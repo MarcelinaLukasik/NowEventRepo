@@ -1,0 +1,91 @@
+.slider {
+  padding: 200px 0 200px 0;
+  height: 100vh;
+  margin-top: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images/partyBg.jpg");
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 1000px;
+}
+
+.slider .items-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  padding: 0;
+}
+
+.slider .event-title {
+  display: block;
+  font-size: 4rem;
+  letter-spacing: 1;
+  padding: 10px 0;
+
+  line-height: 1;
+  margin-bottom: 25px;
+}
+
+.slider p {
+  color: #b8b8b8;
+  font-size: 18px;
+  padding: 10px 5px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+}
+
+.slider button {
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgb(25, 2, 47) 0%,
+    rgb(72, 10, 100) 35%,
+    rgb(25, 157, 197) 100%
+  );
+  border-radius: 50px;
+  padding: 10px 15px;
+}
+
+.slider button svg {
+  margin-left: 10px;
+  transition: 0.5s ease;
+}
+
+.slider button:hover svg {
+  margin-left: 25px;
+}
+
+.slider .img2 {
+  animation: updown 3s linear infinite;
+}
+@keyframes updown {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+
+.txt-rotate > .wrapper {
+  border-right: 0.08em solid #777;
+}
+
+@media (max-width: 767px) {
+  .slider .img2 {
+    display: none;
+  }
+}

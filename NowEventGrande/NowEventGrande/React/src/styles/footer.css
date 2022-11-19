@@ -1,0 +1,22 @@
+.footer {
+  padding: 50px 0;
+  background-color: #000;
+}
+
+.footer-text-center {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-title {
+  margin: 0;
+}
+.footer-desc {
+  font-weight: 400;
+  font-size: 14px;
+  color: #b8b8b8;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+}

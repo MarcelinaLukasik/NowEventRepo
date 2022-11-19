@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 187.5 187.5" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.81088 0 0 .81088 5.9097 -403.36)" stroke="#000" stroke-linejoin="round" stroke-width="3.75">
+  <path d="m33 560.36h152a3 3 0 0 1 3 3v94a3 3 0 0 1 -3 3h-152a3 3 0 0 1 -3 -3v-94a3 3 0 0 1 3 -3" fill="#fff" stroke-linecap="round"/>
+  <path d="m32 658.36 76-56 80 58" fill="none"/>
+  <path d="m31.935 561.05 75.769 59.968 78.296-60.623-154.06 0.65586z" fill="#fff" fill-rule="evenodd"/>
+ </g>
+</svg>

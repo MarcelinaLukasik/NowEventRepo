@@ -1,0 +1,324 @@
+* {
+  box-sizing: border-box;
+}
+
+[class*="Event-col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .Event-col-1 {width: 8.33%;}
+  .Event-col-2 {width: 16.66%;}
+  .Event-col-3 {width: 25%;}
+  .Event-col-4 {width: 33.33%;}
+  .Event-col-5 {width: 41.66%;}
+  .Event-col-6 {width: 50%;}
+  .Event-col-7 {width: 58.33%;}
+  .Event-col-8 {width: 66.66%;}
+  .Event-col-9 {width: 75%;}
+  .Event-col-10 {width: 83.33%;}
+  .Event-col-11 {width: 91.66%;}
+  .Event-col-12 {width: 100%;}
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+.event {
+  text-align: center;
+  font-family: "Trebuchet MS";
+  padding: 200px 0 100px 0;
+  background-image: url("../images/blackWallpaper.jpg");
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 1500px;
+}
+
+.event h1 {
+  text-align: center;
+  color: #ffffff;
+  font-size: 55px;
+  border-radius: 20px;
+  padding: 40px 100px;
+  margin-bottom: 20px;
+
+  background: linear-gradient(
+    90deg,
+    rgb(25, 2, 47) 0%,
+    rgb(25, 157, 197) 100%
+  );
+}
+
+.event h3 {
+  font-family: Calibri;
+  margin-bottom: 20px;
+}
+
+.column-3 {
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  margin: 20px;
+  border-radius: 25px;
+}
+
+.tile {
+  border-color: rgb(44, 189, 246);
+  border-width: 2px;
+  border-style: solid;
+  color: rgb(255, 255, 255);
+}
+
+.tile:hover {
+  color: #ab77ff;
+}
+
+.tileText {
+  text-align: center;
+  font-size: 35px;
+}
+
+.tilesContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.tilesContainer button {
+  flex-basis: 300px;
+}
+
+
+.createEventForm {  
+ display: block;
+  font-size: 25px;
+
+}
+
+
+.addEventButton {
+  border: 0;
+  background-color:rgb(75, 178, 219);
+  border-radius: 20px;
+  padding: 20px 40px;
+  font-size: 20px;
+  margin: 20px;
+}
+
+.eventName { 
+  margin: 20px;
+}
+
+.featureIcon {
+  /* filter: drop-shadow(8px 8px 10px rgb(82, 82, 82)); */
+  filter: brightness(90%) hue-rotate(50deg);
+  width: 50px;
+  padding-top: 20px;
+}
+
+@media only screen and (min-width: 400px) {
+  .featureIcon {
+    width: 150px;
+  }
+}
+
+
+.addCost {
+  /* margin: 10px;
+  display: flex;
+  justify-content: right;
+  align-items: right; */
+  width: 150px;
+}
+
+.saveCosts {
+  background-color:rgb(126, 78, 214);
+  padding: 5px;
+  margin: 10px;
+  margin-left: 30px;
+  width: 100px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  float:right;
+}
+
+.container-fluid {
+  background-image: url("../images/blackWallpaper.jpg");
+}
+
+
+.budgetForm {
+  font-size: 23px;
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-bottom: 30px;
+  display: grid;
+  column-gap: 50px;
+}
+
+.budgetForm > div {
+  background-color: rgba(63, 63, 63, 0.472);
+  padding: 15px;
+  font-size: 23px;
+  text-align: center;
+}
+
+.editCost {
+  background-color:rgb(126, 78, 214);
+  padding: 5px;
+  margin: 10px;
+  margin-left: 30px;
+  width: 100px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  float:right;
+}
+
+.costInput {
+  width: 80px;
+}
+
+
+.progressBarContainer {
+  margin:auto;
+  /* margin-right: 50px; */
+  text-align: center;
+  position: relative;
+  /* float: right; */
+  top: -35px;
+  /* left: 330px; */
+}
+
+.progressText {
+  font-size: 24px;
+  margin:auto;
+
+}
+
+
+.half {
+  font-size: 14px;
+  color: #7c7c7c;
+}
+
+.label {
+  display: inline-block;
+  margin: 0 0 20px 0;
+  padding: 5px 0;
+  width: 52px;
+  color: #aaa;
+  text-shadow: 0 1px black;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.radio:checked + .label {
+  color: white;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.progress {
+  margin: auto;
+  width: 400px;
+  height: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.progress {
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 12px #fa8f6e;
+}
+
+.progress-bar {
+  width: 0%;
+  background: #f88030;
+  height: 12px;
+  border-radius: 30px;
+  transition: 2.5s linear;
+  transition-property: width, background-color;
+}
+
+.saveDate {
+  background-color:rgb(126, 78, 214);
+  padding: 5px;
+  margin: auto;
+  width: 100px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  float:right;
+  text-align: center;
+}
+
+.offerInformation {
+    text-align: center;
+    margin: auto;
+    word-wrap: break-word;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+.postOffer {
+  background-color:rgb(126, 78, 214);
+  padding: 7px;
+  margin: auto;
+  margin-top: 30px;
+  width: 200px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 22px;
+  
+  text-align: center;
+  /* color:#b1b1b1; */
+}
+
+
+.countdown {
+  background-color: #ab77ff;
+  border-radius: 20px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 48px !important;
+  
+}
+
+
+
+
+.timer-counter {
+  background: #5c5c5c5d !important;
+  font-size: 23px !important;
+  border-radius: 10px !important;
+  width: 80px !important;
+  padding: 20px !important;
+  margin: auto !important;
+  margin-top: 10px !important;
+  
+}
+
+.summaryStats {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+
+
+
+
+
+
+
+

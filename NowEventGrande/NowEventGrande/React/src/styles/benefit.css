@@ -1,0 +1,102 @@
+.wrap {
+  padding: 30px;
+}
+.header-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #000;
+}
+.items-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.benefit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.benefit-header {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(15, 76, 151) 50%,
+    rgb(16, 87, 220) 100%
+  );
+  flex-basis: 30%;
+  text-align: center;
+  display: flex;
+  padding: 10px;
+  color: #000;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.benefit-header:hover {
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.benefit-header span img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 25px;
+}
+
+.benefit-header h2 {
+  margin-bottom: 25px;
+  color: #b8b8b8;
+  text-transform: uppercase;
+}
+
+.benefit-header p {
+  color: #b8b8b8;
+  font-size: 18px;
+  padding: 10px 5px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+}
+
+.wrap .btn-join {
+  display: flex;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  margin: 25px auto;
+  color: #fff;
+  background: rgb(16, 87, 220);
+}
+
+.wrap .btn-join button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.wrap .btn-join button svg {
+  margin-left: 10px;
+  transition: 0.5s ease;
+}
+
+.wrap .btn-join button:hover svg {
+  margin-left: 25px;
+}
+
+@media (max-width: 1007px) {
+  .benefit {
+    flex-direction: column;
+  }
+  .benefit-header {
+    margin-bottom: 15px;
+  }
+}

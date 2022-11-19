@@ -1,0 +1,29 @@
+/* .vertical-menu {
+    width: 350px;
+} */
+
+.vertical-menu a {
+    background-color: #eee;
+    color: black;
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    border: 0px;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc;
+    
+}
+
+.vertical-menu a.active {
+    background-color: rgb(38, 24, 78);
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    
+}
