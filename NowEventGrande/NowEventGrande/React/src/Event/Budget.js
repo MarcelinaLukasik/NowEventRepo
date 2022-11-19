@@ -17,6 +17,7 @@ function Budget() {
     const [food, setFood] = useState("");
     const [budget, setBudget] = useState([]);
     const [count, setCount] = useState(0);
+    const [isValid, setValid] = useState(true);
 
     const [isRentOpen, setRentOpen] = useState(false);
     const openRentInput = () => {setRentOpen(!isRentOpen);}
@@ -80,11 +81,15 @@ function Budget() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: valueToChange ,
+          body: JSON.stringify(valueToChange) ,
         });
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
+          setValid(false);
           throw new Error(message);
+        }
+        else{
+          setValid(true);
         }
         const result = await res;
         return result;
@@ -193,7 +198,9 @@ function Budget() {
                             }
                             </div>                                                                         
                         </form>  
-
+                        <div>
+                           {!isValid && <p className="wrongInputMessage">Please provide valid numbers!</p>}
+                        </div>     
                    </div>
                    <div className="Event-col-2">
                       <h3>Total cost: {budget.total}</h3>

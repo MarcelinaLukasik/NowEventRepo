@@ -295,9 +295,6 @@
   
 }
 
-
-
-
 .timer-counter {
   background: #5c5c5c5d !important;
   font-size: 23px !important;
@@ -312,6 +309,11 @@
 .summaryStats {
   margin-top: 20px;
   font-size: 20px;
+}
+
+.wrongInputMessage {
+  color: red;
+  font-size: 19px;
 }
 
 

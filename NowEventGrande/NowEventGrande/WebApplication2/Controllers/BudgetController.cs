@@ -23,10 +23,21 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPatch("{eventId}/Update/RentPrice")]
-        public async Task<IActionResult> UpdateRentPrice(int eventId, [FromBody] decimal rentPrice)
+        public async Task<IActionResult> UpdateRentPrice(int eventId, [FromBody] string rentPrice)
         {
-            await _budgetRepository.ChangeRentPrice(rentPrice, eventId);
-            return Ok(rentPrice);
+            var isDecimal = decimal.TryParse(rentPrice, out decimal price);
+            if (isDecimal)
+            {
+                await _budgetRepository.ChangeRentPrice(price, eventId);
+                return Ok(rentPrice);
+            }
+            else
+            {
+                return BadRequest(rentPrice);
+            }
+          
+
+
         }
 
         [HttpPatch("{eventId}/Update/DecorationPrice")]
