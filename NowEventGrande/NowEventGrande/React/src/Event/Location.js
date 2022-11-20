@@ -25,11 +25,10 @@ function Location() {
     const [endHour, setEndHour] = useState("00");
     const [endMinutes, setEndMinutes] = useState("00");
     const [eventTime, setEventTime] = useState("");
-    const Completionist = () => <span>Time to party!</span>;
+    // const Completionist = () => <span>Time to party!</span>;
 
     useEffect(() => {
         fetchRequest();
-        // handleEventStartTime();
         fetchProgress();
       }, []);
 
@@ -55,11 +54,8 @@ function Location() {
     };
 
     useEffect(() => {
-        console.log('HEY HANDLEWEATHER', eventTime)
+        // console.log('HEY HANDLEWEATHER', eventTime)
       }, [eventTime]);
-
-
- 
 
   
     async function handleDateSave() {
@@ -81,7 +77,6 @@ function Location() {
         }
         else {
         fetchProgress();
-        // handleEventStartTime();
         }
     } 
 

@@ -15,6 +15,7 @@ namespace WebApplication2.Data
         public DbSet<EventAddress> EventAddress{ get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Budget> Budget { get; set; }
+        public DbSet<Offer> Offer { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
