@@ -39,22 +39,27 @@ function Event() {
                 <div className="columns">                 
                     <div>                           
                         <br />
-                        <h3>Choose your event category:</h3>                      
-                        <div className="tilesContainer">
-                            <button className="column-3 tile" onClick={e => setText(EventTypes.Birthday)}>
+                        <h3>Choose your event category:</h3>  
+                                       
+                        <div className="row tileContainer">
+                            {/* <div className="Event-col-4"></div> */}
+                            
+                            <button className="Event-col-2 tile" onClick={e => setText(EventTypes.Birthday)}>
                                 <h2 className="tileText">BIRTHDAY</h2>
                             </button>
-                            <button className="column-3 tile" onClick={e => setText(EventTypes.Festival)}>
+                            <button className="Event-col-2 tile" onClick={e => setText(EventTypes.Festival)}>
                                 <h2 className="tileText">FESTIVAL</h2>
                             </button>
-                            <button className="column-3 tile" onClick={e => setText(EventTypes.Concert)}>
+                            <button className="Event-col-2 tile" onClick={e => setText(EventTypes.Concert)}>
                                 <h2 className="tileText">CONCERT</h2>
                             </button>
+                            
+                            {/* <div className="Event-col-4"></div> */}
                         </div>
                     </div>
                 </div>
                 <div className="createEventForm"> 
-                    <h3 >Create event: {text}</h3>                                                                       
+                    <h3 className="eventType">Create event: {text}</h3>                                                                       
                     <form  onSubmit={handleSubmit}>  
                     <label>Choose your event name:</label>
                     <input className="eventName" type="text" value={eventName} required onChange={e => setEventName(e.target.value)}/>                                                

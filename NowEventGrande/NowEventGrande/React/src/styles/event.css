@@ -68,25 +68,50 @@
 }
 
 .tile {
-  border-color: rgb(44, 189, 246);
+  border-color: #cd83ff;
   border-width: 2px;
   border-style: solid;
   color: rgb(255, 255, 255);
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  margin: 20px;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  transition: .5s;
+  background-color: #1d1d1d;
 }
 
 .tile:hover {
-  color: #ab77ff;
+  color: rgb(253, 189, 115);
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #cd83ff;
+  
 }
+
+.tile:hover::before {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #cd83ff;
+}
+
+.tile::before{
+  background: #ffee10;
+  transition: .5s;
+  transform: scale(.9);
+  z-index: -1;
+}
+
 
 .tileText {
   text-align: center;
   font-size: 35px;
 }
 
-.tilesContainer {
+.tileContainer {
   display: flex;
   justify-content: center;
 }
+
 
 .tilesContainer button {
   flex-basis: 300px;
@@ -96,9 +121,12 @@
 .createEventForm {  
  display: block;
   font-size: 25px;
-
 }
 
+.eventType{
+  margin-top: 10px !important;
+  margin-bottom: 5px !important;
+}
 
 .addEventButton {
   border: 0;
@@ -110,7 +138,7 @@
 }
 
 .eventName { 
-  margin: 20px;
+  margin-bottom: 10px;
 }
 
 .featureIcon {
@@ -295,9 +323,6 @@
   
 }
 
-
-
-
 .timer-counter {
   background: #5c5c5c5d !important;
   font-size: 23px !important;
@@ -313,6 +338,14 @@
   margin-top: 20px;
   font-size: 20px;
 }
+
+.wrongInputMessage {
+  color: red;
+  font-size: 19px;
+}
+
+
+
 
 
 
