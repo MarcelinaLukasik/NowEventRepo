@@ -71,7 +71,7 @@ function Offer() {
                             </div>
                             }
                             {!status &&
-                            <h3 className="offerInformation">Your event is not completed yet. Provide all required information and come back!.</h3>
+                            <h3 className="offerInformation">Your event is not completed yet. Provide all required information and come back!</h3>
                             }
                         </div>   
                         <div className="Event-col-2">
