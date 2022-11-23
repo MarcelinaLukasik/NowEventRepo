@@ -15,15 +15,23 @@ namespace WebApplication2.Controllers
         private readonly IGuestRepository _guestRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IOfferRepository _offerRepository;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository)
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
             _eventRepository = eventRepository;
             _budgetRepository = budgetRepository;
+            _offerRepository = offerRepository;
         }
 
+        [HttpPost("PostOffer")]
+        public IActionResult AddOffer([FromBody] Offer offer)
+        {
+            _offerRepository.AddOffer(offer);
+            return Ok(offer);
+        }
 
         [HttpPost("GetGuest")]
         public IActionResult GetGuest([FromBody] Guest guest)
