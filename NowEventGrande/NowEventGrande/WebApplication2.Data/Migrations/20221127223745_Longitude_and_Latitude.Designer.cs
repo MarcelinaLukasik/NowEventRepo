@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication2.Data;
 
@@ -11,9 +12,10 @@ using WebApplication2.Data;
 namespace WebApplication2.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127223745_Longitude_and_Latitude")]
+    partial class Longitude_and_Latitude
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,22 +210,10 @@ namespace WebApplication2.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(23,9)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(23,9)");
-
-                    b.Property<string>("PlaceId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlaceOpeningHours")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PlaceStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

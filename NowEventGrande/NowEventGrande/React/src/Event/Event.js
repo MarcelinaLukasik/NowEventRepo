@@ -2,8 +2,6 @@ import '../styles/event.css';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Event() {
     const [text, setText] = useState("");
     const [eventName, setEventName] = useState("");

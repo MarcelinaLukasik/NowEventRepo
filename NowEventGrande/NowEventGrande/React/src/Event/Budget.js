@@ -1,6 +1,5 @@
 import SideBar from "./SideBar";
 import React from 'react';
-import { Outlet, NavLink } from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import {Col} from "react-bootstrap";
 import calendarIcon from '../images/icons/salary.png';
@@ -115,29 +114,7 @@ function Budget() {
             <div className="row">
                     <div className="Event-col-3">
                     <div className="sidebar">
-                        <div className="vertical-menu">
-                        <ul>
-                            <li >
-                                <NavLink to={{pathname :`/event/${eventId}/guests`}} state={{EventId: eventId}}>Guest list</NavLink>
-                            </li>   
-                            <li >
-                              <NavLink to={{pathname :`/event/${eventId}/budget`}} state={{EventId: eventId}}>Budget</NavLink>
-                            </li>
-                            <li >
-                              <NavLink to={{pathname :`/event/${eventId}/location`}} state={{EventId: eventId}} >Location and date</NavLink>
-                            </li>
-                            <li >
-                              <NavLink to={{pathname :`/event/${eventId}/offer`}} state={{EventId: eventId}} >Make offer</NavLink>
-                            </li>
-                            <li >
-                              <NavLink to={{pathname :`/event/${eventId}/afterEvent`}} state={{EventId: eventId}} >After event</NavLink>
-                            </li>
-                            <li >
-                                <NavLink to={{pathname :`/event/${eventId}/summary`}} state={{EventId: eventId}} >Summary</NavLink>
-                            </li>
-                        </ul>
-                        <Outlet />
-                        </div>
+                      <SideBar eventId={eventId}/>
                     </div>
                     </div>
                    <div className="Event-col-5">              

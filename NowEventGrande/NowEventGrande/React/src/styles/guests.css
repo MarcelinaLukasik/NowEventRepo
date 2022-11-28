@@ -2,10 +2,10 @@ hr.solid {
   border-top: 3px solid #bbb;
 }
 
-/* .guestList {
-  margin: 10px;
- 
-} */
+.guestList {
+  margin:auto;
+  margin-top: 10px;
+}
 
 .removeButton {
   margin-left: 30px;
@@ -21,8 +21,7 @@ hr.solid {
   border-radius: 20px;
   padding: 20px 20px;
   font-size: 20px;
-
-  margin-top: 30px;
+  margin-left: 150px;
 }
 
 .removeModal {
@@ -77,9 +76,8 @@ hr.solid {
     padding:10px 2px;
     border:solid 1px #ffffff;
     width:280px;
-    margin:20px 10px 20px 0px;
- 
-
+    margin:20px 10px 20px 80px;
+    
 }
 
 .addGuest {

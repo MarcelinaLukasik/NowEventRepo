@@ -76,11 +76,12 @@ namespace WebApplication2.Controllers
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            var key = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
-            var firstKey = key.Split(";")[0];
+            var keys = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
+            var firstKey = keys.Split(";")[0];
             return firstKey;
 
         }
+
 
         //TODO checkStatus, then setStatus based on checkStatus return value
         [HttpGet("{id}/CheckStatus")]

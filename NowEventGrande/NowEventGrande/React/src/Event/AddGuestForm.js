@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState } from "react";
+import { useState} from "react";
 
-function AddGuestForm({onClick, isOpen, eventId}) {
+function AddGuestForm({onClick, addGuestCount, isOpen, eventId}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-   
+  
     function handleSubmit(evt) {
         evt.preventDefault();
         handlePost();
@@ -23,11 +23,13 @@ function AddGuestForm({onClick, isOpen, eventId}) {
           },
           body: JSON.stringify({FirstName: firstName, LastName: lastName, Email: email, EventId: eventId}) ,
         })
-        .then(window.location.reload(false));
+        // .then(window.location.reload(false));
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
           throw new Error(message);
         }
+        const result = await res.json();
+        addGuestCount();
     }  
       fetchData();    
     }

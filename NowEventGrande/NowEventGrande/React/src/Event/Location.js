@@ -4,14 +4,13 @@ import {Col} from "react-bootstrap";
 import calendarIcon from '../images/icons/list.png';
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { Outlet, NavLink } from "react-router-dom";
 import Calendar from 'react-calendar';
 import {handleStyle} from "./HandleProgress";
+import SideBar from "./SideBar";
+import Address from './Address';
 
 
 function Location() {
-    const [isOpen, setOpen] = useState(false);
-    const openInput = () => {setOpen(!isOpen);}
     const location = useLocation();
     const eventId = location.state.EventId;
     const [id, setEventId] = useState(eventId);
@@ -24,7 +23,7 @@ function Location() {
     const [startMinutes, setStartMinutes] = useState("00");
     const [endHour, setEndHour] = useState("00");
     const [endMinutes, setEndMinutes] = useState("00");
-    const [eventTime, setEventTime] = useState("");
+    // const [eventTime, setEventTime] = useState("");
     // const Completionist = () => <span>Time to party!</span>;
 
     useEffect(() => {
@@ -53,11 +52,6 @@ function Location() {
         setRes(dataJ.slip.advice);
     };
 
-    useEffect(() => {
-        // console.log('HEY HANDLEWEATHER', eventTime)
-      }, [eventTime]);
-
-  
     async function handleDateSave() {
         const res = await fetch(`/events/${id}/SaveDate`, {
         method: "POST",
@@ -79,7 +73,6 @@ function Location() {
         fetchProgress();
         }
     } 
-
 
     return (
         <div className="event">
@@ -103,29 +96,7 @@ function Location() {
                         <div className="row">
                             <div className="Event-col-3">
                             <div className="sidebar">
-                                <div className="vertical-menu">
-                                <ul>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/guests`}} state={{EventId: id}}>Guest list</NavLink>
-                                    </li>   
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/budget`}} state={{EventId: id}} >Budget</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/location`}} state={{EventId: id}} >Location and date</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/offer`}} state={{EventId: id}} >Make offer</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/afterEvent`}} state={{EventId: id}} >After event</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/summary`}} state={{EventId: id}} >Summary</NavLink>
-                                    </li>
-                                </ul>
-                                <Outlet />
-                                </div>
+                                <SideBar eventId={eventId}/>
                             </div>
                             </div>
                         <div className="Event-col-4">              
@@ -187,7 +158,10 @@ function Location() {
                         </div>                             
                     </div>
                     <div className="row">
-                        <input type="button" className="saveDate" value="Save" onClick={handleDateSave}/>
+                        <input type="button" className="saveDate" value="Save date" onClick={handleDateSave}/>
+                    </div>
+                    <div className="row">
+                                <Address eventId={eventId} fetchProgress={fetchProgress}/>  
                     </div>
                   
                 </div>

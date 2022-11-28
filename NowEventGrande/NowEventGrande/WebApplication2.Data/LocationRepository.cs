@@ -19,5 +19,33 @@ namespace WebApplication2.Data
         {
             return _appDbContext.EventAddress.FirstOrDefault(x => x.Id == id);
         }
+
+        public EventAddress GetLocationAddress(int eventId)
+        {
+            return _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventId);
+        }
+
+
+        public void SaveLocation(EventAddress eventAddress)
+        {
+            var address = _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventAddress.EventId);
+            if (address == null)
+            {
+                _appDbContext.EventAddress.Add(eventAddress);
+                _appDbContext.SaveChanges();
+            }
+            else
+            {
+                address.FullAddress = eventAddress.FullAddress;
+                _appDbContext.SaveChanges();
+            }
+        }
+
+        public bool VerifyLocation(EventAddress eventAddress)
+        {
+            return false;
+        }
+
+
     }
 }

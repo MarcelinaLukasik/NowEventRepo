@@ -27,5 +27,3 @@ yarn-debug.log*
 yarn-error.log*
 .vs
 .key.txt
-package-lock.json
-package.json

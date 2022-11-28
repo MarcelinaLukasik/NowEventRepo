@@ -4,7 +4,7 @@ import {Col} from "react-bootstrap";
 import Icon from '../images/icons/list.png';
 import {useLocation} from 'react-router-dom';
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import SideBar from "./SideBar";
 
 function AfterEvent() {
     const location = useLocation();
@@ -55,29 +55,7 @@ function AfterEvent() {
                         <div className="row">
                             <div className="Event-col-3">
                             <div className="sidebar">
-                                <div className="vertical-menu">
-                                <ul>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/guests`}} state={{EventId: id}}>Guest list</NavLink>
-                                    </li>   
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/budget`}} state={{EventId: id}} >Budget</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/location`}} state={{EventId: id}} >Location and date</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/offer`}} state={{EventId: id}} >Make offer</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/afterEvent`}} state={{EventId: id}} >After event</NavLink>
-                                    </li>
-                                    <li >
-                                        <NavLink to={{pathname :`/event/${id}/summary`}} state={{EventId: id}} >Summary</NavLink>
-                                    </li>
-                                </ul>
-                                <Outlet />
-                                </div>
+                            <SideBar eventId={eventId}/>
                             </div>
                             </div>
                         <div className="Event-col-6">              
