@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 import { FilterSection } from './FilterSection.js'
 import { Sort } from './Sort.js'
 import { OffersList } from './OffersList.js'
-import { async } from 'jshint/src/prod-params.js'
+//import { async } from 'jshint/src/prod-params.js'
 import { useEffect, useState } from 'react'
 
 export const OffersMainPage = () => {

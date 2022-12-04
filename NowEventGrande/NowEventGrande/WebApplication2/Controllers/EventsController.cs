@@ -18,9 +18,8 @@ namespace WebApplication2.Controllers
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository, IOfferRepository offerRepository)
         public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, 
-            IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService)
+            IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
