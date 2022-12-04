@@ -20,6 +20,7 @@ builder.Services.AddScoped<IGuestRepository, GuestRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 
 

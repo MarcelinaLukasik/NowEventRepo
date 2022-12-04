@@ -15,8 +15,10 @@ namespace WebApplication2.Controllers
         private readonly IGuestRepository _guestRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
 
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository, IOfferRepository offerRepository)
         public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, 
             IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService)
         {
@@ -24,9 +26,16 @@ namespace WebApplication2.Controllers
             _guestRepository = guestRepository;
             _eventRepository = eventRepository;
             _budgetRepository = budgetRepository;
+            _offerRepository = offerRepository;
             _verificationService = verificationService;
         }
 
+        [HttpPost("PostOffer")]
+        public IActionResult AddOffer([FromBody] Offer offer)
+        {
+            _offerRepository.AddOffer(offer);
+            return Ok(offer);
+        }
 
         [HttpPost("SaveGuest")]
         public IActionResult SaveGuest([FromBody] Guest guest)
