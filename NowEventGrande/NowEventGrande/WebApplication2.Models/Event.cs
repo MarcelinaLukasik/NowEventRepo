@@ -10,6 +10,7 @@ namespace WebApplication2.Models
         public int ContractorId { get; set; }
         [MaxLength(15)]
         public string Size { get; set; }
+        public string? SizeRange { get; set; }
         public DateTime Date { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }

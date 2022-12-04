@@ -16,6 +16,7 @@ function Address(props) {
     const [openingHours, setOpeningHours] = useState();
     const [placeId, setPlaceId] = useState();
     const [placeStatus, setPlaceStatus] = useState();
+    const [isValid, setValid] = useState(true);
 
     const handlePlaceChanged = () => { 
         const [ place ] = inputRef.current.getPlaces();
@@ -77,10 +78,12 @@ function Address(props) {
         if (!res.ok) {
         //TODO message to user
         const message = `An error has occured: ${res.status} - ${res.statusText}`;
+        setValid(false);
         throw new Error(message);
         
         }
         else {
+        setValid(true);
         props.fetchProgress();
         }
     } 
@@ -138,6 +141,9 @@ function Address(props) {
         <div className="row">
             <input type="button" className="saveDate" value="Save location" onClick={handleLocationSave}/>
         </div>
+        <div>
+            {!isValid && <p className="wrongInputMessage">Invalid location!</p>}
+        </div>         
     </div>
       );
 }

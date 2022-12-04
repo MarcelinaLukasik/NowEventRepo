@@ -31,7 +31,6 @@ namespace WebApplication2.Controllers
             var keys = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
             var mapKey = keys.Split(";")[1].Trim();
             return mapKey;
-
         }
 
         [HttpPost("SaveLocation")]
@@ -45,9 +44,7 @@ namespace WebApplication2.Controllers
         public Dictionary<string, string> GetVerificationInfo(int id)
         {
             return _verificationService.GetVerificationInfo(id);
-
         }
-
 
 
     }

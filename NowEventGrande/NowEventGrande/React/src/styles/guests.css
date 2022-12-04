@@ -21,7 +21,8 @@ hr.solid {
   border-radius: 20px;
   padding: 20px 20px;
   font-size: 20px;
-  margin-left: 150px;
+  margin: auto;
+  margin-bottom: 15px;
 }
 
 .removeModal {
@@ -76,7 +77,9 @@ hr.solid {
     padding:10px 2px;
     border:solid 1px #ffffff;
     width:280px;
-    margin:20px 10px 20px 80px;
+    /* margin:20px 10px 20px 80px; */
+    margin: auto;
+    margin-top: 20px;
     
 }
 
@@ -111,6 +114,55 @@ hr.solid {
   font-size: 20px;
   margin: 10px;
 }
+
+.addGuestForm {
+    margin-left: 20px;
+}
+
+.rangeContainer {
+  margin:auto;
+  margin-top: 10px;
+}
+
+.saveRange {
+  background-color:rgb(126, 78, 214);
+  padding: 15px;
+  margin: auto;
+  margin-left: 15px;
+  width: 180px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+}
+
+.saveRange {
+  background-color:rgb(126, 78, 214);
+  padding: 15px;
+  margin: auto;
+  margin-left: 15px;
+  width: 180px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+.saveRange:focus{
+  background-color:rgb(23, 195, 167);
+  padding: 15px;
+  margin: auto;
+  margin-left: 15px;
+  width: 180px;
+  color:#ffffff;
+  border: 0px;
+  border-radius: 20px;
+}
+
+.rangeCol {
+  margin-top: 35px;
+}
+
+
 
 
 

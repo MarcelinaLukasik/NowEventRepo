@@ -36,7 +36,8 @@
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 1500px;
+  height:auto;
+  width: auto;
 }
 
 .event h1 {
@@ -141,9 +142,47 @@
   margin-bottom: 10px;
 }
 
+            
+ol li {
+  list-style-type: none;
+  counter-increment: item;
+  margin-bottom: 10px;
+  padding-left: -10px;
+}
+
+ol li:before {
+  content: counter(item);
+  float: left;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-left: -15px;
+  font-size: 20px;
+  background-color: #ffe59d;
+  color: #000000;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.infoNote{
+  color: #ffe6a1;
+}
+
+.infoPanel{
+  margin: auto;
+  text-align: center;
+  background-color: rgba(63, 63, 63, 0.472);
+  border-radius: 15px;
+  padding: 15px;
+}
+
+/* .infoPanel ol{
+  
+} */
+
 .assistanceIcon {
-  margin: 15px;
-  width: 120px;
+  margin: auto;
+  width: 150px;
 }
 
 .featureIcon {
@@ -331,7 +370,7 @@
 
 .timer-counter {
   background: #5c5c5c5d !important;
-  font-size: 23px !important;
+  font-size: 36px !important;
   border-radius: 10px !important;
   width: 80px !important;
   padding: 20px !important;
@@ -348,6 +387,8 @@
 .wrongInputMessage {
   color: red;
   font-size: 19px;
+  margin: auto;
+  text-align: center;
 }
 
 .form-control{
@@ -361,6 +402,8 @@
   color: black;
   display: block;
 }
+
+
 
 
 

@@ -13,5 +13,6 @@ namespace WebApplication2.Data
         void SaveLocation(EventAddress eventAddress);
         bool VerifyLocation(EventAddress eventAddress);
         EventAddress GetLocationAddress(int eventId);
+        // string? GetLocationHours(int eventId);
     }
 }

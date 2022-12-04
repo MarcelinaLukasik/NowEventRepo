@@ -21,6 +21,8 @@ namespace WebApplication2.Data
         string GetStatus(int id);
 
         Dictionary<string, string> GetInfo(int id);
+        DateTime GetEventStartTime(int id);
+        DateTime GetEventEndTime(int id);
     }
 
 }

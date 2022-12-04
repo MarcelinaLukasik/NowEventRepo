@@ -23,6 +23,7 @@ function Location() {
     const [startMinutes, setStartMinutes] = useState("00");
     const [endHour, setEndHour] = useState("00");
     const [endMinutes, setEndMinutes] = useState("00");
+    const [isValid, setValid] = useState(true);
     // const [eventTime, setEventTime] = useState("");
     // const Completionist = () => <span>Time to party!</span>;
 
@@ -64,14 +65,14 @@ function Location() {
         })
         
         if (!res.ok) {
-        //TODO message to user
-        const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        throw new Error(message);
-        
-        }
-        else {
-        fetchProgress();
-        }
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            setValid(false);
+            throw new Error(message);
+          }
+          else{
+            setValid(true);
+            fetchProgress();
+          }
     } 
 
     return (
@@ -108,7 +109,10 @@ function Location() {
                                 <h3 className='text-center'>
                                     <span className='bold'>Selected Date:</span>{' '}
                                     {date.toDateString()}
-                                </h3>               
+                                </h3> 
+                                <div>
+                                    {!isValid && <p className="wrongInputMessage">Please provide valid date and time!</p>}
+                                </div>                  
                         </div>
                         <div className="Event-col-3">
                             {/* <div>
@@ -161,7 +165,7 @@ function Location() {
                         <input type="button" className="saveDate" value="Save date" onClick={handleDateSave}/>
                     </div>
                     <div className="row">
-                                <Address eventId={eventId} fetchProgress={fetchProgress}/>  
+                        <Address eventId={eventId} fetchProgress={fetchProgress}/>  
                     </div>
                   
                 </div>

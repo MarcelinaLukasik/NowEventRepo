@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import AddGuestForm from "./AddGuestForm";
 
 
-const AllGuests = ({eventId}) => {
+const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
   const [hasError, setErrors] = useState(false);
   const [guests, setState] = useState([]);
   const [guestCount, setGuestCount] = useState(0);
@@ -92,6 +92,7 @@ const AllGuests = ({eventId}) => {
           }
           const result = await res.json();
           setGuestCount(guestCount -1);
+          subtractChecklistCount();
       }  
         fetchData();    
   }
@@ -135,8 +136,8 @@ const AllGuests = ({eventId}) => {
           </Modal>
         <h3>Total guests: {Array.from(guests).length} </h3>
         </div>
-        <div className="Event-col-4">
-        <AddGuestForm onClick={openInput} addGuestCount={addGuestCount} isOpen={isOpen} eventId={currentEventId}/>
+        <div className="Event-col-5">
+        <AddGuestForm onClick={openInput} addGuestCount={addGuestCount} isOpen={isOpen} eventId={currentEventId} addChecklistCount={addChecklistCount}/>
         </div>
         </div>
     </div>

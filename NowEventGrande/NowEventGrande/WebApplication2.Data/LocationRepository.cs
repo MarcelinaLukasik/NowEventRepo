@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WebApplication2.Models;
@@ -45,6 +46,11 @@ namespace WebApplication2.Data
         {
             return false;
         }
+
+        // public string? GetLocationHours(int eventId)
+        // {
+        //     return _appDbContext.EventAddress.Where(x => x.EventId == eventId).Select(y => y.PlaceOpeningHours).FirstOrDefault();
+        // }
 
 
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import lightbulb_1 from '../images/icons/lightbulb_1.png';
+import lightbulb_1 from '../images/icons/light_bulb_small.png';
 import { useState, useEffect } from "react";
 import EventInfoPanel from "./EventInfoPanel";
 
@@ -31,7 +31,7 @@ function Assistance(props) {
         <div>
           <img src={lightbulb_1} alt="img" className="assistanceIcon" onClick={getInfo}/>
           {
-              isOpen && <EventInfoPanel placeDetails={placeDetails}/>
+              isOpen && <EventInfoPanel placeDetails={placeDetails} />
           }                  
         </div>
       );

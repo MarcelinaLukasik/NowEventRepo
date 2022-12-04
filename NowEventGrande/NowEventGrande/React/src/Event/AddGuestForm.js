@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState} from "react";
 
-function AddGuestForm({onClick, addGuestCount, isOpen, eventId}) {
+function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCount}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [isValid, setValid] = useState(true);
   
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -16,7 +17,7 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId}) {
 
     function handlePost(){
       async function fetchData() {
-        const res = await fetch(`/events/GetGuest`, {
+        const res = await fetch(`/events/SaveGuest`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -26,19 +27,26 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId}) {
         // .then(window.location.reload(false));
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
+          setValid(false);
           throw new Error(message);
         }
-        const result = await res.json();
-        addGuestCount();
+        else{
+          const result = await res.json();
+          setValid(true);
+          addGuestCount();
+          addChecklistCount();
+        }
+      
     }  
       fetchData();    
     }
     
     return (   
         <div className='addGuestForm'>
+          
         <button className="addButton" onClick={onClick}>Add guest</button>
         {isOpen &&
-        <container className="addGuestContainer">
+        <div className="addGuestContainer">
         <form onSubmit={handleSubmit}>
 
             <label>First name:</label>
@@ -51,8 +59,11 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId}) {
             <input className="addGuest" type="email" value={email} required onChange={e => setEmail(e.target.value)}/>
             <input className="saveGuest" type="submit" value="Save"/>
         </form>
-        </container>
+        </div>
         }
+        <div>
+          {!isValid && <p className="wrongInputMessage">Please provide valid name and email!</p>}
+        </div>   
         </div>   
     )
       
