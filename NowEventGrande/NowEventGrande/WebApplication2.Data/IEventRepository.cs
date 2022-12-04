@@ -21,6 +21,7 @@ namespace WebApplication2.Data
         string GetStatus(int id);
 
         Dictionary<string, string> GetInfo(int id);
+        public IEnumerable<Event> GetOffersWithInCompleteStatus();
     }
 
 }

@@ -27,6 +27,11 @@ namespace WebApplication2.Data
             return newEvent.Id;
         }
 
+        public IEnumerable<Event> GetOffersWithInCompleteStatus()
+        {
+            return _appDbContext.Events.Where(x => x.Status == "Incomplete");
+        }
+
         public Budget CreateBudget(int eventId)
         {
             Budget budget = new Budget();

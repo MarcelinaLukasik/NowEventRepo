@@ -10,6 +10,7 @@ html {
 }
 
 body {
+  margin-bottom: 200px;
   font-weight: 400;
   overflow-x: hidden;
   position: relative;

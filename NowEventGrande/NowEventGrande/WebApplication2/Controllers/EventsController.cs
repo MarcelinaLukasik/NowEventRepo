@@ -26,6 +26,8 @@ namespace WebApplication2.Controllers
             _offerRepository = offerRepository;
         }
 
+
+
         [HttpPost("PostOffer")]
         public IActionResult AddOffer([FromBody] Offer offer)
         {

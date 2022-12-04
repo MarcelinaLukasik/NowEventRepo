@@ -1,10 +1,10 @@
 import { OffersMainPage } from "../componentPages/OffersPage/OffersMainPage";
-
+import { motion } from 'framer-motion'
 function Offers() {
     return (
-        <div>
+        <motion.div layout>
             <OffersMainPage />
-        </div>
+        </motion.div>
     )
 }
 
