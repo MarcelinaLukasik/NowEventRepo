@@ -29,6 +29,8 @@ namespace WebApplication2.Controllers
             _verificationService = verificationService;
         }
 
+
+
         [HttpPost("PostOffer")]
         public IActionResult AddOffer([FromBody] Offer offer)
         {

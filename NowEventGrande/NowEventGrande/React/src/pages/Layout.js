@@ -47,7 +47,7 @@ const Layout = () => {
               <Nav.Link as={Link} to="/" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Home</Nav.Link>
               <Nav.Link as={Link} to="/inspirations" >Get inspired</Nav.Link>
               <Nav.Link as={Link} to="/contact" className={activeLink === 'contact' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('contact')}>Contact</Nav.Link>
-              <Nav.Link as={Link} to="/offers" className={activeLink === 'offers' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('offers')}>Offers
+              <Nav.Link as={Link} to="/alloffer" className={activeLink === 'offers' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('offers')}>Offers
               </Nav.Link>
               <NavDropdown className="dropdown" title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="user">User</NavDropdown.Item>

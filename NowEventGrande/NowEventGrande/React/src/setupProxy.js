@@ -21,7 +21,7 @@ const context5 = [
 ];
 
 const context6 = [
-    "/offers",
+    "/offer",
 ];
 
 module.exports = function (app) {
