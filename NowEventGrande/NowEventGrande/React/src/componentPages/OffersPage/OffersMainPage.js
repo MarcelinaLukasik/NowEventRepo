@@ -14,7 +14,6 @@ export const OffersMainPage = () => {
 
     const fetchOffers = async () => {
         const data = await fetch('/offers');
-        console.log(data);
         const offers = await data.json();
         console.log(offers);
         setOffer(offers.results);
