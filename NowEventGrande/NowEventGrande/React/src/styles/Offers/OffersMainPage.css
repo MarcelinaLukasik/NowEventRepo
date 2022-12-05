@@ -6,6 +6,9 @@
   padding: 200px 0 200px 0;
 }
 
+.container_offers {
+}
+
 .main-offers {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -15,9 +18,14 @@
 
 .offer_tile {
   margin: 5%;
+  padding: 2%;
+  background: rgb(65, 98, 168);
+  border-radius: 1rem;
 }
 
 .offer_tile h2 {
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .offer_tile img {
@@ -26,6 +34,42 @@
   object-fit: cover;
   border-radius: 1rem;
   margin-bottom: 1rem;
+}
+
+.offer_desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.offer_size,
+.offer_type {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.offer_size {
+}
+.offer_type {
+}
+
+.offer_tile button {
+  display: block;
+  margin: 0 auto;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: bold;
+  transition: 0.5s ease-in-out;
+}
+
+.offer_tile button:hover {
+  color: rgb(65, 98, 168);
+  background: #fff;
 }
 
 .filters button {

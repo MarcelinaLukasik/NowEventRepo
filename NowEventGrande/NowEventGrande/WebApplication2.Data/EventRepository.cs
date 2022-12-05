@@ -27,9 +27,15 @@ namespace WebApplication2.Data
             return newEvent.Id;
         }
 
-        public IEnumerable<Event> GetOffersWithInCompleteStatus()
+        public IEnumerable<Event> GetOffersWithInCompleteStatus(string query)
         {
-            return _appDbContext.Events.Where(x => x.Status == "Incomplete");
+            /*return _appDbContext.Events.Where(x => x.Status == "Incomplete");*/
+            return _appDbContext.Events
+                .Where(r => query == null || (r.Name.ToLower().Contains(query.ToLower())
+                                              || r.Size.ToLower().Contains(query.ToLower())
+                                              || r.Type.ToLower().Contains(query.ToLower())
+                                              ))
+                .ToList();
         }
 
         public Budget CreateBudget(int eventId)

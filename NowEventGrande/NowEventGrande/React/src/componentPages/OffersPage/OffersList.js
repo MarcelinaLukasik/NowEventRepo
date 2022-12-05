@@ -6,12 +6,13 @@ export const OffersList = ({ offer }) => {
         <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className='offer_tile'>
             <h2>{offer.name}</h2>
             <img src={sample} alt="sample img" />
-            <div>
-                <span>{offer.size}</span>
-                <span>{offer.type}</span>
+            <div className='offer_desc'>
+                <span className='offer_size'>Size: {offer.size}</span>
+                <span className='offer_type'>Type: {offer.type}</span>
             </div>
-            <h3>{offer.start}</h3>
-            <button>more...</button>
+            {/* TODO: Cut date on backend side */}
+            <h3>Start: {offer.date.split("T")[0]}</h3>
+            <button>get more...</button>
 
         </motion.div>
     )
