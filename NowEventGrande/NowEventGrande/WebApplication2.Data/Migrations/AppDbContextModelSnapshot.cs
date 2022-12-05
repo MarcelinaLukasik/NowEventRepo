@@ -151,6 +151,9 @@ namespace WebApplication2.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<string>("SizeRange")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -200,23 +203,30 @@ namespace WebApplication2.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("FullAddress")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Street")
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(23,9)");
+
+                    b.Property<decimal>("Longitude")
+                        .HasColumnType("decimal(23,9)");
+
+                    b.Property<string>("PlaceId")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceOpeningHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -342,13 +352,11 @@ namespace WebApplication2.Data.Migrations
 
             modelBuilder.Entity("WebApplication2.Models.EventAddress", b =>
                 {
-                    b.HasOne("WebApplication2.Models.Event", "Event")
+                    b.HasOne("WebApplication2.Models.Event", null)
                         .WithMany("EventAddresses")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Guest", b =>

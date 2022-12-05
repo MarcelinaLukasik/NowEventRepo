@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
 using WebApplication2.Models;
-
+using WebApplication2.Services.VerificationService;
 
 namespace WebApplication2.Controllers
 {
@@ -15,21 +15,40 @@ namespace WebApplication2.Controllers
         private readonly IGuestRepository _guestRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IOfferRepository _offerRepository;
+        private readonly IVerificationService _verificationService;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository)
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, 
+            IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
             _eventRepository = eventRepository;
             _budgetRepository = budgetRepository;
+            _offerRepository = offerRepository;
+            _verificationService = verificationService;
         }
 
 
-        [HttpPost("GetGuest")]
-        public IActionResult GetGuest([FromBody] Guest guest)
+
+        [HttpPost("PostOffer")]
+        public IActionResult AddOffer([FromBody] Offer offer)
         {
-            _guestRepository.AddGuest(guest);
-            return Ok(guest);
+            _offerRepository.AddOffer(offer);
+            return Ok(offer);
+        }
+
+        [HttpPost("SaveGuest")]
+        public IActionResult SaveGuest([FromBody] Guest guest)
+        {
+            bool validGuest = _verificationService.VerifyGuest(guest);
+            if (validGuest)
+            {
+                _guestRepository.AddGuest(guest);
+                return Ok(guest);
+            }
+            else
+                return  BadRequest(guest);
         }
 
         [HttpGet("{id}/all")]
@@ -58,10 +77,16 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost("CreateNewEvent")]
-        public int CreateNewEvent([FromBody] Event newEvent)
+        public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
-            int id = _eventRepository.AddEvent(newEvent);
-            return id;
+            bool validEvent = _verificationService.VerifyEvent(newEvent);
+            if (validEvent)
+            {
+                int id = _eventRepository.AddEvent(newEvent);
+                return Ok(id);
+            }
+            else return BadRequest(newEvent);
+         
         }
 
         //TODO move to new controller, save to database
@@ -76,11 +101,12 @@ namespace WebApplication2.Controllers
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            var key = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
-            var firstKey = key.Split(";")[0];
+            var keys = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
+            var firstKey = keys.Split(";")[0];
             return firstKey;
 
         }
+
 
         //TODO checkStatus, then setStatus based on checkStatus return value
         [HttpGet("{id}/CheckStatus")]
@@ -149,32 +175,35 @@ namespace WebApplication2.Controllers
         public IActionResult GetEventStartDate(int id)
         {
             var eventStartDate = _eventRepository.GetEventStartDate(id);
-            var test = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss");
-            var test2 = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffff'Z'");
-            // DateTimeOffset dto = new DateTimeOffset(eventStartDate);
-            // DateTimeOffset timeNow = new DateTimeOffset(DateTime.Now);
-            // TimeSpan ts = new TimeSpan(1, 12,
-            //     15, 16);
-            // DateTimeOffset value = timeNow.Subtract(ts);
-            // var unixTimeNow = timeNow.ToUnixTimeMilliseconds();
-            // var unixTime = dto.ToUnixTimeMilliseconds();
-            // var timeToEvent = unixTime - unixTimeNow;
-            // DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(unixTime);
-            return Ok(test);
+            var date = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss");
+            return Ok(date);
         }
 
         [HttpGet("{id}/GetEventStatus")]
         public string GetEventStatus(int id)
         {
             return _eventRepository.GetStatus(id);
-
         }
 
         [HttpGet("{id}/GetEventInfo")]
         public Dictionary<string, string> GetEventInfo(int id)
         {
             return _eventRepository.GetInfo(id);
+        }
 
+        [HttpPost("{id}/SetSize")]
+        public IActionResult SetSize(int id, [FromBody] string size)
+        {
+            bool correctData = _eventRepository.SetSize(id, size);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+
+        [HttpPost("{id}/SetSizeRange")]
+        public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
+        {
+            bool correctData = _eventRepository.SetSizeRange(id, sizeRange);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
     }

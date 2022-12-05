@@ -27,6 +27,11 @@ namespace WebApplication2.Data
             return newEvent.Id;
         }
 
+        public IEnumerable<Event> GetOffersWithInCompleteStatus()
+        {
+            return _appDbContext.Events.Where(x => x.Status == "Incomplete");
+        }
+
         public Budget CreateBudget(int eventId)
         {
             Budget budget = new Budget();
@@ -56,16 +61,21 @@ namespace WebApplication2.Data
             //TODO check if date is not older than current day
             if (correct)
             {
-                eventById.Date = date;
+                int result = DateTime.Compare(date, DateTime.Now);
+                if (result < 0)
+                {
+                    return false;
+                }
+                else
+                    eventById.Date = date;
             }
             else return false;
 
             bool correctStartTime = DateTime.TryParse(startTime, out start);
             if (correctStartTime)
             {
-                TimeSpan ts = new TimeSpan(int.Parse(dateInfo["StartHour"]), int.Parse(dateInfo["StartMinutes"]), 0);
-                DateTime newEventDate = date.Date + ts;
-                eventById.EventStart = newEventDate;
+                DateTime newDateTime = date.Date.Add(start.TimeOfDay);
+                eventById.EventStart = newDateTime;
             }
             else return false;
 
@@ -118,6 +128,40 @@ namespace WebApplication2.Data
             info["Name"] = eventById.Name;
             info["Status"] = eventById.Status;
             return info;
+        }
+
+        public DateTime GetEventStartTime(int id)
+        {
+            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
+        }
+
+        public DateTime GetEventEndTime(int id)
+        {
+            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+        }
+
+        public bool SetSize(int id, string size)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            if (eventById != null)
+            {
+                eventById.Size = size;
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
+        }
+
+        public bool SetSizeRange(int id, string sizeRange)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            if (eventById != null)
+            {
+                eventById.SizeRange = sizeRange;
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
         }
     }
 }

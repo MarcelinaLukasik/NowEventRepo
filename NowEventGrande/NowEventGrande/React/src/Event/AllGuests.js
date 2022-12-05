@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Trash } from "react-bootstrap-icons";
 import Modal from 'react-bootstrap/Modal';
+import AddGuestForm from "./AddGuestForm";
 
 
-const AllGuests = ({eventId}) => {
+const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
   const [hasError, setErrors] = useState(false);
   const [guests, setState] = useState([]);
-  const [removedGuestCount, setRemovedCount] = useState(0);
+  const [guestCount, setGuestCount] = useState(0);
   const [id, setId] = useState("");
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("Default");
   const handleClose = () => setShow(false);
   const currentEventId = eventId;
+  const [isOpen, setOpen] = useState(false);
+  const openInput = () => {setOpen(!isOpen);}
+  
+  const addGuestCount =() => {
+    setGuestCount(guestCount +1);
+  }
 
   //TODO change to post with choosen sort value
   useEffect(() => {
@@ -34,7 +41,7 @@ const AllGuests = ({eventId}) => {
         .catch(err => setErrors(err))
     }
      fetchData();  
-}, [removedGuestCount]);
+}, [guestCount]);
 
 
 
@@ -51,28 +58,18 @@ const AllGuests = ({eventId}) => {
     setShow(true); 
   }
 
-  async function handleSortDescending(){
-    const response = await fetch(`/events/${currentEventId}/all/descending`);
-    const result = await response.json();
-    setState(result);
-  }
-
-  async function handleSortAscending(){
-    const response = await fetch(`/events/${currentEventId}/all/ascending`);
+  async function handleSort(sortType){
+    const response = await fetch(`/events/${currentEventId}/all/${sortType}`);
     const result = await response.json();
     setState(result);
   }
 
   function handleSortSubmit(evt) {
     evt.preventDefault();
-    if (evt.target.value === "Descending"){
+    if (evt.target.value !== "Default"){
+      handleSort(evt.target.value);
       setValue(evt.target.value);
-      handleSortDescending();
-    }  
-    else if (evt.target.value === "Ascending"){
-      setValue(evt.target.value);
-      handleSortAscending();
-    }  
+    }
     else {
       setValue(evt.target.value);
     }
@@ -94,19 +91,22 @@ const AllGuests = ({eventId}) => {
           
           }
           const result = await res.json();
-          setRemovedCount(removedGuestCount +1);
+          setGuestCount(guestCount -1);
+          subtractChecklistCount();
       }  
         fetchData();    
   }
 
   return (
     <div>
+      <div className="row">
+        <div className="Event-col-6">
       <div className="selectSort">
         <label>Sort by:</label>
         <select className="sortGuests" value={value} onChange={handleSortSubmit}>
         <option value="Default">Default</option>
-          <option value="Ascending">Ascending</option>
-          <option value="Descending">Descending</option>         
+          <option value="ascending">Ascending</option>
+          <option value="descending">Descending</option>         
         </select>     
       </div>
       <h2>Current guests on list:</h2>
@@ -124,20 +124,22 @@ const AllGuests = ({eventId}) => {
               </Modal.Header>
               <Modal.Body>Are you sure you want to remove this guest from list?</Modal.Body>
               <Modal.Footer>
-                <container className="removeButtons">
+                <div className="removeButtons">
                   <button className="rejectButton" variant="secondary" onClick={handleClose}>
                     No
                   </button>
                   <button className="acceptButton" variant="primary" onClick={removeGuest} >
                     Yes
                   </button>
-                </container>             
+                </div>             
             </Modal.Footer>
           </Modal>
         <h3>Total guests: {Array.from(guests).length} </h3>
-        {/* <div>
-          Has errors: {JSON.stringify(hasError)}
-      </div>            */}
+        </div>
+        <div className="Event-col-5">
+        <AddGuestForm onClick={openInput} addGuestCount={addGuestCount} isOpen={isOpen} eventId={currentEventId} addChecklistCount={addChecklistCount}/>
+        </div>
+        </div>
     </div>
   );      
 };

@@ -20,6 +20,10 @@ const context5 = [
     "/location",
 ];
 
+const context6 = [
+    "/offer",
+];
+
 module.exports = function (app) {
     const appProxy = createProxyMiddleware(context, {
         target: 'https://localhost:7267',
@@ -55,4 +59,11 @@ module.exports = function (app) {
     });
 
     app.use(appProxy5);
+
+    const appProxy6 = createProxyMiddleware(context6, {
+        target: 'https://localhost:7267',
+        secure: false
+    });
+
+    app.use(appProxy6);
 };

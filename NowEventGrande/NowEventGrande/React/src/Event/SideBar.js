@@ -1,38 +1,31 @@
 import React from 'react';
 import { Outlet, NavLink } from "react-router-dom";
 import '../styles/sidebar.css';
-import { useState } from "react";
-import { useContext } from "react";
-import { EventIdContext } from "./EventMain";
 
-function SideBar() {
-  const eventId = useContext(EventIdContext);
-
-   const [Id, setEventId] = useState(eventId);
-
+function SideBar(props) {
     return (
         <div className="vertical-menu">
           <ul>
             <li >
-                <NavLink to={{pathname :`/event/${Id}/guests`}} state={{EventId: Id}}>Guest list</NavLink>
+                <NavLink to={{pathname :`/event/${props.eventId}/guests`}} state={{EventId: props.eventId}}>Guest list</NavLink>
             </li>   
             <li >
-              <NavLink to={{pathname :`/event/${Id}/budget`}} state={{EventId: Id}} >Budget</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/budget`}} state={{EventId: props.eventId}} >Budget</NavLink>
             </li>
             <li >
-               <NavLink to={{pathname :`/event/${Id}/inspirations`}} state={{EventId: Id}} >Get inspired</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/location`}} state={{EventId: props.eventId}} >Location and date</NavLink>
             </li>
             <li >
-              <NavLink to={{pathname :`/event/${Id}/location`}} state={{EventId: Id}} >Location and date</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/details`}} state={{EventId: props.eventId}} >Details</NavLink>
             </li>
             <li >
-              <NavLink to={{pathname :`/event/${Id}/offer`}} state={{EventId: Id}} >Make offer</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/offer`}} state={{EventId: props.eventId}} >Make offer</NavLink>
             </li>
             <li >
-              <NavLink to={{pathname :`/event/${Id}/afterEvent`}} state={{EventId: Id}} >After event</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/afterEvent`}} state={{EventId: props.eventId}} >After event</NavLink>
             </li>
             <li >
-              <NavLink to={{pathname :`/event/${Id}/summary`}} state={{EventId: Id}} >Summary</NavLink>
+              <NavLink to={{pathname :`/event/${props.eventId}/summary`}} state={{EventId: props.eventId}} >Summary</NavLink>
             </li>
           </ul>
           <Outlet />
