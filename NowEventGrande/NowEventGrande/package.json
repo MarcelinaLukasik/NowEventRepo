@@ -11,6 +11,7 @@
     "react-google-places-autocomplete": "^3.4.0",
     "react-ios-time-picker": "^0.2.2",
     "react-on-screen": "^2.1.1",
+    "react-responsive-carousel": "^3.2.23",
     "react-time-picker": "^5.1.0",
     "timepicker-ui": "^2.5.0"
   }

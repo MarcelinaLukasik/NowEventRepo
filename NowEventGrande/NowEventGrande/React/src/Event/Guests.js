@@ -48,7 +48,7 @@ function Guests() {
     }
 
     async function changeSize(){
-        const choosenSize = "Small";
+        let choosenSize = "Small";
         if (checked){
             choosenSize = "Large";
         }
@@ -62,37 +62,37 @@ function Guests() {
             "Content-Type": "application/json",
             "x-access-token": "token-value",
         },
-        body: JSON.stringify({ Size: choosenSize}),
+        body: JSON.stringify(choosenSize),
         })
         
-        // if (!res.ok) {
-        //     const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        //     setValid(false);
-        //     throw new Error(message);
-        //     }
-        //     else{
-        //     setValid(true);
-        //     fetchProgress();
-        //     }
+        if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            // setValid(false);
+            throw new Error(message);
+            }
+            // else{
+            // setValid(true);
+            // fetchProgress();
+            // }
         // } 
     }
 
     async function changeSizeRange(event){
-        const sizeRange = event.target.value;
+        let sizeRange = event.target.value;
         const res = await fetch(`/events/${id}/SetSizeRange`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "x-access-token": "token-value",
         },
-        body: JSON.stringify({ SizeRange: sizeRange}),
+        body: JSON.stringify(sizeRange),
         })
         
-        // if (!res.ok) {
-        //     const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        //     setValid(false);
-        //     throw new Error(message);
-        //     }
+        if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            // setValid(false);
+            throw new Error(message);
+            }
         //     else{
         //     setValid(true);
         //     fetchProgress();

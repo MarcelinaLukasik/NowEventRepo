@@ -1,4 +1,4 @@
-.slider {
+.mainSlider {
   padding: 200px 0 200px 0;
   height: 100vh;
   margin-top: 0;
@@ -10,7 +10,7 @@
   height: 1000px;
 }
 
-.slider .items-center {
+.mainSlider .items-center {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,7 +21,7 @@
   padding: 0;
 }
 
-.slider .event-title {
+.mainSlider .event-title {
   display: block;
   font-size: 4rem;
   letter-spacing: 1;
@@ -31,7 +31,7 @@
   margin-bottom: 25px;
 }
 
-.slider p {
+.mainSlider p {
   color: #b8b8b8;
   font-size: 18px;
   padding: 10px 5px;
@@ -40,7 +40,7 @@
   width: 96%;
 }
 
-.slider button {
+.mainSlider button {
   color: #fff;
   font-weight: 700;
   font-size: 2rem;
@@ -56,16 +56,16 @@
   padding: 10px 15px;
 }
 
-.slider button svg {
+.mainSlider button svg {
   margin-left: 10px;
   transition: 0.5s ease;
 }
 
-.slider button:hover svg {
+.mainSlider button:hover svg {
   margin-left: 25px;
 }
 
-.slider .img2 {
+.mainSlider .img2 {
   animation: updown 3s linear infinite;
 }
 @keyframes updown {
@@ -85,7 +85,7 @@
 }
 
 @media (max-width: 767px) {
-  .slider .img2 {
+  .mainSlider .img2 {
     display: none;
   }
 }

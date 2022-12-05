@@ -16,6 +16,9 @@ function SideBar(props) {
               <NavLink to={{pathname :`/event/${props.eventId}/location`}} state={{EventId: props.eventId}} >Location and date</NavLink>
             </li>
             <li >
+              <NavLink to={{pathname :`/event/${props.eventId}/details`}} state={{EventId: props.eventId}} >Details</NavLink>
+            </li>
+            <li >
               <NavLink to={{pathname :`/event/${props.eventId}/offer`}} state={{EventId: props.eventId}} >Make offer</NavLink>
             </li>
             <li >

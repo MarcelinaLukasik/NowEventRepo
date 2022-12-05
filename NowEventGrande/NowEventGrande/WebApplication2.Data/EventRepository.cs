@@ -139,5 +139,29 @@ namespace WebApplication2.Data
         {
             return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
         }
+
+        public bool SetSize(int id, string size)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            if (eventById != null)
+            {
+                eventById.Size = size;
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
+        }
+
+        public bool SetSizeRange(int id, string sizeRange)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            if (eventById != null)
+            {
+                eventById.SizeRange = sizeRange;
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
+        }
     }
 }

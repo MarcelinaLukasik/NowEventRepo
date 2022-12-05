@@ -3,7 +3,7 @@ import React from 'react';
 import {useLocation} from 'react-router-dom';
 import {Col} from "react-bootstrap";
 import calendarIcon from '../images/icons/salary.png';
-import { useState, useEffect, setState, setErrors } from "react";
+import { useState, useEffect, setErrors } from "react";
 import '../styles/event.css';
 import {handleStyle} from "./HandleProgress";
 

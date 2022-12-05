@@ -24,6 +24,8 @@ namespace WebApplication2.Data
         public IEnumerable<Event> GetOffersWithInCompleteStatus();
         DateTime GetEventStartTime(int id);
         DateTime GetEventEndTime(int id);
+        bool SetSize(int id, string size);
+        bool SetSizeRange(int id, string sizeRange);
     }
 
 }

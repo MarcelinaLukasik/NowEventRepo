@@ -42,7 +42,7 @@ const Slider = () => {
     }
 
     return (
-        <section className="slider">
+        <section className="mainSlider">
             <Container>
                 <Row className="items-center">
                     <Col cs={12} md={6} xl={7}>

@@ -191,5 +191,20 @@ namespace WebApplication2.Controllers
             return _eventRepository.GetInfo(id);
         }
 
+        [HttpPost("{id}/SetSize")]
+        public IActionResult SetSize(int id, [FromBody] string size)
+        {
+            bool correctData = _eventRepository.SetSize(id, size);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+
+        [HttpPost("{id}/SetSizeRange")]
+        public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
+        {
+            bool correctData = _eventRepository.SetSizeRange(id, sizeRange);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
     }
 }
