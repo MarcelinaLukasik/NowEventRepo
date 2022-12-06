@@ -206,5 +206,12 @@ namespace WebApplication2.Controllers
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
+        [HttpPost("{id}/SetTheme")]
+        public IActionResult SetTheme(int id, [FromBody] string theme)
+        {
+            bool correctData = _eventRepository.SetEventTheme(id, theme);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
     }
 }

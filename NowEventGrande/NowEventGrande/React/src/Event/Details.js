@@ -5,10 +5,12 @@ import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import {handleStyle} from "./HandleProgress";
 
+
 function Details(){
     const location = useLocation();
     const eventId = location.state.EventId;
     const [count, setCount] = useState(0);
+    
 
     useEffect(() =>{   
         fetchProgress();
@@ -45,6 +47,9 @@ function Details(){
                       <SideBar eventId={eventId}/>
                     </div>
                 </div>
+                <div className="Event-col-1"> 
+                   
+                   </div> 
                 <div className="Event-col-4">  
                     <Carousel/>
                 </div>

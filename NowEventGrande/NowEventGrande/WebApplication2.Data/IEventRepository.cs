@@ -26,6 +26,7 @@ namespace WebApplication2.Data
         DateTime GetEventEndTime(int id);
         bool SetSize(int id, string size);
         bool SetSizeRange(int id, string sizeRange);
+        bool SetEventTheme(int id, string theme);
     }
 
 }

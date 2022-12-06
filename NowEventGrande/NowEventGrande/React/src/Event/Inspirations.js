@@ -56,6 +56,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );
@@ -70,6 +71,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );
@@ -84,6 +86,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );

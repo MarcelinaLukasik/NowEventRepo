@@ -163,5 +163,17 @@ namespace WebApplication2.Data
             }
             else return false;
         }
+
+        public bool SetEventTheme(int id, string theme)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            if (eventById != null)
+            {
+                eventById.Theme = theme;
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
+        }
     }
 }
