@@ -16,12 +16,8 @@ namespace WebApplication2.Data
         {
             _appDbContext = appDbContext;
         }
-        public EventAddress GetLocation(int id)
-        {
-            return _appDbContext.EventAddress.FirstOrDefault(x => x.Id == id);
-        }
 
-        public EventAddress GetLocationAddress(int eventId)
+        public EventAddress GetLocation(int eventId)
         {
             return _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventId);
         }
@@ -31,27 +27,12 @@ namespace WebApplication2.Data
         {
             var address = _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventAddress.EventId);
             if (address == null)
-            {
                 _appDbContext.EventAddress.Add(eventAddress);
-                _appDbContext.SaveChanges();
-            }
             else
-            {
                 address.FullAddress = eventAddress.FullAddress;
-                _appDbContext.SaveChanges();
-            }
+            
+            _appDbContext.SaveChanges();
         }
-
-        public bool VerifyLocation(EventAddress eventAddress)
-        {
-            return false;
-        }
-
-        // public string? GetLocationHours(int eventId)
-        // {
-        //     return _appDbContext.EventAddress.Where(x => x.EventId == eventId).Select(y => y.PlaceOpeningHours).FirstOrDefault();
-        // }
-
 
     }
 }

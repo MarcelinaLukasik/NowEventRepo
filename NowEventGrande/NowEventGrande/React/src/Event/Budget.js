@@ -66,7 +66,7 @@ function Budget() {
   }
 
     async function fetchStatsData() {
-      const res = await fetch(`/budget/${eventId}/GetBudgetStats`);
+      const res = await fetch(`/budget/${eventId}/GetBudget`);
       res
         .json()
         .then(res => setBudget(res))

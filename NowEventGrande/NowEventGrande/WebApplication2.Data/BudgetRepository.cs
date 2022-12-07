@@ -26,32 +26,29 @@ namespace WebApplication2.Data
                 _appDbContext.SaveChanges();
             }
         }
-
-        public async Task ChangeRentPrice(decimal rentPrice, int eventId)
+        public async Task ChangePrice(decimal price, int eventId, BudgetPrices budgetPrice)
         {
             var budgedToChange = _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
-            budgedToChange.RentPrice = rentPrice;
-            budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
-            await _appDbContext.SaveChangesAsync();
+            if (budgedToChange != null)
+            {
+                switch (budgetPrice)
+                {
+                    case BudgetPrices.Food:
+                        budgedToChange.FoodPrice = price;
+                        break;
+                    case BudgetPrices.Decoration:
+                        budgedToChange.DecorationPrice = price;
+                        break;
+                    case BudgetPrices.Rent:
+                        budgedToChange.RentPrice = price;
+                        break;
+                }
+                budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
+                await _appDbContext.SaveChangesAsync();
+            }
         }
 
-        public async Task ChangeDecorPrice(decimal decorationPrice, int eventId)
-        {
-            var budgedToChange = _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
-            budgedToChange.DecorationPrice = decorationPrice;
-            budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
-            await _appDbContext.SaveChangesAsync();
-        }
-
-        public async Task ChangeFoodPrice(decimal foodPrice, int eventId)
-        {
-            var budgedToChange = _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
-            budgedToChange.FoodPrice = foodPrice;
-            budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
-            await _appDbContext.SaveChangesAsync();
-        }
-
-        public async Task<Budget> GetStats(int eventId)
+        public async Task<Budget> GetBudget(int eventId)
         {
             return _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
     
@@ -60,21 +57,10 @@ namespace WebApplication2.Data
         public bool CheckStatus(int eventId)
         {
             var rentPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.RentPrice).FirstOrDefault();
-            if (rentPrice == 0)
-            {
-                return false;
-            }
             var decorPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.DecorationPrice).FirstOrDefault();
-            if (decorPrice == 0)
-            {
-                return false;
-            }
             var foodPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.FoodPrice).FirstOrDefault();
-            if (foodPrice == 0)
-            {
-                return false;
-            }
-            else return true;
+
+            return rentPrice != 0 && decorPrice != 0 && foodPrice != 0;
         }
     }
 }

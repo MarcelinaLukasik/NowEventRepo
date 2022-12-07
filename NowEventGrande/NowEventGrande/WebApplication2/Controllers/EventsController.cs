@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.VerificationService;
+using EventData = WebApplication2.Data.EventData;
 
 namespace WebApplication2.Controllers
 {
@@ -51,25 +52,25 @@ namespace WebApplication2.Controllers
                 return  BadRequest(guest);
         }
 
-        [HttpGet("{id}/all")]
+        [HttpGet("{id:int}/all")]
         public IEnumerable<Guest> GetAllGuests(int id)
         {
             return _guestRepository.AllGuestsByEventId(id);
         }
 
-        [HttpGet("{id}/all/descending")]
+        [HttpGet("{id:int}/all/descending")]
         public IEnumerable<Guest> GuestsSortedDescending(int id)
         {
             return  _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
         }
 
-        [HttpGet("{id}/all/ascending")]
+        [HttpGet("{id:int}/all/ascending")]
         public IEnumerable<Guest> GuestsSortedAscending(int id)
         {
             return _guestRepository.SortAscending().Where(x => x.EventId == id).ToArray();
         }
 
-        [HttpDelete("removeGuest/{id}")]
+        [HttpDelete("removeGuest/{id:int}")]
         public IActionResult RemoveGuest(int id)
         {
             _guestRepository.RemoveGuest(id);
@@ -80,13 +81,11 @@ namespace WebApplication2.Controllers
         public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
             bool validEvent = _verificationService.VerifyEvent(newEvent);
+            int id = 0;
             if (validEvent)
-            {
-                int id = _eventRepository.AddEvent(newEvent);
-                return Ok(id);
-            }
-            else return BadRequest(newEvent);
-         
+                id = _eventRepository.AddEvent(newEvent);
+
+            return validEvent ? Ok(id) : BadRequest(newEvent);
         }
 
         //TODO move to new controller, save to database
@@ -101,15 +100,12 @@ namespace WebApplication2.Controllers
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            var keys = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
-            var firstKey = keys.Split(";")[0];
-            return firstKey;
-
+            return (System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"))).Split(";")[0];
         }
 
 
         //TODO checkStatus, then setStatus based on checkStatus return value
-        [HttpGet("{id}/CheckStatus")]
+        [HttpGet("{id:int}/CheckStatus")]
         public bool CheckIfComplete(int id)
         {
             var guests = _guestRepository.AllGuestsByEventId(id);
@@ -124,7 +120,7 @@ namespace WebApplication2.Controllers
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
-            if (!_eventRepository.CheckDateAndTime(id))
+            if (!_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
@@ -137,7 +133,7 @@ namespace WebApplication2.Controllers
             }
         }
 
-        [HttpGet("{id}/GetChecklistProgress")]
+        [HttpGet("{id:int}/GetChecklistProgress")]
         public int GetChecklistProgress(int id)
         {
             var count = 0;
@@ -152,64 +148,56 @@ namespace WebApplication2.Controllers
                 count++;
             }
 
-            if (_eventRepository.CheckDateAndTime(id))
+            if (_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 count++;
             }
             return count;
         }
 
-        [HttpPost("{id}/SaveDate")]
+        [HttpPost("{id:int}/SaveDate")]
         public IActionResult SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
         {
-            var correctDateAndTime = _eventRepository.SaveEventDateAndTime(id, dateInfo);
-            if (correctDateAndTime)
-            {
-                return Ok(correctDateAndTime);
-            }
-            else return BadRequest(correctDateAndTime);
-
+            return _eventRepository.SetEventDateAndTime(id, dateInfo) ? Ok() : BadRequest();
         }
 
-        [HttpGet("{id}/GetEventStartDate")]
+        [HttpGet("{id:int}/GetEventStartDate")]
         public IActionResult GetEventStartDate(int id)
         {
-            var eventStartDate = _eventRepository.GetEventStartDate(id);
-            var date = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss");
-            return Ok(date);
+            return Ok(_eventRepository.GetEventStartDate(id).ToString("yyyy-MM-dd'T'HH:mm:ss"));
         }
 
-        [HttpGet("{id}/GetEventStatus")]
+        [HttpGet("{id:int}/GetEventStatus")]
         public string GetEventStatus(int id)
         {
             return _eventRepository.GetStatus(id);
         }
 
-        [HttpGet("{id}/GetEventInfo")]
+        [HttpGet("{id:int}/GetEventInfo")]
         public Dictionary<string, string> GetEventInfo(int id)
         {
             return _eventRepository.GetInfo(id);
         }
 
-        [HttpPost("{id}/SetSize")]
+        [HttpPost("{id:int}/SetSize")]
         public IActionResult SetSize(int id, [FromBody] string size)
         {
-            bool correctData = _eventRepository.SetSize(id, size);
+            bool correctData = _eventRepository.ManageEventData(id, size, EventData.Size);
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
 
-        [HttpPost("{id}/SetSizeRange")]
+        [HttpPost("{id:int}/SetSizeRange")]
         public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
         {
-            bool correctData = _eventRepository.SetSizeRange(id, sizeRange);
+            bool correctData = _eventRepository.ManageEventData(id, sizeRange, EventData.SizeRange);
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
-        [HttpPost("{id}/SetTheme")]
+        [HttpPost("{id:int}/SetTheme")]
         public IActionResult SetTheme(int id, [FromBody] string theme)
         {
-            bool correctData = _eventRepository.SetEventTheme(id, theme);
+            bool correctData = _eventRepository.ManageEventData(id, theme, EventData.Theme);
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
