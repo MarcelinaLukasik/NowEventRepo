@@ -19,7 +19,7 @@ namespace WebApplication2.Services.VerificationService
 
         public Dictionary<string, string> GetVerificationInfo(int eventId)
         {
-            var location = _locationRepository.GetLocationAddress(eventId);
+            var location = _locationRepository.GetLocation(eventId);
             if (location != null)
             {
                 VerifyPlaceStatus(location.PlaceStatus);

@@ -14,6 +14,7 @@ namespace WebApplication2.Models
         public DateTime Date { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
+        public string? Theme { get; set; }
         public string Status { get; set; }
         public DateTime EventStart { get; set; }
         public DateTime EventEnd { get; set; }

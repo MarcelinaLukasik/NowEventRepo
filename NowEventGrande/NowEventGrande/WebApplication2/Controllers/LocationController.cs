@@ -18,10 +18,10 @@ namespace WebApplication2.Controllers
             _verificationService = verificationService;
         }
 
-        [HttpGet("{id}/GetLocation")]
-        public IActionResult GetGuest(int id)
+        [HttpGet("{id:int}/GetLocation")]
+        public IActionResult GetLocation(int eventId)
         {
-            var location = _locationRepository.GetLocation(id);
+            var location = _locationRepository.GetLocation(eventId);
             return Ok(location);
         }
 
@@ -40,7 +40,7 @@ namespace WebApplication2.Controllers
             return Ok(eventAddress);
         }
 
-        [HttpGet("{id}/GetVerificationInfo")]
+        [HttpGet("{id:int}/GetVerificationInfo")]
         public Dictionary<string, string> GetVerificationInfo(int id)
         {
             return _verificationService.GetVerificationInfo(id);

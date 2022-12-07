@@ -16,47 +16,37 @@ namespace WebApplication2.Controllers
             _budgetRepository = budgetRepository;
         }
 
-        [HttpPost("GetBudget")]
-        public IActionResult GetBudget([FromBody] Budget budget)
-        {
-            _budgetRepository.AddBudget(budget);
-            return Ok(budget);
-        }
-
-        [HttpPatch("{eventId}/Update/RentPrice")]
+        [HttpPatch("{eventId:int}/Update/RentPrice")]
         public async Task<IActionResult> UpdateRentPrice(int eventId, [FromBody] string rentPrice)
         {
             var isDecimal = decimal.TryParse(rentPrice, out decimal price);
             if (isDecimal)
             {
-                await _budgetRepository.ChangeRentPrice(price, eventId);
+                await _budgetRepository.ChangePrice(price, eventId, BudgetPrices.Rent);
                 return Ok(rentPrice);
             }
-            else
-            {
-                return BadRequest(rentPrice);
-            }
+            else return BadRequest(rentPrice);
 
         }
 
-        [HttpPatch("{eventId}/Update/DecorationPrice")]
+        [HttpPatch("{eventId:int}/Update/DecorationPrice")]
         public async Task<IActionResult> UpdateDecorPrice(int eventId, [FromBody] decimal decorationPrice)
         {
-            await _budgetRepository.ChangeDecorPrice(decorationPrice, eventId);
+            await _budgetRepository.ChangePrice(decorationPrice, eventId, BudgetPrices.Decoration);
             return Ok(decorationPrice);
         }
 
-        [HttpPatch("{eventId}/Update/FoodPrice")]
+        [HttpPatch("{eventId:int}/Update/FoodPrice")]
         public async Task<IActionResult> UpdateFoodPrice(int eventId, [FromBody] decimal foodPrice)
         {
-            await _budgetRepository.ChangeFoodPrice(foodPrice, eventId);
+            await _budgetRepository.ChangePrice(foodPrice, eventId, BudgetPrices.Food);
             return Ok(foodPrice);
         }
 
-        [HttpGet("{id}/GetBudgetStats")]
-        public async Task<Budget> GetBudgetStats(int id)
+        [HttpGet("{id:int}/GetBudget")]
+        public async Task<Budget> GetBudget(int id)
         {
-            Budget budget = await _budgetRepository.GetStats(id);
+            Budget budget = await _budgetRepository.GetBudget(id);
             return budget;
         }
     }

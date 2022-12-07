@@ -35,7 +35,7 @@ function Guests() {
 
     useEffect(() => {
         changeSize();
-      }, [checked]);
+    }, [checked]);
 
     async function fetchProgress() {
       const res = await fetch(`/events/${eventId}/GetChecklistProgress`);      
