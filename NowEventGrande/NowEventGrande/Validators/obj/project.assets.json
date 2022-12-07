@@ -5,14 +5,10 @@
       "FluentValidation/11.4.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/FluentValidation.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/FluentValidation.dll": {}
         },
         "runtime": {
-          "lib/net6.0/FluentValidation.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/FluentValidation.dll": {}
         }
       },
       "Microsoft.AspNetCore.JsonPatch/6.0.10": {
@@ -22,14 +18,10 @@
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "lib/net6.0/Microsoft.AspNetCore.JsonPatch.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.AspNetCore.JsonPatch.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.AspNetCore.JsonPatch.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.AspNetCore.JsonPatch.dll": {}
         }
       },
       "Microsoft.CSharp/4.7.0": {
@@ -44,14 +36,10 @@
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "WebApplication2.Models/1.0.0": {
@@ -221,19 +209,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rozdu\\.nuget\\packages\\": {}
+    "C:\\Users\\DOM\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
+      "projectUniqueName": "C:\\Users\\DOM\\csharp\\Repos\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
       "projectName": "NowEvent.Validators",
-      "projectPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
-      "packagesPath": "C:\\Users\\rozdu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\obj\\",
+      "projectPath": "C:\\Users\\DOM\\csharp\\Repos\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
+      "packagesPath": "C:\\Users\\DOM\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\DOM\\csharp\\Repos\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\rozdu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DOM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -247,8 +240,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj": {
-              "projectPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj"
+            "C:\\Users\\DOM\\csharp\\Repos\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj": {
+              "projectPath": "C:\\Users\\DOM\\csharp\\Repos\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj"
             }
           }
         }
@@ -274,8 +267,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -284,7 +276,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
