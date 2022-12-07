@@ -13,22 +13,22 @@ export const OffersMainPage = () => {
     const [filtered, setFiltered] = useState([]);
     const [activeType, setActiveType] = useState("");
     const [searchPhrase, setSearchPhrase] = useSearchParams();
-    const [query, setQuery] = useState(searchPhrase.get('query'));
+    const [query, setQuery] = useState(searchPhrase.get('searchPhrase'));
     // const page = searchPhrase.get('page') || 0;
-    const search = useLocation().search;
-    const name = new URLSearchParams(search).get('query');
-    console.log(name);
+    // const search = useLocation().search;
+    // const name = new URLSearchParams(search).get('query');
+    // console.log(name);
     useEffect(() => {
         fetchOffers();
     }, [query]);
 
     const fetchOffers = async () => {
-        const data = await fetch(query ? `/offer/GetOffersWithInCompleteStatus/?query=${query}` : `/offer/GetOffersWithInCompleteStatus`);
+        const data = await fetch(query ? `/offer?searchPhrase=${query}&pageSize=20&pageNumber=1&sortBy=Name&sortDirection=DESC` : `/offer?searchPhrase=&pageSize=20&pageNumber=1&sortBy=Name&sortDirection=DESC`);
         //const data = await fetch(`/offer/GetOffersWithInCompleteStatus`);
         const offers = await data.json();
         console.log(offers);
-        setOffer(offers);
-        setFiltered(offers);
+        setOffer(offers.items);
+        setFiltered(offers.items);
     }
 
     const SearchChange = (e) => {
@@ -45,7 +45,7 @@ export const OffersMainPage = () => {
             <Container className='container_offers'>
                 <div className="search">
                     <div className="search_inputs">
-                        <input value={query} type="text" placeholder='search...' onChange={SearchChange} />
+                        <input value={query === null ? "" : query} type="text" placeholder='search...' onChange={SearchChange} />
                     </div>
                 </div>
                 <FilterSection offer={offer} setFiltered={setFiltered} activeType={activeType} setActiveType={setActiveType} />

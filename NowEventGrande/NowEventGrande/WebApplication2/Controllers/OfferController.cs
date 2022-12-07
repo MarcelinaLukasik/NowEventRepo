@@ -21,12 +21,14 @@ namespace WebApplication2.Controllers
             _eventRepository = eventRepository;
         }
 
-        [HttpGet("GetOffersWithInCompleteStatus")]
+        [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<Event> GetOffersWithInCompleteStatus([FromQuery]string? query)
+        public ActionResult<IEnumerable<Event>> GetAll([FromQuery]OfferQuery query)
         {
-           return _eventRepository.GetOffersWithInCompleteStatus(query);
+            var offers = _eventRepository.GetAll(query);
+            return Ok(offers);
         }
+
         /*[HttpGet]*/
         /*public IEnumerable<Offer> GetAll()
         {

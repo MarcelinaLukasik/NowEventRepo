@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using WebApplication2.Models;
@@ -27,15 +28,37 @@ namespace WebApplication2.Data
             return newEvent.Id;
         }
 
-        public IEnumerable<Event> GetOffersWithInCompleteStatus(string query)
+        public PagedResult<Event> GetAll(OfferQuery query)
         {
-            /*return _appDbContext.Events.Where(x => x.Status == "Incomplete");*/
-            return _appDbContext.Events
-                .Where(r => query == null || (r.Name.ToLower().Contains(query.ToLower())
-                                              || r.Size.ToLower().Contains(query.ToLower())
-                                              || r.Type.ToLower().Contains(query.ToLower())
-                                              ))
-                .ToList();
+            var baseQuery = _appDbContext.Events
+                .Where(r => query.SearchPhrase == null || (r.Name.ToLower().Contains(query.SearchPhrase.ToLower())
+                                                           || r.Size.ToLower().Contains(query.SearchPhrase.ToLower())
+                                                           || r.Type.ToLower().Contains(query.SearchPhrase.ToLower())));
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnSelectors = new Dictionary<string, Expression<Func<Event, object>>>
+                {
+                    { nameof(Event.Name), r=> r.Name },
+                    { nameof(Event.Size), r => r.Size },
+                    { nameof(Event.Type), r=> r.Type },
+                };
+
+                var selectedColumn = columnSelectors[query.SortBy];
+               baseQuery = query.SortDirection == SortDirection.ASC ?
+                   baseQuery.OrderBy(selectedColumn)
+                   : baseQuery.OrderByDescending(selectedColumn);
+            }
+
+            var offers = baseQuery
+            // pomijamy oferty o określoną ilość
+            .Skip(query.PageSize * (query.PageNumber - 1))
+            // bierzemy określolną ilość ofert
+            .Take(query.PageSize)
+            .ToList();
+
+            var totalItemsCount = baseQuery.Count();
+            var result = new PagedResult<Event>(offers, totalItemsCount, query.PageSize, query.PageNumber);
+            return result;
         }
 
         public Budget CreateBudget(int eventId)

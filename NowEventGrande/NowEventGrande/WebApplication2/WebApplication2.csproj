@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
     <PackageReference Include="MailKit" Version="3.4.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.10" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Validators\NowEvent.Validators.csproj" />
     <ProjectReference Include="..\WebApplication2.Data\WebApplication2.Data.csproj" />
   </ItemGroup>
 
