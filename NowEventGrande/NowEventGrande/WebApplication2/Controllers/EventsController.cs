@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
@@ -18,9 +19,14 @@ namespace WebApplication2.Controllers
         private readonly IBudgetRepository _budgetRepository;
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, 
-            IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService, IOfferRepository offerRepository)
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
+            IEventRepository eventRepository, IBudgetRepository budgetRepository,
+            IVerificationService verificationService, IOfferRepository offerRepository,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _logger = logger;
             _guestRepository = guestRepository;
@@ -28,6 +34,8 @@ namespace WebApplication2.Controllers
             _budgetRepository = budgetRepository;
             _offerRepository = offerRepository;
             _verificationService = verificationService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -49,7 +57,7 @@ namespace WebApplication2.Controllers
                 return Ok(guest);
             }
             else
-                return  BadRequest(guest);
+                return BadRequest(guest);
         }
 
         [HttpGet("{id:int}/all")]
@@ -61,7 +69,7 @@ namespace WebApplication2.Controllers
         [HttpGet("{id:int}/all/descending")]
         public IEnumerable<Guest> GuestsSortedDescending(int id)
         {
-            return  _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
+            return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
         }
 
         [HttpGet("{id:int}/all/ascending")]
@@ -114,12 +122,14 @@ namespace WebApplication2.Controllers
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (!budgetStatus)
             {
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
+
             if (!_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 _eventRepository.SetStatus(id, "Incomplete");
@@ -142,6 +152,7 @@ namespace WebApplication2.Controllers
             {
                 count++;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (budgetStatus)
             {
@@ -152,6 +163,7 @@ namespace WebApplication2.Controllers
             {
                 count++;
             }
+
             return count;
         }
 
@@ -201,5 +213,39 @@ namespace WebApplication2.Controllers
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new User
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Password = model.Password,
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                
+                    return Ok();
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+
+            }
+
+            return Ok();
+
+        }
     }
 }
