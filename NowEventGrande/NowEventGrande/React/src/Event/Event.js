@@ -7,7 +7,8 @@ function Event() {
     const [eventName, setEventName] = useState("");
     const navigate = useNavigate();
     const [isValid, setValid] = useState(true);
-
+    const user = localStorage.getItem('user');
+    console.log(user);
     const EventTypes = {
         Birthday: "Birthday",
         Festival:"Festival",
@@ -20,18 +21,26 @@ function Event() {
       }
 
     async function handlePost(){
+        console.log("here");
+
         const res = await fetch('../events/CreateNewEvent',{
             method: 'POST',
             headers:{'Content-type':'application/json'},
+            Authorization: 'Bearer ' + user.accessToken,
+            // headers: !token ? {} : { 'Authorization': `Bearer ${token}` },
               body:  JSON.stringify({ClientId: 1, Type: text, Size: "Small", Name: eventName, Status: ""}) 
           });
           if (!res.ok) {
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
             setValid(false);
+            
             throw new Error(message);
           }
           else{
-            await res.json().then((result)=> { navigate(`/event/${result}/main`, {state: {eventId: result, eventName: eventName}});})          
+            console.log("SOMETHING");
+            console.log(res.status);
+            
+            await res.json().then((result)=> { console.log(result); navigate(`/event/${result}/main`, {state: {eventId: result, eventName: eventName}});})          
           }
     }             
         

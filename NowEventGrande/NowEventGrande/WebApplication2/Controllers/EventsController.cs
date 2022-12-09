@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -19,14 +20,11 @@ namespace WebApplication2.Controllers
         private readonly IBudgetRepository _budgetRepository;
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+
 
         public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
             IEventRepository eventRepository, IBudgetRepository budgetRepository,
-            IVerificationService verificationService, IOfferRepository offerRepository,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
@@ -34,8 +32,7 @@ namespace WebApplication2.Controllers
             _budgetRepository = budgetRepository;
             _offerRepository = offerRepository;
             _verificationService = verificationService;
-            _userManager = userManager;
-            _signInManager = signInManager;
+          
         }
 
 
@@ -86,6 +83,7 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost("CreateNewEvent")]
+        [Authorize]
         public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
             bool validEvent = _verificationService.VerifyEvent(newEvent);
@@ -98,7 +96,7 @@ namespace WebApplication2.Controllers
 
         //TODO move to new controller, save to database
         [HttpPost("SaveRatings")]
-        public IActionResult CreateNewEvent([FromBody] Rating rating)
+        public IActionResult SaveRatings([FromBody] Rating rating)
         {
             var test = rating;
             return Ok(test);
@@ -213,39 +211,6 @@ namespace WebApplication2.Controllers
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register(User model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new User
-                {
-                    UserName = model.UserName,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Password = model.Password,
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                
-                    return Ok();
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
-            }
-
-            return Ok();
-
-        }
+        
     }
 }
