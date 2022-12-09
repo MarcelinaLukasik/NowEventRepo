@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
 using WebApplication2.Models;
-
+using WebApplication2.Services.VerificationService;
+using EventData = WebApplication2.Data.EventData;
 
 namespace WebApplication2.Controllers
 {
@@ -16,14 +19,20 @@ namespace WebApplication2.Controllers
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
         private readonly IOfferRepository _offerRepository;
+        private readonly IVerificationService _verificationService;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, IEventRepository eventRepository, IBudgetRepository budgetRepository, IOfferRepository offerRepository)
+
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
+            IEventRepository eventRepository, IBudgetRepository budgetRepository,
+            IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
             _eventRepository = eventRepository;
             _budgetRepository = budgetRepository;
             _offerRepository = offerRepository;
+            _verificationService = verificationService;
+          
         }
 
 
@@ -35,32 +44,38 @@ namespace WebApplication2.Controllers
             return Ok(offer);
         }
 
-        [HttpPost("GetGuest")]
-        public IActionResult GetGuest([FromBody] Guest guest)
+        [HttpPost("SaveGuest")]
+        public IActionResult SaveGuest([FromBody] Guest guest)
         {
-            _guestRepository.AddGuest(guest);
-            return Ok(guest);
+            bool validGuest = _verificationService.VerifyGuest(guest);
+            if (validGuest)
+            {
+                _guestRepository.AddGuest(guest);
+                return Ok(guest);
+            }
+            else
+                return BadRequest(guest);
         }
 
-        [HttpGet("{id}/all")]
+        [HttpGet("{id:int}/all")]
         public IEnumerable<Guest> GetAllGuests(int id)
         {
             return _guestRepository.AllGuestsByEventId(id);
         }
 
-        [HttpGet("{id}/all/descending")]
+        [HttpGet("{id:int}/all/descending")]
         public IEnumerable<Guest> GuestsSortedDescending(int id)
         {
-            return  _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
+            return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
         }
 
-        [HttpGet("{id}/all/ascending")]
+        [HttpGet("{id:int}/all/ascending")]
         public IEnumerable<Guest> GuestsSortedAscending(int id)
         {
             return _guestRepository.SortAscending().Where(x => x.EventId == id).ToArray();
         }
 
-        [HttpDelete("removeGuest/{id}")]
+        [HttpDelete("removeGuest/{id:int}")]
         public IActionResult RemoveGuest(int id)
         {
             _guestRepository.RemoveGuest(id);
@@ -68,15 +83,20 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost("CreateNewEvent")]
-        public int CreateNewEvent([FromBody] Event newEvent)
+        [Authorize]
+        public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
-            int id = _eventRepository.AddEvent(newEvent);
-            return id;
+            bool validEvent = _verificationService.VerifyEvent(newEvent);
+            int id = 0;
+            if (validEvent)
+                id = _eventRepository.AddEvent(newEvent);
+
+            return validEvent ? Ok(id) : BadRequest(newEvent);
         }
 
         //TODO move to new controller, save to database
         [HttpPost("SaveRatings")]
-        public IActionResult CreateNewEvent([FromBody] Rating rating)
+        public IActionResult SaveRatings([FromBody] Rating rating)
         {
             var test = rating;
             return Ok(test);
@@ -86,14 +106,12 @@ namespace WebApplication2.Controllers
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            var key = System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"));
-            var firstKey = key.Split(";")[0];
-            return firstKey;
-
+            return (System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"))).Split(";")[0];
         }
 
+
         //TODO checkStatus, then setStatus based on checkStatus return value
-        [HttpGet("{id}/CheckStatus")]
+        [HttpGet("{id:int}/CheckStatus")]
         public bool CheckIfComplete(int id)
         {
             var guests = _guestRepository.AllGuestsByEventId(id);
@@ -102,13 +120,15 @@ namespace WebApplication2.Controllers
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (!budgetStatus)
             {
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
-            if (!_eventRepository.CheckDateAndTime(id))
+
+            if (!_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
@@ -121,7 +141,7 @@ namespace WebApplication2.Controllers
             }
         }
 
-        [HttpGet("{id}/GetChecklistProgress")]
+        [HttpGet("{id:int}/GetChecklistProgress")]
         public int GetChecklistProgress(int id)
         {
             var count = 0;
@@ -130,62 +150,67 @@ namespace WebApplication2.Controllers
             {
                 count++;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (budgetStatus)
             {
                 count++;
             }
 
-            if (_eventRepository.CheckDateAndTime(id))
+            if (_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 count++;
             }
+
             return count;
         }
 
-        [HttpPost("{id}/SaveDate")]
+        [HttpPost("{id:int}/SaveDate")]
         public IActionResult SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
         {
-            var correctDateAndTime = _eventRepository.SaveEventDateAndTime(id, dateInfo);
-            if (correctDateAndTime)
-            {
-                return Ok(correctDateAndTime);
-            }
-            else return BadRequest(correctDateAndTime);
-
+            return _eventRepository.SetEventDateAndTime(id, dateInfo) ? Ok() : BadRequest();
         }
 
-        [HttpGet("{id}/GetEventStartDate")]
+        [HttpGet("{id:int}/GetEventStartDate")]
         public IActionResult GetEventStartDate(int id)
         {
-            var eventStartDate = _eventRepository.GetEventStartDate(id);
-            var test = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss");
-            var test2 = eventStartDate.ToString("yyyy-MM-dd'T'HH:mm:ss.fffffff'Z'");
-            // DateTimeOffset dto = new DateTimeOffset(eventStartDate);
-            // DateTimeOffset timeNow = new DateTimeOffset(DateTime.Now);
-            // TimeSpan ts = new TimeSpan(1, 12,
-            //     15, 16);
-            // DateTimeOffset value = timeNow.Subtract(ts);
-            // var unixTimeNow = timeNow.ToUnixTimeMilliseconds();
-            // var unixTime = dto.ToUnixTimeMilliseconds();
-            // var timeToEvent = unixTime - unixTimeNow;
-            // DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(unixTime);
-            return Ok(test);
+            return Ok(_eventRepository.GetEventStartDate(id).ToString("yyyy-MM-dd'T'HH:mm:ss"));
         }
 
-        [HttpGet("{id}/GetEventStatus")]
+        [HttpGet("{id:int}/GetEventStatus")]
         public string GetEventStatus(int id)
         {
             return _eventRepository.GetStatus(id);
-
         }
 
-        [HttpGet("{id}/GetEventInfo")]
+        [HttpGet("{id:int}/GetEventInfo")]
         public Dictionary<string, string> GetEventInfo(int id)
         {
             return _eventRepository.GetInfo(id);
-
         }
 
+        [HttpPost("{id:int}/SetSize")]
+        public IActionResult SetSize(int id, [FromBody] string size)
+        {
+            bool correctData = _eventRepository.ManageEventData(id, size, EventData.Size);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+
+        [HttpPost("{id:int}/SetSizeRange")]
+        public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
+        {
+            bool correctData = _eventRepository.ManageEventData(id, sizeRange, EventData.SizeRange);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+        [HttpPost("{id:int}/SetTheme")]
+        public IActionResult SetTheme(int id, [FromBody] string theme)
+        {
+            bool correctData = _eventRepository.ManageEventData(id, theme, EventData.Theme);
+            return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+        
     }
 }

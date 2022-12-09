@@ -50,8 +50,7 @@ namespace WebApplication2.Data
 
         public IEnumerable<Guest> SortDescending()
         {
-            var guests = AllGuests.OrderByDescending(guests => guests.FirstName);
-            return guests;
+            return AllGuests.OrderByDescending(guests => guests.FirstName);
         }
 
         public IEnumerable<Guest> SortAscending()

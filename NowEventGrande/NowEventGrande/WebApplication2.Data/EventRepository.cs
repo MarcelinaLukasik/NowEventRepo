@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -77,52 +78,38 @@ namespace WebApplication2.Data
             return _appDbContext.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool SaveEventDateAndTime(int id, Dictionary<string, string>  dateInfo)
+
+        public bool SetEventDateAndTime(int id, Dictionary<string, string>  dateInfo)
         {
             var eventById = GetEventById(id);
-            var date = DateTime.Now;
-            var start = DateTime.Now;
-            var end = DateTime.Now;
-            bool correct = DateTime.TryParse(dateInfo["Date"], out date);
+            bool isCorrect = DateTime.TryParse(dateInfo["Date"], out var date);
             var startTime = dateInfo["StartHour"] + ":" + dateInfo["StartMinutes"] + " " + dateInfo["TimeOfDayStart"];
             var endTime = dateInfo["EndHour"] + ":" + dateInfo["EndMinutes"] + " " + dateInfo["TimeOfDayEnd"];
+            bool correctStartTime = DateTime.TryParse(startTime, out var start);
+            bool correctEndTime = DateTime.TryParse(endTime, out var end);
 
-            //TODO check if date is not older than current day
-            if (correct)
+            if (isCorrect && correctStartTime && correctEndTime)
             {
-                eventById.Date = date;
-            }
-            else return false;
+                int result = DateTime.Compare(date, DateTime.Now);
+                if (result < 0)
+                {
+                    return false;
+                }
+                else
+                    eventById.Date = date;
 
-            bool correctStartTime = DateTime.TryParse(startTime, out start);
-            if (correctStartTime)
-            {
-                TimeSpan ts = new TimeSpan(int.Parse(dateInfo["StartHour"]), int.Parse(dateInfo["StartMinutes"]), 0);
-                DateTime newEventDate = date.Date + ts;
-                eventById.EventStart = newEventDate;
-            }
-            else return false;
-
-            bool correctEndTime = DateTime.TryParse(endTime, out end);
-            if (correctEndTime)
-            {
+                DateTime newDateTime = date.Date.Add(start.TimeOfDay);
+                eventById.EventStart = newDateTime;
                 eventById.EventEnd = end;
-            }
-            else return false;
-
-            _appDbContext.SaveChanges();
-            return true;
-        }
-
-        public bool CheckDateAndTime(int id)
-        {
-            var eventById = GetEventById(id);
-            var eventDate = eventById.Date;
-            if (eventDate > DateTime.Now)
-            {
+                _appDbContext.SaveChanges();
                 return true;
             }
-            return false;
+            else return false;
+        }
+
+        public bool CheckDateAndTimeByEventId(int id)
+        {
+            return GetEventById(id).Date > DateTime.Now;
         }
 
         public DateTime GetEventStartDate(int id)
@@ -152,6 +139,48 @@ namespace WebApplication2.Data
             info["Name"] = eventById.Name;
             info["Status"] = eventById.Status;
             return info;
+        }
+
+        public DateTime GetEventStartTime(int id)
+        {
+            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
+        }
+
+        public DateTime GetEventEndTime(int id)
+        {
+            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+        }
+
+        public bool ManageEventData(int id, string dataToChange, EventData eventDataCol)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            bool isCorrect = eventById != null;
+            if (isCorrect)
+            {
+#pragma warning disable CS8604
+                SetEventData(eventById, dataToChange, eventDataCol);
+#pragma warning restore CS8604
+                _appDbContext.SaveChanges();
+            }
+            return isCorrect;
+        }
+
+        public void SetEventData(Event eventById, string dataToChange, EventData eventDataCol)
+        {
+            switch (eventDataCol)
+            {
+                case EventData.Size:
+                    eventById.Size = dataToChange;
+                    break;
+
+                case EventData.SizeRange:
+                    eventById.SizeRange = dataToChange;
+                    break;
+
+                case EventData.Theme:
+                    eventById.Theme = dataToChange;
+                    break;
+            }
         }
     }
 }

@@ -13,14 +13,19 @@ namespace WebApplication2.Data
         // void RemoveEvent(int id);
         int AddEvent(Event newEvent);
         Event GetEventById(int id);
-        bool SaveEventDateAndTime(int id, Dictionary<string, string> dateInfo);
-        bool CheckDateAndTime(int id);
+        bool SetEventDateAndTime(int id, Dictionary<string, string> dateInfo);
+        bool CheckDateAndTimeByEventId(int id);
 
         DateTime GetEventStartDate(int id);
         void SetStatus(int id, string status);
         string GetStatus(int id);
 
         Dictionary<string, string> GetInfo(int id);
+        public IEnumerable<Event> GetOffersWithInCompleteStatus();
+        DateTime GetEventStartTime(int id);
+        DateTime GetEventEndTime(int id);
+        bool ManageEventData(int id, string dataToChange, EventData eventDataCol);
+        void SetEventData(Event eventById, string dataToChange, EventData eventDataCol);
         public PagedResult<Event> GetAll(OfferQuery query);
     }
 

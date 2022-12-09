@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\FetchApi\" />
-    <Folder Include="src\pages\" />
+    <Folder Include="src\images\themes\" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

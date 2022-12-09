@@ -1,11 +1,11 @@
 import SideBar from "./SideBar";
+import Assistance from "./Assistance";
 import React from 'react';
 import '../styles/guests.css';
 import {Col} from "react-bootstrap";
-import calendarIcon from '../images/icons/find.png';
+import lighbulbIcon from '../images/icons/light_bulb_small.png';
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { Outlet, NavLink } from "react-router-dom";
 import {handleStyle} from "./HandleProgress";
 //import Counter from 'react-countdown-customizable';
 
@@ -80,36 +80,17 @@ function Summary() {
                 <div className="row">
                     <div className="Event-col-3">
                     <div className="sidebar">
-                        <div className="vertical-menu">
-                        <ul>
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/guests`}} state={{EventId: id}}>Guest list</NavLink>
-                            </li>   
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/budget`}} state={{EventId: id}} >Budget</NavLink>
-                            </li>
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/location`}} state={{EventId: id}} >Location and date</NavLink>
-                            </li>
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/offer`}} state={{EventId: id}} >Make offer</NavLink>
-                            </li>
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/afterEvent`}} state={{EventId: id}} >After event</NavLink>
-                            </li>
-                            <li >
-                                <NavLink to={{pathname :`/event/${id}/summary`}} state={{EventId: id}} >Summary</NavLink>
-                            </li>
-                        </ul>
-                        <Outlet />
-                        </div>
+                        <SideBar eventId={eventId}/>
                     </div>
                     </div>
-                   {/* <div className="Event-col-6">              
+                    <div className="Event-col-1"> 
+                   
+                   </div>   
+                   <div className="Event-col-4">              
                         <br/>   
-                        <h3>Title: {title}</h3>                                      
+                        <h2>Title: {title}</h2>                                      
                         {eventTime && <Counter className="countdown" date={eventTime}
-                        timerStyle={{ margin: "auto", width: "45%", fontSize: "25px"}}
+                        timerStyle={{ margin: "auto", width: "60%", fontSize: "25px"}}
                         labelStyle={{
                           color: "#b1b1b1",
                           fontSize: "14px",
@@ -120,15 +101,22 @@ function Summary() {
                             <Completionist />
                         </Counter>  } 
                         <div className="summaryStats">
-                        <p>Current status: {status}</p> 
-                        <p>Your event type: {type}</p>
-                        </div>               
-                   </div>    */}
-                   <div className="Event-col-2">
-                    <Col cs={12} md={6} xl={6}>
-                        <img src={calendarIcon} alt="img" className="featureIcon"/>
-                    </Col>
-                    </div>                  
+                        <h3>Current status: {status}</h3> 
+                        <h3>Your event type: {type}</h3>
+                        </div>  
+                              
+                   </div>   
+                   <div className="Event-col-3">
+                    {/* <Col cs={12} md={6} xl={6}>
+                        <img src={lighbulbIcon} alt="img" className="lightbulbIcon"/>
+                    </Col> */}
+                        <div>
+                            <Assistance eventId={eventId}/>   
+                        </div>       
+                    </div> 
+                    <div className="Event-col-1"> 
+                   
+                    </div>      
                 </div>                             
             </div>
         </div>

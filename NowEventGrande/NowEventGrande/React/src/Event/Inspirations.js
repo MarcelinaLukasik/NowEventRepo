@@ -1,13 +1,8 @@
-import SideBar from "./SideBar";
 import React from 'react';
-import AddGuestForm from "./AddGuestForm";
-import AllGuests from "./AllGuests";
 import '../styles/guests.css';
 import {Col} from "react-bootstrap";
-import calendarIcon from '../images/icons/contact-list.png';
 import {useLocation} from 'react-router-dom';
 import { useState , useEffect} from "react";
-import { Outlet, NavLink } from "react-router-dom";
 
 function Inspirations() {
     // const location = useLocation();
@@ -61,6 +56,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );
@@ -75,6 +71,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );
@@ -89,6 +86,7 @@ function Inspirations() {
                                             className="img-fluid"
                                             src={val.urls.small}
                                             alt="val.alt_description"
+                                            loading="lazy"
                                             />
                                         </>
                                         );

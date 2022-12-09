@@ -10,13 +10,12 @@ namespace WebApplication2.Data
     public interface IBudgetRepository
     {
         void AddBudget(Budget budget);
-        Task ChangeRentPrice(decimal rentPrice, int Id);
-        Task ChangeDecorPrice(decimal decorationPrice, int Id);
-        Task ChangeFoodPrice(decimal foodPrice, int Id);
+        Task ChangePrice(decimal price, int eventId, BudgetPrices budgetPrice);
 
         // Budget GetBudget(int id);
         bool CheckStatus(int eventId);
 
-        Task<Budget> GetStats(int eventId);
+        Task<Budget> GetBudget(int eventId);
+
     }
 }

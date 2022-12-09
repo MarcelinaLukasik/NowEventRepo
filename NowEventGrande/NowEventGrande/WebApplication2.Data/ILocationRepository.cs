@@ -9,6 +9,8 @@ namespace WebApplication2.Data
 {
     public interface ILocationRepository
     {
-        EventAddress GetLocation(int id);
+        void SaveLocation(EventAddress eventAddress);
+        EventAddress GetLocation(int eventId);
+        // string? GetLocationHours(int eventId);
     }
 }
