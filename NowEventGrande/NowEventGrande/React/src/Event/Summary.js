@@ -7,7 +7,7 @@ import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import {handleStyle} from "./HandleProgress";
-import Counter from 'react-countdown-customizable';
+//import Counter from 'react-countdown-customizable';
 
 function Summary() {
     const [isOpen, setOpen] = useState(false);
@@ -105,7 +105,7 @@ function Summary() {
                         </div>
                     </div>
                     </div>
-                   <div className="Event-col-6">              
+                   {/* <div className="Event-col-6">              
                         <br/>   
                         <h3>Title: {title}</h3>                                      
                         {eventTime && <Counter className="countdown" date={eventTime}
@@ -123,7 +123,7 @@ function Summary() {
                         <p>Current status: {status}</p> 
                         <p>Your event type: {type}</p>
                         </div>               
-                   </div>   
+                   </div>    */}
                    <div className="Event-col-2">
                     <Col cs={12} md={6} xl={6}>
                         <img src={calendarIcon} alt="img" className="featureIcon"/>
