@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
@@ -19,8 +21,10 @@ namespace WebApplication2.Controllers
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository, 
-            IEventRepository eventRepository, IBudgetRepository budgetRepository, IVerificationService verificationService, IOfferRepository offerRepository)
+
+        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
+            IEventRepository eventRepository, IBudgetRepository budgetRepository,
+            IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _logger = logger;
             _guestRepository = guestRepository;
@@ -28,6 +32,7 @@ namespace WebApplication2.Controllers
             _budgetRepository = budgetRepository;
             _offerRepository = offerRepository;
             _verificationService = verificationService;
+          
         }
 
 
@@ -49,7 +54,7 @@ namespace WebApplication2.Controllers
                 return Ok(guest);
             }
             else
-                return  BadRequest(guest);
+                return BadRequest(guest);
         }
 
         [HttpGet("{id:int}/all")]
@@ -61,7 +66,7 @@ namespace WebApplication2.Controllers
         [HttpGet("{id:int}/all/descending")]
         public IEnumerable<Guest> GuestsSortedDescending(int id)
         {
-            return  _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
+            return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
         }
 
         [HttpGet("{id:int}/all/ascending")]
@@ -78,6 +83,7 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPost("CreateNewEvent")]
+        [Authorize]
         public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
             bool validEvent = _verificationService.VerifyEvent(newEvent);
@@ -90,7 +96,7 @@ namespace WebApplication2.Controllers
 
         //TODO move to new controller, save to database
         [HttpPost("SaveRatings")]
-        public IActionResult CreateNewEvent([FromBody] Rating rating)
+        public IActionResult SaveRatings([FromBody] Rating rating)
         {
             var test = rating;
             return Ok(test);
@@ -114,12 +120,14 @@ namespace WebApplication2.Controllers
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (!budgetStatus)
             {
                 _eventRepository.SetStatus(id, "Incomplete");
                 return false;
             }
+
             if (!_eventRepository.CheckDateAndTimeByEventId(id))
             {
                 _eventRepository.SetStatus(id, "Incomplete");
@@ -142,6 +150,7 @@ namespace WebApplication2.Controllers
             {
                 count++;
             }
+
             var budgetStatus = _budgetRepository.CheckStatus(id);
             if (budgetStatus)
             {
@@ -152,6 +161,7 @@ namespace WebApplication2.Controllers
             {
                 count++;
             }
+
             return count;
         }
 
@@ -201,5 +211,6 @@ namespace WebApplication2.Controllers
             return correctData ? Ok(correctData) : BadRequest(correctData);
         }
 
+        
     }
 }

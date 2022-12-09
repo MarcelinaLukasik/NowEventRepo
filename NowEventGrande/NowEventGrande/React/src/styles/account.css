@@ -1,0 +1,34 @@
+.loginForm {
+    height: 230px;
+    margin-top: 20px;
+}
+
+.registerForm {
+    height: 1500px;
+    margin-top: 20px;
+}
+
+
+.registerInput {
+    width: 300px;
+    padding: 15px;
+    margin: auto;
+}
+
+.registerButton {
+    padding: 20px;
+    background-color: rgb(60, 183, 187);
+    color:aliceblue;
+    font-size: 18px;
+    margin-top: 30px;
+    width: 300px;   
+}
+
+.signInModal {
+    z-index: 9999;
+    color:rgb(0, 0, 0);
+    text-align: center;
+    position: absolute;   
+    top: 200px;
+    vertical-align: middle;   
+}

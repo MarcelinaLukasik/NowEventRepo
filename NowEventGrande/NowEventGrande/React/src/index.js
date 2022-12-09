@@ -20,6 +20,8 @@ import AfterEvent from './Event/AfterEvent';
 import Summary from './Event/Summary';
 import Details from './Event/Details';
 import Offers from './pages/Offers';
+import Registration from './pages/Registration';
+import SignIn from './pages/SignIn';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +36,8 @@ function AllRoutes() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/signIn" element={<SignIn />} />
                     <Route path="/inspirations" element={<Inspirations />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="Event" element={<Event />} />

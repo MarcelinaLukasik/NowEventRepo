@@ -1,16 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 
 namespace WebApplication2.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<ClientAddress> ClientAddress{ get; set; }
+        // public DbSet<Client> Clients { get; set; }
+        // public DbSet<ClientAddress> ClientAddress{ get; set; }
         public DbSet<Event> Events{ get; set; }
         public DbSet<EventAddress> EventAddress{ get; set; }
         public DbSet<Guest> Guests { get; set; }

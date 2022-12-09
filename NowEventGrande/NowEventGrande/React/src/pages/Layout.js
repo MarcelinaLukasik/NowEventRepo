@@ -8,10 +8,13 @@ import facebookIcon from '../images/facebook.svg'
 import instagramIcon from '../images/instagram.svg'
 import twitterIcon from '../images/twitter.svg'
 import '../styles/layout.css';
+import SignIn from './SignIn';
+
 const Layout = () => {
 
   const [activeLink, setActiveLink] = useState('home');
   const [scrolled, setScrolled] = useState(false);
+
 
   useEffect(() => scrollNavbar(), []);
 
@@ -64,8 +67,13 @@ const Layout = () => {
                 <a href="#"><img src={instagramIcon} alt="instagram" /></a>
                 <a href="#"><img src={twitterIcon} alt="twitter" /></a>
               </div>
-              <button className="" onClick={() => console.log('sing in')}><span>Sign in</span></button>
-            </span>
+                <Nav.Link as={Link} to="/registration" >
+                  <button className=""><span>Register</span></button>
+                </Nav.Link> 
+                <SignIn/> 
+                   
+                                
+              </span>
           </Navbar.Collapse>
         </Container>
 
