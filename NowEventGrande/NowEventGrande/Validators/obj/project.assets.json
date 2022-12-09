@@ -221,19 +221,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rozdu\\.nuget\\packages\\": {}
+    "C:\\Users\\domin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
+      "projectUniqueName": "C:\\Users\\domin\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
       "projectName": "NowEvent.Validators",
-      "projectPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
-      "packagesPath": "C:\\Users\\rozdu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\obj\\",
+      "projectPath": "C:\\Users\\domin\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\NowEvent.Validators.csproj",
+      "packagesPath": "C:\\Users\\domin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\domin\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\Validators\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\rozdu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\domin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -247,8 +247,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj": {
-              "projectPath": "C:\\Users\\rozdu\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj"
+            "C:\\Users\\domin\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj": {
+              "projectPath": "C:\\Users\\domin\\Desktop\\NowEventRepo\\NowEventGrande\\NowEventGrande\\WebApplication2.Models\\WebApplication2.Models.csproj"
             }
           }
         }
@@ -284,7 +284,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
