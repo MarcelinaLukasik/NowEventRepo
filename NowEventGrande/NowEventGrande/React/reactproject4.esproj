@@ -11,4 +11,9 @@
     <Folder Include="src\FetchApi\" />
     <Folder Include="src\images\themes\" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties package-lock_1json__JsonSchema="https://bitbucket.org/atlassianlabs/atlascode/raw/main/resources/schemas/pipelines-schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

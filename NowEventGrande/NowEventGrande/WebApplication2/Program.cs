@@ -2,8 +2,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NowEvent.Validators;
 using WebApplication2;
 using WebApplication2.Data;
 using WebApplication2.Models;
@@ -74,6 +76,7 @@ builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
 
 var app = builder.Build();
@@ -84,7 +87,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
 }
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
@@ -20,11 +21,14 @@ namespace WebApplication2.Controllers
             _eventRepository = eventRepository;
         }
 
-        [HttpGet("GetOffersWithInCompleteStatus")]
-        public IEnumerable<Event> GetOffersWithInCompleteStatus()
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<Event>> GetAll([FromQuery]OfferQuery query)
         {
-           return _eventRepository.GetOffersWithInCompleteStatus().ToList();
+            var offers = _eventRepository.GetAll(query);
+            return Ok(offers);
         }
+
         /*[HttpGet]*/
         /*public IEnumerable<Offer> GetAll()
         {
