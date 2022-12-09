@@ -9,14 +9,14 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Services.AuthenticationService
 {
-    public class AuthenticationService : IAuthenticationService
+    public class UserAuthenticationService : IUserAuthenticationService
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         // private readonly IMapper _mapper;
         private User? _user;
 
-        public AuthenticationService(UserManager<User> userManager, IConfiguration configuration)
+        public UserAuthenticationService(UserManager<User> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;

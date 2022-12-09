@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using WebApplication2.Services.AuthenticationService;
 
 namespace WebApplication2.Controllers
@@ -17,13 +18,13 @@ namespace WebApplication2.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAuthenticationService authenticationService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUserAuthenticationService userAuthenticationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _authenticationService = authenticationService;
+            _userAuthenticationService = userAuthenticationService;
         }
 
         [HttpGet]
@@ -77,10 +78,10 @@ namespace WebApplication2.Controllers
 
                 if (result.Succeeded)
                 {
-                    var token = await _authenticationService.CreateTokenAsync(user);
+                    var token = await _userAuthenticationService.CreateTokenAsync(user);
                     var test = token;
 
-                    return Ok(new { Token = await _authenticationService.CreateTokenAsync(user) });
+                    return Ok(new { Token = await _userAuthenticationService.CreateTokenAsync(user) });
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");

@@ -7,7 +7,7 @@ import lighbulbIcon from '../images/icons/light_bulb_small.png';
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import {handleStyle} from "./HandleProgress";
-//import Counter from 'react-countdown-customizable';
+import Counter from 'react-countdown-customizable';
 
 function Summary() {
     const [isOpen, setOpen] = useState(false);
