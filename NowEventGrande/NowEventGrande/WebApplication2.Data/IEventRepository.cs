@@ -21,7 +21,7 @@ namespace WebApplication2.Data
         string GetStatus(int id);
 
         Dictionary<string, string> GetInfo(int id);
-        public IEnumerable<Event> GetOffersWithInCompleteStatus();
+        // public IEnumerable<Event> GetOffersWithInCompleteStatus();
         DateTime GetEventStartTime(int id);
         DateTime GetEventEndTime(int id);
         bool ManageEventData(int id, string dataToChange, EventData eventDataCol);

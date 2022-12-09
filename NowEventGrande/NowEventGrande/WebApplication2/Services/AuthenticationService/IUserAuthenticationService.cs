@@ -5,7 +5,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Services.AuthenticationService
 {
-    public interface IAuthenticationService
+    public interface IUserAuthenticationService
     {
         Task<string> CreateTokenAsync(User user);
         SigningCredentials GetSigningCredentials();
