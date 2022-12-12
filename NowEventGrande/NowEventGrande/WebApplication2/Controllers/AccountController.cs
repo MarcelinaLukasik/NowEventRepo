@@ -70,11 +70,13 @@ namespace WebApplication2.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(User user)
+        public async Task<IActionResult> Login(Dictionary<string,string> userData)
         {
-            if (ModelState.IsValid)
+            var user = _userManager.FindByNameAsync(userData["UserName"]).Result;
+            var isUserValid = _signInManager.UserManager.CheckPasswordAsync(user, userData["Password"]).Result;
+            if (isUserValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
+                var result = await _signInManager.PasswordSignInAsync(userData["UserName"], userData["Password"], true, false);
 
                 if (result.Succeeded)
                 {
@@ -98,6 +100,14 @@ namespace WebApplication2.Controllers
             return Ok("Logout");
         }
 
+        [HttpGet("GetCurrentUserId")]
+        [Authorize]
+        public IActionResult GetCurrentUserId()
+        {
+            var result = HttpContext.User.Identity;
+            string userId = _userAuthenticationService.GetCurrentUserId(result.Name);
+            return Ok(userId);
+        }
 
     }
 }

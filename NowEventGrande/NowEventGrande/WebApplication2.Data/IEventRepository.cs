@@ -13,6 +13,7 @@ namespace WebApplication2.Data
         // void RemoveEvent(int id);
         int AddEvent(Event newEvent);
         Event GetEventById(int id);
+        IQueryable GetEventsByUserId(string id);
         bool SetEventDateAndTime(int id, Dictionary<string, string> dateInfo);
         bool CheckDateAndTimeByEventId(int id);
 

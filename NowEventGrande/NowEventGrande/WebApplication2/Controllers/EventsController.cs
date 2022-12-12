@@ -7,6 +7,7 @@ using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.VerificationService;
 using EventData = WebApplication2.Data.EventData;
+using WebApplication2.Services.AuthenticationService;
 
 namespace WebApplication2.Controllers
 {
@@ -20,11 +21,13 @@ namespace WebApplication2.Controllers
         private readonly IBudgetRepository _budgetRepository;
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
 
         public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
             IEventRepository eventRepository, IBudgetRepository budgetRepository,
-            IVerificationService verificationService, IOfferRepository offerRepository)
+            IVerificationService verificationService, IOfferRepository offerRepository, 
+            IUserAuthenticationService userAuthenticationService)
         {
             _logger = logger;
             _guestRepository = guestRepository;
@@ -32,9 +35,8 @@ namespace WebApplication2.Controllers
             _budgetRepository = budgetRepository;
             _offerRepository = offerRepository;
             _verificationService = verificationService;
-          
+            _userAuthenticationService = userAuthenticationService;
         }
-
 
 
         [HttpPost("PostOffer")]
@@ -209,6 +211,15 @@ namespace WebApplication2.Controllers
         {
             bool correctData = _eventRepository.ManageEventData(id, theme, EventData.Theme);
             return correctData ? Ok(correctData) : BadRequest(correctData);
+        }
+
+
+        [HttpPost("GetEventsByUserId")]
+        [Authorize]
+        public IQueryable GetEventsByUserId([FromBody] string id)
+        {
+            var result = _eventRepository.GetEventsByUserId(id);
+            return result;
         }
 
         

@@ -389,6 +389,7 @@ ol li:before {
   font-size: 19px;
   margin: auto;
   text-align: center;
+  margin-top: 10px;
 }
 
 .form-control{

@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using WebApplication2.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication2.Services.AuthenticationService
 {
@@ -64,6 +64,11 @@ namespace WebApplication2.Services.AuthenticationService
                 signingCredentials: signingCredentials
             );
             return tokenOptions;
+        }
+
+        public string GetCurrentUserId(string userName)
+        {
+            return _userManager.FindByNameAsync(userName).Result.Id;
         }
     }
 }

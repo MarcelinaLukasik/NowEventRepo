@@ -78,6 +78,11 @@ namespace WebApplication2.Data
             return _appDbContext.Events.FirstOrDefault(x => x.Id == id);
         }
 
+        public IQueryable GetEventsByUserId(string id)
+        {
+            return _appDbContext.Events.Where(x => x.ClientId == id).Select(x => new { x.Name, x.Status});
+        }
+
 
         public bool SetEventDateAndTime(int id, Dictionary<string, string>  dateInfo)
         {
