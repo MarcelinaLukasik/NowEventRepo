@@ -66,7 +66,7 @@ function Event() {
     return (       
             <div className="event">
                 <h1>New Event</h1>
-                <div className="columns">                 
+                <div>                 
                     <div>                           
                         <br />
                         <h3>Choose your event category:</h3>  

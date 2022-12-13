@@ -80,7 +80,7 @@ namespace WebApplication2.Data
 
         public IQueryable GetEventsByUserId(string id)
         {
-            return _appDbContext.Events.Where(x => x.ClientId == id).Select(x => new { x.Name, x.Status});
+            return _appDbContext.Events.Where(x => x.ClientId == id).Select(x => new { x.Name, x.Status, x.Id});
         }
 
 
