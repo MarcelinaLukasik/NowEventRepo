@@ -14,7 +14,7 @@ namespace WebApplication2.Data
         int AddEvent(Event newEvent);
         Event GetEventById(int id);
         IQueryable GetEventsByUserId(string id);
-        bool SetEventDateAndTime(int id, Dictionary<string, string> dateInfo);
+        bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo);
         bool CheckDateAndTimeByEventId(int id);
 
         DateTime GetEventStartDate(int id);

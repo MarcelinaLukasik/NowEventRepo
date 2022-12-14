@@ -8,13 +8,16 @@ namespace WebApplication2.Services.VerificationService
     {
         private readonly ILocationRepository _locationRepository;
         private readonly IEventRepository _eventRepository;
+        private readonly IBudgetRepository _budgetRepository;
         private Dictionary<string, string> _verificationInfo = new Dictionary<string, string>();
         private Dictionary<string, string> _openingHours = new Dictionary<string, string>();
 
-        public VerificationService(ILocationRepository locationRepository, IEventRepository eventRepository)
+        public VerificationService(ILocationRepository locationRepository, IEventRepository eventRepository, 
+            IBudgetRepository budgetRepository)
         {
             _locationRepository = locationRepository;
             _eventRepository = eventRepository;
+            _budgetRepository = budgetRepository;
         }
 
         public Dictionary<string, string> GetVerificationInfo(int eventId)
@@ -130,10 +133,8 @@ namespace WebApplication2.Services.VerificationService
 
         public bool VerifyGuest(Guest guest)
         {
-            bool validFirstName = guest.FirstName.All(Char.IsLetter);
-            bool validLastName = guest.LastName.All(Char.IsLetter);
+            bool validName = VerifyGuestName(guest);
             var validMail = true;
-
             try
             {
                 var emailAddress = new MailAddress(guest.Email);
@@ -142,12 +143,24 @@ namespace WebApplication2.Services.VerificationService
             {
                 validMail = false;
             }
-            if (validFirstName && validLastName && validMail)
+            if (validName && validMail)
             {
                 return true;
             }
             else
                 return false;
+        }
+
+        public bool VerifyGuestName(Guest guest)
+        {
+            bool validFirstName = guest.FirstName.All(Char.IsLetter);
+            bool validLastName = guest.LastName.All(Char.IsLetter);
+
+            if (validFirstName && validLastName)
+            {
+                return true;
+            }
+            else return false;
         }
 
         public bool VerifyEvent(Event newEvent)
@@ -157,6 +170,23 @@ namespace WebApplication2.Services.VerificationService
                 return false;
             }
             return newEvent.Name.All(Char.IsLetter);
+        }
+
+        public bool CheckBudgetFullStatus(int eventId)
+        {
+            Dictionary<BudgetPrices, decimal> allPrices = _budgetRepository.GetAllPrices(eventId);
+            foreach (var price in allPrices)
+            {
+                if (price.Value <= 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool VerifyBudgetPrice(string budgetPrice)
+        {
+            return decimal.TryParse(budgetPrice, out _);
         }
 
     }

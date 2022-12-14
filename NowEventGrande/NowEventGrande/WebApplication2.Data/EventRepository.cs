@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApplication2.Models;
 
+
 namespace WebApplication2.Data
 {
     public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _appDbContext;
-
+        
         public EventRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -84,14 +85,12 @@ namespace WebApplication2.Data
         }
 
 
-        public bool SetEventDateAndTime(int id, Dictionary<string, string>  dateInfo)
+        public bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
             var eventById = GetEventById(id);
-            bool isCorrect = DateTime.TryParse(dateInfo["Date"], out var date);
-            var startTime = dateInfo["StartHour"] + ":" + dateInfo["StartMinutes"] + " " + dateInfo["TimeOfDayStart"];
-            var endTime = dateInfo["EndHour"] + ":" + dateInfo["EndMinutes"] + " " + dateInfo["TimeOfDayEnd"];
-            bool correctStartTime = DateTime.TryParse(startTime, out var start);
-            bool correctEndTime = DateTime.TryParse(endTime, out var end);
+            bool isCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
+            bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
+            bool correctEndTime = DateTime.TryParse(formattedDateInfo["EndTime"], out var end);
 
             if (isCorrect && correctStartTime && correctEndTime)
             {

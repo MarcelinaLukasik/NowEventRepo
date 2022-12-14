@@ -8,6 +8,7 @@ using WebApplication2.Models;
 using WebApplication2.Services.VerificationService;
 using EventData = WebApplication2.Data.EventData;
 using WebApplication2.Services.AuthenticationService;
+using WebApplication2.Services.DateAndTimeService;
 
 namespace WebApplication2.Controllers
 {
@@ -22,12 +23,13 @@ namespace WebApplication2.Controllers
         private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
         private readonly IUserAuthenticationService _userAuthenticationService;
+        private readonly IDateAndTimeService _dateAndTimeService;
 
 
         public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
             IEventRepository eventRepository, IBudgetRepository budgetRepository,
             IVerificationService verificationService, IOfferRepository offerRepository, 
-            IUserAuthenticationService userAuthenticationService)
+            IUserAuthenticationService userAuthenticationService, IDateAndTimeService dateAndTimeService)
         {
             _logger = logger;
             _guestRepository = guestRepository;
@@ -36,6 +38,7 @@ namespace WebApplication2.Controllers
             _offerRepository = offerRepository;
             _verificationService = verificationService;
             _userAuthenticationService = userAuthenticationService;
+            _dateAndTimeService = dateAndTimeService;
         }
 
 
@@ -123,7 +126,7 @@ namespace WebApplication2.Controllers
                 return false;
             }
 
-            var budgetStatus = _budgetRepository.CheckStatus(id);
+            var budgetStatus = _verificationService.CheckBudgetFullStatus(id);
             if (!budgetStatus)
             {
                 _eventRepository.SetStatus(id, "Incomplete");
@@ -153,7 +156,7 @@ namespace WebApplication2.Controllers
                 count++;
             }
 
-            var budgetStatus = _budgetRepository.CheckStatus(id);
+            var budgetStatus = _verificationService.CheckBudgetFullStatus(id);
             if (budgetStatus)
             {
                 count++;
@@ -170,7 +173,8 @@ namespace WebApplication2.Controllers
         [HttpPost("{id:int}/SaveDate")]
         public IActionResult SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
         {
-            return _eventRepository.SetEventDateAndTime(id, dateInfo) ? Ok() : BadRequest();
+            Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
+            return _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
 
         [HttpGet("{id:int}/GetEventStartDate")]

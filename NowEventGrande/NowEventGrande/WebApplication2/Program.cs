@@ -11,6 +11,7 @@ using WebApplication2;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.AuthenticationService;
+using WebApplication2.Services.DateAndTimeService;
 using WebApplication2.Services.EmailService;
 using WebApplication2.Services.VerificationService;
 
@@ -86,6 +87,7 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IDateAndTimeService, DateAndTimeService>();
 
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
