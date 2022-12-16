@@ -186,5 +186,11 @@ namespace WebApplication2.Data
                     break;
             }
         }
+
+        public bool CheckIfLargeSize(int id)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            return eventById.Size == "Large";
+        }
     }
 }

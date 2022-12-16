@@ -151,7 +151,7 @@
 ol li {
   list-style-type: none;
   counter-increment: item;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding-left: -10px;
 }
 
@@ -160,7 +160,7 @@ ol li:before {
   float: left;
   margin: auto;
   margin-bottom: 10px;
-  margin-left: -15px;
+  margin-left: -35px;
   font-size: 20px;
   background-color: #ffe59d;
   color: #000000;
@@ -400,6 +400,33 @@ ol li:before {
   color: black;
   display: block;
 }
+
+
+.notSignedInInfo {
+  height: 1200px;
+  font-size: 27px;
+  color: #ffee10;
+ 
+}
+
+.createdEventsInfo {
+  font-size: 27px;
+  color: #2ac6e2;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.visibilityButton {
+  margin: auto;
+}
+
+.passwordInput {
+  margin-left: 25px;
+}
+
+
+
+
 
 
 

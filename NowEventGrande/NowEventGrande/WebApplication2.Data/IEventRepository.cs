@@ -28,6 +28,8 @@ namespace WebApplication2.Data
         bool ManageEventData(int id, string dataToChange, EventData eventDataCol);
         void SetEventData(Event eventById, string dataToChange, EventData eventDataCol);
         public PagedResult<Event> GetAll(OfferQuery query);
+
+        bool CheckIfLargeSize(int id);
     }
 
 }

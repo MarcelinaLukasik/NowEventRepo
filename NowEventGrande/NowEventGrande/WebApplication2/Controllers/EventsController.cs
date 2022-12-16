@@ -226,6 +226,14 @@ namespace WebApplication2.Controllers
             return result;
         }
 
-        
+        [HttpGet("{id:int}/CheckIfLargeSize")]
+        public bool CheckIfLargeSize(int id)
+        {
+            return _eventRepository.CheckIfLargeSize(id);
+           
+        }
+
+
+
     }
 }

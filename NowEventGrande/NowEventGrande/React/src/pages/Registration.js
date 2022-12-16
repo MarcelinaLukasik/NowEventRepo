@@ -1,6 +1,7 @@
 import '../styles/account.css';
 import React from 'react';
 import { useState} from "react";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 
 function Registration() {
     const [firstName, setFirstName] = useState("");
@@ -11,6 +12,7 @@ function Registration() {
     const [confrimPassword, setConfirmPassword] = useState("");
     const [valid, setValid] = useState(true);
     const [isCompleted, setIsCompleted] = useState(false);
+    const [passwordType, setPasswordType] = useState("password");
 
     function handlePost(evt){
         evt.preventDefault();
@@ -35,6 +37,16 @@ function Registration() {
         fetchData();    
       }
 
+      const togglePasswordVisibility =(evt)=>{
+        evt.preventDefault();
+        if(passwordType==="password")
+        {
+         setPasswordType("text")
+         return;
+        }
+        setPasswordType("password")
+      }
+
     return (
 
         <div className="event">
@@ -49,30 +61,35 @@ function Registration() {
                      aria-required="true" placeholder="Email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
                     <span asp-validation-for="Input.Email" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
+                <div>
                     <input asp-for="Input.FirstName" className="registerInput" aria-required="true" 
                     placeholder="First Name" value={firstName} onChange={(event) => {setFirstName(event.target.value)}}/>
                     <span asp-validation-for="Input.FirstName" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
+                <div>
                     <input asp-for="Input.LastName" className="registerInput" aria-required="true" 
                     placeholder="Last Name" value={lastName} onChange={(event) => {setLastName(event.target.value)}}/>
                     <span asp-validation-for="Input.LastName" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
+                <div>
                     <input asp-for="Input.UserName" className="registerInput" aria-required="true" 
                     placeholder="UserName" value={userName} onChange={(event) => {setUserName(event.target.value)}}/>
                     <span asp-validation-for="Input.UserName" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
+                <div className='passwordInput'>
                     <input asp-for="Input.Password" className="registerInput" autoComplete="new-password" aria-required="true"
-                     placeholder="Password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
+                     placeholder="Password" value={password} onChange={(event) => {setPassword(event.target.value)}}
+                     type={passwordType}/>
+                      <button className="visibilityButton" onClick={togglePasswordVisibility}>
+                     { passwordType==="password"? <EyeSlash size={24} color="white"/> :<Eye size={24} color="white"/> }
+                     </button>
                     <span asp-validation-for="Input.Password" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
+                <div>
                     <input asp-for="Input.ConfirmPassword" className="registerInput" autoComplete="new-password"
                      aria-required="true" placeholder="Confirm password" value={confrimPassword} 
-                     onChange={(event) => {setConfirmPassword(event.target.value)}}/>
+                     onChange={(event) => {setConfirmPassword(event.target.value)}}
+                     type={passwordType}/>
                     <span asp-validation-for="Input.ConfirmPassword" className="text-danger"></span>
                 </div>
                 <button id="registerSubmit" type="submit" className="registerButton" onClick={handlePost}>Register</button>

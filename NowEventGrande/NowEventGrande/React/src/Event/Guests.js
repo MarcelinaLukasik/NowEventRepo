@@ -27,6 +27,7 @@ function Guests() {
 
     useEffect(() =>{  
         fetchProgress();
+        checkIfLargeSize();
     }, [])
 
     useEffect(() => {
@@ -46,6 +47,17 @@ function Guests() {
             handleStyle(res);
         })                
     }
+
+    async function checkIfLargeSize() {
+        const res = await fetch(`/events/${eventId}/CheckIfLargeSize`);      
+        res
+          .json()
+          .then(res => {
+              if (res === true){
+                setChecked(true);
+              }
+          })                
+      }
 
     async function changeSize(){
         let choosenSize = "Small";
