@@ -102,9 +102,10 @@ namespace WebApplication2.Data
                 else
                     eventById.Date = date;
 
-                DateTime newDateTime = date.Date.Add(start.TimeOfDay);
-                eventById.EventStart = newDateTime;
-                eventById.EventEnd = end;
+                DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
+                DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
+                eventById.EventStart = eventStartDate;
+                eventById.EventEnd = eventEndDate;
                 _appDbContext.SaveChanges();
                 return true;
             }
