@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using WebApplication2.Services.VerificationService;
 
 namespace WebApplication2.Controllers
 {
@@ -10,19 +11,22 @@ namespace WebApplication2.Controllers
     public class BudgetController : ControllerBase
     {
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IVerificationService _verificationService;
 
-        public BudgetController(IBudgetRepository budgetRepository)
+        public BudgetController(IBudgetRepository budgetRepository, IVerificationService verificationService)
         {
             _budgetRepository = budgetRepository;
+            _verificationService = verificationService;
         }
 
         [HttpPatch("{eventId:int}/Update/RentPrice")]
         public async Task<IActionResult> UpdateRentPrice(int eventId, [FromBody] string rentPrice)
         {
-            var isDecimal = decimal.TryParse(rentPrice, out decimal price);
-            if (isDecimal)
+            bool validPrice = _verificationService.VerifyBudgetPrice(rentPrice);
+            // var isDecimal = decimal.TryParse(rentPrice, out decimal price);
+            if (validPrice)
             {
-                await _budgetRepository.ChangePrice(price, eventId, BudgetPrices.Rent);
+                await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Rent);
                 return Ok(rentPrice);
             }
             else return BadRequest(rentPrice);
@@ -30,17 +34,28 @@ namespace WebApplication2.Controllers
         }
 
         [HttpPatch("{eventId:int}/Update/DecorationPrice")]
-        public async Task<IActionResult> UpdateDecorPrice(int eventId, [FromBody] decimal decorationPrice)
+        public async Task<IActionResult> UpdateDecorPrice(int eventId, [FromBody] string decorationPrice)
         {
-            await _budgetRepository.ChangePrice(decorationPrice, eventId, BudgetPrices.Decoration);
-            return Ok(decorationPrice);
+            bool validPrice = _verificationService.VerifyBudgetPrice(decorationPrice);
+            if (validPrice)
+            {
+                await _budgetRepository.ChangePrice(decimal.Parse(decorationPrice), eventId, BudgetPrices.Decoration);
+                return Ok(decorationPrice);
+            }
+            else return BadRequest(decorationPrice);
         }
 
         [HttpPatch("{eventId:int}/Update/FoodPrice")]
-        public async Task<IActionResult> UpdateFoodPrice(int eventId, [FromBody] decimal foodPrice)
+        public async Task<IActionResult> UpdateFoodPrice(int eventId, [FromBody] string foodPrice)
         {
-            await _budgetRepository.ChangePrice(foodPrice, eventId, BudgetPrices.Food);
-            return Ok(foodPrice);
+            bool validPrice = _verificationService.VerifyBudgetPrice(foodPrice);
+            if (validPrice)
+            {
+                await _budgetRepository.ChangePrice(decimal.Parse(foodPrice), eventId, BudgetPrices.Food);
+                return Ok(foodPrice);
+            }
+            else return BadRequest(foodPrice);
+
         }
 
         [HttpGet("{id:int}/GetBudget")]

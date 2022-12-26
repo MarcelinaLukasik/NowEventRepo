@@ -1,5 +1,5 @@
 .loginForm {
-    height: 230px;
+    height: 260px;
     margin-top: 20px;
 }
 
@@ -31,4 +31,15 @@
     position: absolute;   
     top: 200px;
     vertical-align: middle;   
+}
+
+.registerCompleted {  
+    color: rgb(124, 182, 37);
+    font-size: 30px;
+}
+
+.registerMessage {
+    height: 1500px;
+    font-size: 20px;
+    margin-top: 20px;
 }

@@ -6,8 +6,8 @@ namespace WebApplication2.Models
     public class Event
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
-        public int ContractorId { get; set; }
+        public string? ClientId { get; set; }
+        public string? ContractorId { get; set; }
         [MaxLength(15)]
         public string Size { get; set; }
         public string? SizeRange { get; set; }

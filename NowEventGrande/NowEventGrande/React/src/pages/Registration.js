@@ -1,11 +1,18 @@
 import '../styles/account.css';
 import React from 'react';
 import { useState} from "react";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
 
 function Registration() {
-    const [fullName, setFullName] = useState("John");
-    const [email, setEmail] = useState("Dee");
-    const [password, setPassword] = useState("password");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confrimPassword, setConfirmPassword] = useState("");
+    const [valid, setValid] = useState(true);
+    const [isCompleted, setIsCompleted] = useState(false);
+    const [passwordType, setPasswordType] = useState("password");
 
     function handlePost(evt){
         evt.preventDefault();
@@ -15,56 +22,90 @@ function Registration() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({FirstName: "John", LastName: "Doe", Email: email, Password: password, UserName: "qqq"}) ,
+            body: JSON.stringify({FirstName: firstName, LastName: lastName, Email: email, Password: password, UserName: userName}) ,
           })
-          // .then(window.location.reload(false));
-        //   if (!res.ok) {
-        //     const message = `An error has occured: ${res.status} - ${res.statusText}`;
-        //     setValid(false);
-        //     throw new Error(message);
-        //   }
-        //   else{
-        //     const result = await res.json();
-        //     setValid(true);
-        //     addGuestCount();
-        //     addChecklistCount();
-        //   }
-        
+          if (!res.ok) {
+            const message = `An error has occured: ${res.status} - ${res.statusText}`;
+            setValid(false);
+            throw new Error(message);
+          }
+          else{
+            const result = await res.json();
+            setIsCompleted(true);
+          }       
       }  
         fetchData();    
+      }
+
+      const togglePasswordVisibility =(evt)=>{
+        evt.preventDefault();
+        if(passwordType==="password")
+        {
+         setPasswordType("text")
+         return;
+        }
+        setPasswordType("password")
       }
 
     return (
 
         <div className="event">
-            <div >
-                <h2>Create a new account</h2>
-            </div>
+            {!isCompleted &&
+            <div>
+                <h2>Create a new account</h2>       
             <form className="registerForm" method="post">     
                 <hr />
                 <div asp-validation-summary="ModelOnly" className="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Input.Email" className="registerInput" autoComplete="username" aria-required="true" placeholder="Email"/>
-                    <label asp-for="Input.Email"></label>
+                <div className="form-floating">
+                    <input asp-for="Input.Email" className="registerInput" autoComplete="username"
+                     aria-required="true" placeholder="Email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
                     <span asp-validation-for="Input.Email" className="text-danger"></span>
                 </div>
-                <div className="form-floating">
-                    <input asp-for="Input.FullName" className="registerInput" autoComplete="username" aria-required="true" placeholder="Full Name"/>
-                    <label asp-for="Input.FullName"></label>
-                    <span asp-validation-for="Input.FullName" className="text-danger"></span>
+                <div>
+                    <input asp-for="Input.FirstName" className="registerInput" aria-required="true" 
+                    placeholder="First Name" value={firstName} onChange={(event) => {setFirstName(event.target.value)}}/>
+                    <span asp-validation-for="Input.FirstName" className="text-danger"></span>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="Input.Password" className="registerInput" autoComplete="new-password" aria-required="true" placeholder="Password"/>
-                    <label asp-for="Input.Password"></label>
+                <div>
+                    <input asp-for="Input.LastName" className="registerInput" aria-required="true" 
+                    placeholder="Last Name" value={lastName} onChange={(event) => {setLastName(event.target.value)}}/>
+                    <span asp-validation-for="Input.LastName" className="text-danger"></span>
+                </div>
+                <div>
+                    <input asp-for="Input.UserName" className="registerInput" aria-required="true" 
+                    placeholder="UserName" value={userName} onChange={(event) => {setUserName(event.target.value)}}/>
+                    <span asp-validation-for="Input.UserName" className="text-danger"></span>
+                </div>
+                <div className='passwordInput'>
+                    <input asp-for="Input.Password" className="registerInput" autoComplete="new-password" aria-required="true"
+                     placeholder="Password" value={password} onChange={(event) => {setPassword(event.target.value)}}
+                     type={passwordType}/>
+                      <button className="visibilityButton" onClick={togglePasswordVisibility}>
+                     { passwordType==="password"? <EyeSlash size={24} color="white"/> :<Eye size={24} color="white"/> }
+                     </button>
                     <span asp-validation-for="Input.Password" className="text-danger"></span>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="Input.ConfirmPassword" className="registerInput" autoComplete="new-password" aria-required="true" placeholder="Confirm password"/>
-                    <label asp-for="Input.ConfirmPassword"></label>
+                <div>
+                    <input asp-for="Input.ConfirmPassword" className="registerInput" autoComplete="new-password"
+                     aria-required="true" placeholder="Confirm password" value={confrimPassword} 
+                     onChange={(event) => {setConfirmPassword(event.target.value)}}
+                     type={passwordType}/>
                     <span asp-validation-for="Input.ConfirmPassword" className="text-danger"></span>
                 </div>
                 <button id="registerSubmit" type="submit" className="registerButton" onClick={handlePost}>Register</button>
+                {!valid &&
+            <div className='wrongInputMessage'>Invalid credentials. Try again.</div>}
+            
+           
             </form>
+            </div>
+            }
+            {isCompleted &&
+            <div>
+            <div className="registerCompleted" >Registration completed!</div>
+            <div className="registerMessage">Feel free to sing in</div>
+            </div>
+            }
         </div>
     )
 }

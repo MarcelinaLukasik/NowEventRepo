@@ -108,6 +108,11 @@
   font-size: 35px;
 }
 
+.tileTextSmall{
+  text-align: center;
+  font-size: 20px;
+}
+
 .tileContainer {
   display: flex;
   justify-content: center;
@@ -146,7 +151,7 @@
 ol li {
   list-style-type: none;
   counter-increment: item;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding-left: -10px;
 }
 
@@ -155,7 +160,7 @@ ol li:before {
   float: left;
   margin: auto;
   margin-bottom: 10px;
-  margin-left: -15px;
+  margin-left: -35px;
   font-size: 20px;
   background-color: #ffe59d;
   color: #000000;
@@ -175,10 +180,6 @@ ol li:before {
   border-radius: 15px;
   padding: 15px;
 }
-
-/* .infoPanel ol{
-  
-} */
 
 .assistanceIcon {
   margin: auto;
@@ -200,10 +201,6 @@ ol li:before {
 
 
 .addCost {
-  /* margin: 10px;
-  display: flex;
-  justify-content: right;
-  align-items: right; */
   width: 150px;
 }
 
@@ -389,6 +386,7 @@ ol li:before {
   font-size: 19px;
   margin: auto;
   text-align: center;
+  margin-top: 10px;
 }
 
 .form-control{
@@ -402,6 +400,33 @@ ol li:before {
   color: black;
   display: block;
 }
+
+
+.notSignedInInfo {
+  height: 1200px;
+  font-size: 27px;
+  color: #ffee10;
+ 
+}
+
+.createdEventsInfo {
+  font-size: 27px;
+  color: #2ac6e2;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.visibilityButton {
+  margin: auto;
+}
+
+.passwordInput {
+  margin-left: 25px;
+}
+
+
+
+
 
 
 

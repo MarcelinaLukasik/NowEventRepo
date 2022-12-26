@@ -11,6 +11,7 @@ using WebApplication2;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.AuthenticationService;
+using WebApplication2.Services.DateAndTimeService;
 using WebApplication2.Services.EmailService;
 using WebApplication2.Services.VerificationService;
 
@@ -63,6 +64,16 @@ builder.Services.AddIdentity<User, IdentityRole>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    //this event is called when user is unauthorized and is redirected to login page
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = 401;
+
+        return Task.CompletedTask;
+    };
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -76,6 +87,7 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IDateAndTimeService, DateAndTimeService>();
 
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 

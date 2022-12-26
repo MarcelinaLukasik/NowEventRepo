@@ -40,7 +40,7 @@
   width: 96%;
 }
 
-.mainSlider button {
+.createEventButton {
   color: #fff;
   font-weight: 700;
   font-size: 2rem;
@@ -54,14 +54,16 @@
   );
   border-radius: 50px;
   padding: 10px 15px;
+  width: 280px !important;
+  height: 80px !important;
 }
 
-.mainSlider button svg {
+.createEventButton svg {
   margin-left: 10px;
   transition: 0.5s ease;
 }
 
-.mainSlider button:hover svg {
+.createEventButton:hover svg {
   margin-left: 25px;
 }
 

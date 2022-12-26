@@ -13,7 +13,8 @@ namespace WebApplication2.Data
         // void RemoveEvent(int id);
         int AddEvent(Event newEvent);
         Event GetEventById(int id);
-        bool SetEventDateAndTime(int id, Dictionary<string, string> dateInfo);
+        IQueryable GetEventsByUserId(string id);
+        bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo);
         bool CheckDateAndTimeByEventId(int id);
 
         DateTime GetEventStartDate(int id);
@@ -27,6 +28,8 @@ namespace WebApplication2.Data
         bool ManageEventData(int id, string dataToChange, EventData eventDataCol);
         void SetEventData(Event eventById, string dataToChange, EventData eventDataCol);
         public PagedResult<Event> GetAll(OfferQuery query);
+
+        bool CheckIfLargeSize(int id);
     }
 
 }

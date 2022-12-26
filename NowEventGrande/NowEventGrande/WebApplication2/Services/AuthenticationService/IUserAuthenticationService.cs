@@ -11,5 +11,6 @@ namespace WebApplication2.Services.AuthenticationService
         SigningCredentials GetSigningCredentials();
         Task<List<Claim>> GetClaims(User user);
         JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims);
+        string GetCurrentUserId(string userName);
     }
 }

@@ -193,11 +193,11 @@ namespace WebApplication2.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ContractorId")
-                        .HasColumnType("int");
+                    b.Property<string>("ContractorId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -239,8 +239,6 @@ namespace WebApplication2.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ClientId = 0,
-                            ContractorId = 0,
                             Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -252,8 +250,6 @@ namespace WebApplication2.Data.Migrations
                         new
                         {
                             Id = 2,
-                            ClientId = 0,
-                            ContractorId = 0,
                             Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventEnd = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventStart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

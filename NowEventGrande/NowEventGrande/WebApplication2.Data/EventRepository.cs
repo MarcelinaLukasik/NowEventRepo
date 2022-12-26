@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApplication2.Models;
 
+
 namespace WebApplication2.Data
 {
     public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _appDbContext;
-
+        
         public EventRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -78,15 +79,18 @@ namespace WebApplication2.Data
             return _appDbContext.Events.FirstOrDefault(x => x.Id == id);
         }
 
+        public IQueryable GetEventsByUserId(string id)
+        {
+            return _appDbContext.Events.Where(x => x.ClientId == id).Select(x => new { x.Name, x.Status, x.Id});
+        }
 
-        public bool SetEventDateAndTime(int id, Dictionary<string, string>  dateInfo)
+
+        public bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
             var eventById = GetEventById(id);
-            bool isCorrect = DateTime.TryParse(dateInfo["Date"], out var date);
-            var startTime = dateInfo["StartHour"] + ":" + dateInfo["StartMinutes"] + " " + dateInfo["TimeOfDayStart"];
-            var endTime = dateInfo["EndHour"] + ":" + dateInfo["EndMinutes"] + " " + dateInfo["TimeOfDayEnd"];
-            bool correctStartTime = DateTime.TryParse(startTime, out var start);
-            bool correctEndTime = DateTime.TryParse(endTime, out var end);
+            bool isCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
+            bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
+            bool correctEndTime = DateTime.TryParse(formattedDateInfo["EndTime"], out var end);
 
             if (isCorrect && correctStartTime && correctEndTime)
             {
@@ -98,9 +102,10 @@ namespace WebApplication2.Data
                 else
                     eventById.Date = date;
 
-                DateTime newDateTime = date.Date.Add(start.TimeOfDay);
-                eventById.EventStart = newDateTime;
-                eventById.EventEnd = end;
+                DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
+                DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
+                eventById.EventStart = eventStartDate;
+                eventById.EventEnd = eventEndDate;
                 _appDbContext.SaveChanges();
                 return true;
             }
@@ -181,6 +186,12 @@ namespace WebApplication2.Data
                     eventById.Theme = dataToChange;
                     break;
             }
+        }
+
+        public bool CheckIfLargeSize(int id)
+        {
+            var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            return eventById.Size == "Large";
         }
     }
 }

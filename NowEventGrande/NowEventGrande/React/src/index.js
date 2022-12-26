@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Layout from "./pages/Layout";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import FetchApi from './FetchApi/FetchApi';
 import FetchApi2 from './FetchApi/FetchApi2';
 import Event from './Event/Event';
 import Guests from './Event/Guests';
@@ -19,6 +18,7 @@ import Location from './Event/Location';
 import AfterEvent from './Event/AfterEvent';
 import Summary from './Event/Summary';
 import Details from './Event/Details';
+import CreatedEvents from './Event/CreatedEvents';
 import Offers from './pages/Offers';
 import Registration from './pages/Registration';
 import SignIn from './pages/SignIn';
@@ -41,7 +41,7 @@ function AllRoutes() {
                     <Route path="/inspirations" element={<Inspirations />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="Event" element={<Event />} />
-                    <Route path="user" element={<FetchApi />} />
+                    <Route path="CreatedEvents" element={<CreatedEvents />} />
                     <Route path="user2" element={<FetchApi2 />} />
                     <Route path="alloffer" element={<Offers />} />
                     <Route path="/Event/:id/guests" element={<Guests />} />

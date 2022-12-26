@@ -54,13 +54,39 @@ namespace WebApplication2.Data
     
         }
 
-        public bool CheckStatus(int eventId)
+        public decimal GetBudgetPrice(int eventId, BudgetPrices priceType)
         {
-            var rentPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.RentPrice).FirstOrDefault();
-            var decorPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.DecorationPrice).FirstOrDefault();
-            var foodPrice = _appDbContext.Budget.Where(x => x.EventId == eventId).Select(x => x.FoodPrice).FirstOrDefault();
+            switch (priceType)
+            {
+                case BudgetPrices.Rent:
+                    var rentPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
+                        .Select(x => x.RentPrice).FirstOrDefault();
+                    return rentPrice;
+                case BudgetPrices.Decoration:
+                    var decorPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
+                        .Select(x => x.DecorationPrice).FirstOrDefault();
+                    return decorPrice;
+                case BudgetPrices.Food:
+                    var foodPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
+                        .Select(x => x.FoodPrice).FirstOrDefault();
+                    return foodPrice;
+                default:
+                    return -1;
+            }
+            // return rentPrice != 0 && decorPrice != 0 && foodPrice != 0;
+        }
 
-            return rentPrice != 0 && decorPrice != 0 && foodPrice != 0;
+        public Dictionary<BudgetPrices, decimal> GetAllPrices(int eventId)
+        {
+            decimal rentPrice = GetBudgetPrice(eventId, BudgetPrices.Rent);
+            decimal decorPrice = GetBudgetPrice(eventId, BudgetPrices.Decoration);
+            decimal foodPrice = GetBudgetPrice(eventId, BudgetPrices.Food);
+            Dictionary<BudgetPrices, decimal> pricesDict =
+                new Dictionary<BudgetPrices, decimal> { { BudgetPrices.Rent, rentPrice },
+                    { BudgetPrices.Decoration, decorPrice },
+                    { BudgetPrices.Food, foodPrice }
+                };
+            return pricesDict;
         }
     }
 }
