@@ -9,10 +9,10 @@ namespace WebApplication2.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly ILocationRepository _locationRepository;
+        private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IVerificationService _verificationService;
 
-        public LocationController(ILocationRepository locationRepository, IVerificationService verificationService)
+        public LocationController(ILocationAndTimeRepository locationRepository, IVerificationService verificationService)
         {
             _locationRepository = locationRepository;
             _verificationService = verificationService;

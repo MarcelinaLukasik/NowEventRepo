@@ -9,7 +9,7 @@ namespace NewEventTest
     public class VerificationUnitTest
     {
 
-        private readonly ILocationRepository _locationRepository;
+        private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
 

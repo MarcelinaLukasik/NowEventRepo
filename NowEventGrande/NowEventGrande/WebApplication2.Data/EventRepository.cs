@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using WebApplication2.Models;
 
 
@@ -13,10 +7,15 @@ namespace WebApplication2.Data
     public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _appDbContext;
-        
-        public EventRepository(AppDbContext appDbContext)
+        private readonly IBudgetRepository _budgetRepository;
+        private readonly ILocationAndTimeRepository _locationAndTimeRepository;
+
+        public EventRepository(AppDbContext appDbContext, IBudgetRepository budgetRepository,
+            ILocationAndTimeRepository locationAndTimeRepository)
         {
             _appDbContext = appDbContext;
+            _budgetRepository = budgetRepository;
+            _locationAndTimeRepository = locationAndTimeRepository;
         }
         public int AddEvent(Event newEvent)
         {
@@ -24,9 +23,10 @@ namespace WebApplication2.Data
             _appDbContext.Events.Add(newEvent);
             _appDbContext.SaveChanges();
 
-            Budget budget = CreateBudget(newEvent.Id);
-            _appDbContext.Budget.Add(budget);
-            _appDbContext.SaveChanges();
+            Budget budget = _budgetRepository.CreateBudget(newEvent.Id);
+            _budgetRepository.AddBudget(budget);
+            // _appDbContext.Budget.Add(budget);
+            // _appDbContext.SaveChanges();
             return newEvent.Id;
         }
 
@@ -63,16 +63,7 @@ namespace WebApplication2.Data
             return result;
         }
 
-        public Budget CreateBudget(int eventId)
-        {
-            Budget budget = new Budget();
-            budget.Total = 0;
-            budget.RentPrice = 0;
-            budget.DecorationPrice = 0;
-            budget.FoodPrice = 0;
-            budget.EventId = eventId;
-            return budget;
-        }
+        
 
         public Event GetEventById(int id)
         {
@@ -87,27 +78,24 @@ namespace WebApplication2.Data
 
         public bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
-            var eventById = GetEventById(id);
-            bool isCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
+            bool isDateCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
             bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
             bool correctEndTime = DateTime.TryParse(formattedDateInfo["EndTime"], out var end);
 
-            if (isCorrect && correctStartTime && correctEndTime)
+            if (isDateCorrect && correctStartTime && correctEndTime)
             {
+                var eventById = GetEventById(id);
                 int result = DateTime.Compare(date, DateTime.Now);
                 if (result < 0)
                 {
                     return false;
                 }
                 else
-                    eventById.Date = date;
-
-                DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
-                DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
-                eventById.EventStart = eventStartDate;
-                eventById.EventEnd = eventEndDate;
-                _appDbContext.SaveChanges();
-                return true;
+                {
+                    _locationAndTimeRepository.SaveDateAndTime(eventById, date, start, end);
+                    return true;
+                }
+                
             }
             else return false;
         }

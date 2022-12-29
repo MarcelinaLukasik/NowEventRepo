@@ -2,11 +2,11 @@
 
 namespace WebApplication2.Data
 {
-    public class LocationRepository : ILocationRepository
+    public class LocationAndTimeRepository : ILocationAndTimeRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public LocationRepository(AppDbContext appDbContext)
+        public LocationAndTimeRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
@@ -37,6 +37,16 @@ namespace WebApplication2.Data
                 _appDbContext.SaveChanges();
             }
             
+        }
+
+        public void SaveDateAndTime(Event eventById, DateTime date, DateTime start, DateTime end)
+        {
+            eventById.Date = date;
+            DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
+            DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
+            eventById.EventStart = eventStartDate;
+            eventById.EventEnd = eventEndDate;
+            _appDbContext.SaveChanges();
         }
 
     }

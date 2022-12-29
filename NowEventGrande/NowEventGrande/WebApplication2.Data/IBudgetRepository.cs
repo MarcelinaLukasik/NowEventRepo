@@ -14,6 +14,7 @@ namespace WebApplication2.Data
         Dictionary<BudgetPrices, decimal> GetAllPrices(int eventId);
 
         Task<Budget> GetBudget(int eventId);
+        Budget CreateBudget(int eventId);
 
     }
 }
