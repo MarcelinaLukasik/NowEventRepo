@@ -82,8 +82,8 @@ namespace WebApplication2.Services.VerificationService
 
                 bool isStartTimeCorrect = CompareOpeningAndClosingHours(startHour);
                 bool isEndTimeCorrect = CompareOpeningAndClosingHours(endHour);
-                SetEventTimeStatus(openingAndClosingHours, dayOfWeek, isStartTimeCorrect, EventTimeStage.Start);
-                SetEventTimeStatus(openingAndClosingHours, dayOfWeek, isEndTimeCorrect, EventTimeStage.End);
+                SetEventTimeStatus(openingAndClosingHours, dayOfWeek, isStartTimeCorrect, EventTimeStages.Start);
+                SetEventTimeStatus(openingAndClosingHours, dayOfWeek, isEndTimeCorrect, EventTimeStages.End);
             }
         }
 
@@ -137,11 +137,11 @@ namespace WebApplication2.Services.VerificationService
             return openingCompareResult >= 0 || closingCompareResult >= 0;
         }
 
-        public void SetEventTimeStatus(string[] result, DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStage timeStage )
+        public void SetEventTimeStatus(string[] result, DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )
         {
             switch (timeStage)
             {
-                case EventTimeStage.Start:
+                case EventTimeStages.Start:
                     if (!isTimeCorrect)
                     {
                         _verificationInfo["EventStartStatus"] =
@@ -152,7 +152,7 @@ namespace WebApplication2.Services.VerificationService
                             "The start time of the event match the operating hours of the selected venue. Yay!";
                     break;
 
-                case EventTimeStage.End:
+                case EventTimeStages.End:
                     if (!isTimeCorrect)
                     {
                         _verificationInfo["EventEndStatus"] =

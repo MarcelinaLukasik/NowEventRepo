@@ -19,14 +19,12 @@ namespace WebApplication2.Data
         }
         public int AddEvent(Event newEvent)
         {
-            newEvent.Status = "Incomplete";
+            newEvent.Status = EventStatuses.Incomplete;
             _appDbContext.Events.Add(newEvent);
             _appDbContext.SaveChanges();
 
             Budget budget = _budgetRepository.CreateBudget(newEvent.Id);
             _budgetRepository.AddBudget(budget);
-            // _appDbContext.Budget.Add(budget);
-            // _appDbContext.SaveChanges();
             return newEvent.Id;
         }
 

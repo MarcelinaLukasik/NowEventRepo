@@ -18,7 +18,7 @@ function Offer() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`/events/${id}/CheckStatus`);
+            const res = await fetch(`/progress/${id}/CheckStatus`);
             res
                 .json()
                 .then(res => setStatus(res))
@@ -29,7 +29,7 @@ function Offer() {
     async function handlePostOffer(e) {
         e.preventDefault();
         setButtonSubmit("Sending...")
-        const response = await fetch('/events/PostOffer', {
+        const response = await fetch('/offer/PostOffer', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ ClientId: 0, EventId: eventId, Status: "Open" })

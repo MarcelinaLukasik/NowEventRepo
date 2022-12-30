@@ -17,7 +17,7 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCoun
 
     function handlePost(){
       async function fetchData() {
-        const res = await fetch(`/events/SaveGuest`, {
+        const res = await fetch(`/guest/SaveGuest`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

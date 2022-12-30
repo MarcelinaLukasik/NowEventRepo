@@ -28,6 +28,10 @@ const context7 = [
     "/account",
 ];
 
+const context8 = [
+    "/progress",
+];
+
 module.exports = function (app) {
     const appProxy = createProxyMiddleware(context, {
         target: 'https://localhost:7267',
@@ -77,4 +81,11 @@ module.exports = function (app) {
     });
 
     app.use(appProxy7);
+
+    const appProxy8 = createProxyMiddleware(context8, {
+        target: 'https://localhost:7267',
+        secure: false
+    });
+
+    app.use(appProxy8);
 };

@@ -17,75 +17,62 @@ namespace WebApplication2.Controllers
     public class EventsController : ControllerBase
     {
         private readonly ILogger<EventsController> _logger;
-        private readonly IGuestRepository _guestRepository;
+        // private readonly IGuestRepository _guestRepository;
         private readonly IEventRepository _eventRepository;
-        private readonly IBudgetRepository _budgetRepository;
-        private readonly IOfferRepository _offerRepository;
         private readonly IVerificationService _verificationService;
-        private readonly IUserAuthenticationService _userAuthenticationService;
+        // private readonly IUserAuthenticationService _userAuthenticationService;
         private readonly IDateAndTimeService _dateAndTimeService;
 
 
-        public EventsController(ILogger<EventsController> logger, IGuestRepository guestRepository,
-            IEventRepository eventRepository, IBudgetRepository budgetRepository,
-            IVerificationService verificationService, IOfferRepository offerRepository, 
-            IUserAuthenticationService userAuthenticationService, IDateAndTimeService dateAndTimeService)
+        public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, 
+            IVerificationService verificationService, IDateAndTimeService dateAndTimeService)
         {
             _logger = logger;
-            _guestRepository = guestRepository;
+            // _guestRepository = guestRepository;
             _eventRepository = eventRepository;
-            _budgetRepository = budgetRepository;
-            _offerRepository = offerRepository;
             _verificationService = verificationService;
-            _userAuthenticationService = userAuthenticationService;
+            // _userAuthenticationService = userAuthenticationService;
             _dateAndTimeService = dateAndTimeService;
         }
 
+        //
+        // [HttpPost("SaveGuest")]
+        // public IActionResult SaveGuest([FromBody] Guest guest)
+        // {
+        //     bool validGuest = _verificationService.VerifyGuest(guest);
+        //     if (validGuest)
+        //     {
+        //         _guestRepository.AddGuest(guest);
+        //         return Ok(guest);
+        //     }
+        //     else
+        //         return BadRequest(guest);
+        // }
 
-        [HttpPost("PostOffer")]
-        public IActionResult AddOffer([FromBody] Offer offer)
-        {
-            _offerRepository.AddOffer(offer);
-            return Ok(offer);
-        }
-
-        [HttpPost("SaveGuest")]
-        public IActionResult SaveGuest([FromBody] Guest guest)
-        {
-            bool validGuest = _verificationService.VerifyGuest(guest);
-            if (validGuest)
-            {
-                _guestRepository.AddGuest(guest);
-                return Ok(guest);
-            }
-            else
-                return BadRequest(guest);
-        }
-
-        [HttpGet("{id:int}/all")]
-        public IEnumerable<Guest> GetAllGuests(int id)
-        {
-            return _guestRepository.AllGuestsByEventId(id);
-        }
-
-        [HttpGet("{id:int}/all/descending")]
-        public IEnumerable<Guest> GuestsSortedDescending(int id)
-        {
-            return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
-        }
-
-        [HttpGet("{id:int}/all/ascending")]
-        public IEnumerable<Guest> GuestsSortedAscending(int id)
-        {
-            return _guestRepository.SortAscending().Where(x => x.EventId == id).ToArray();
-        }
-
-        [HttpDelete("removeGuest/{id:int}")]
-        public IActionResult RemoveGuest(int id)
-        {
-            _guestRepository.RemoveGuest(id);
-            return Ok(id);
-        }
+        // [HttpGet("{id:int}/all")]
+        // public IEnumerable<Guest> GetAllGuests(int id)
+        // {
+        //     return _guestRepository.AllGuestsByEventId(id);
+        // }
+        //
+        // [HttpGet("{id:int}/all/descending")]
+        // public IEnumerable<Guest> GuestsSortedDescending(int id)
+        // {
+        //     return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
+        // }
+        //
+        // [HttpGet("{id:int}/all/ascending")]
+        // public IEnumerable<Guest> GuestsSortedAscending(int id)
+        // {
+        //     return _guestRepository.SortAscending().Where(x => x.EventId == id).ToArray();
+        // }
+        //
+        // [HttpDelete("removeGuest/{id:int}")]
+        // public IActionResult RemoveGuest(int id)
+        // {
+        //     _guestRepository.RemoveGuest(id);
+        //     return Ok(id);
+        // }
 
         [HttpPost("CreateNewEvent")]
         [Authorize]
@@ -99,12 +86,11 @@ namespace WebApplication2.Controllers
             return validEvent ? Ok(id) : BadRequest(newEvent);
         }
 
-        //TODO move to new controller, save to database
         [HttpPost("SaveRatings")]
         public IActionResult SaveRatings([FromBody] Rating rating)
         {
-            var test = rating;
-            return Ok(test);
+            //TODO save rating to database
+            return Ok(rating);
         }
 
 
@@ -115,60 +101,6 @@ namespace WebApplication2.Controllers
         }
 
 
-        //TODO checkStatus, then setStatus based on checkStatus return value
-        [HttpGet("{id:int}/CheckStatus")]
-        public bool CheckIfComplete(int id)
-        {
-            var guests = _guestRepository.AllGuestsByEventId(id);
-            if (!guests.Any())
-            {
-                _eventRepository.SetStatus(id, "Incomplete");
-                return false;
-            }
-
-            var budgetStatus = _verificationService.CheckBudgetFullStatus(id);
-            if (!budgetStatus)
-            {
-                _eventRepository.SetStatus(id, "Incomplete");
-                return false;
-            }
-
-            if (!_eventRepository.CheckDateAndTimeByEventId(id))
-            {
-                _eventRepository.SetStatus(id, "Incomplete");
-                return false;
-            }
-            else
-            {
-                //TODO move event statuses to enum
-                _eventRepository.SetStatus(id, "Completed");
-                return true;
-            }
-        }
-
-        [HttpGet("{id:int}/GetChecklistProgress")]
-        public int GetChecklistProgress(int id)
-        {
-            var count = 0;
-            var guests = _guestRepository.AllGuestsByEventId(id);
-            if (guests.Any())
-            {
-                count++;
-            }
-
-            var budgetStatus = _verificationService.CheckBudgetFullStatus(id);
-            if (budgetStatus)
-            {
-                count++;
-            }
-
-            if (_eventRepository.CheckDateAndTimeByEventId(id))
-            {
-                count++;
-            }
-
-            return count;
-        }
 
         [HttpPost("{id:int}/SaveDate")]
         public IActionResult SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)

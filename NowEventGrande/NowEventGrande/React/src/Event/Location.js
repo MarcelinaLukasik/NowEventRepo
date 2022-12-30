@@ -39,7 +39,7 @@ function Location() {
 
 
     async function fetchProgress() {
-      const res = await fetch(`/events/${eventId}/GetChecklistProgress`);      
+      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
       res
         .json()
         .then(res => setCount(res));

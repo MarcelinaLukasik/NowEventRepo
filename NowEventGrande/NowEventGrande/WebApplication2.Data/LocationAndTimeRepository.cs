@@ -42,10 +42,8 @@ namespace WebApplication2.Data
         public void SaveDateAndTime(Event eventById, DateTime date, DateTime start, DateTime end)
         {
             eventById.Date = date;
-            DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
-            DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
-            eventById.EventStart = eventStartDate;
-            eventById.EventEnd = eventEndDate;
+            eventById.EventStart = date.Date.Add(start.TimeOfDay);
+            eventById.EventEnd = date.Date.Add(end.TimeOfDay);
             _appDbContext.SaveChanges();
         }
 
