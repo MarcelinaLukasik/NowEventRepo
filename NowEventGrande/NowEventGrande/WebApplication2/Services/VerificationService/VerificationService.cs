@@ -66,12 +66,8 @@ namespace WebApplication2.Services.VerificationService
             {
                 if (day.Key != dayOfWeekPl.ToLower()) continue;
 
-                // var openingAndClosingHours = day.Value.Split("–");
-                // var openingHoursAndMinutes = openingAndClosingHours[0].Split(":");
-                // var closingHoursAndMinutes = openingAndClosingHours[1].Split(":");
                 _openingHour = _dateAndTimeService.GetOperationalHour(day.Value, EventTimeStages.Start, startDate);
                 _closingHour = _dateAndTimeService.GetOperationalHour(day.Value, EventTimeStages.End, endDate);
-
                 bool isStartTimeCorrect = CompareOpeningAndClosingHours(startDate);
                 bool isEndTimeCorrect = CompareOpeningAndClosingHours(endDate);
                 SetEventTimeStatus(dayOfWeek, isStartTimeCorrect, EventTimeStages.Start);

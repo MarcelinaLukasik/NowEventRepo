@@ -12,11 +12,13 @@ namespace NewEventTest
         private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IDateAndTimeService _dateAndTimeService;
 
         [TestMethod]
         public void Test_VerifyGuestAllowedChars()
         {
-            VerificationService verificationService = new VerificationService(_locationRepository, _eventRepository, _budgetRepository);
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
             Guest guest = new Guest() { FirstName = "John", LastName = "123"};
             Guest guest2 = new Guest() { FirstName = "John", LastName = "Doe" };
             bool result = verificationService.VerifyGuestName(guest);
@@ -26,27 +28,46 @@ namespace NewEventTest
         }
 
         [TestMethod]
-        public void Test_VerifyEvent()
+        public void Test_VerifyCorrectEventData()
         {
-            VerificationService verificationService = new VerificationService(_locationRepository, _eventRepository, _budgetRepository);
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
             Event newEvent = new Event
-                { Id = 99999, Type = "", Size = "Small", Name = "birthdayEvent", Status = "" };
-            Event newEvent2 = new Event
-                { Id = 99999, Type = "Birthday", Size = "Small", Name = "event123", Status = "" };
-            Event newEvent3 = new Event
                 { Id = 99999, Type = "Birthday", Size = "Small", Name = "birthdayEvent", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
-            bool validEvent2 = verificationService.VerifyEvent(newEvent2);
-            bool validEvent3 = verificationService.VerifyEvent(newEvent3);
+            
+            Assert.IsTrue(validEvent);
+        }
+
+        [TestMethod]
+        public void Test_VerifyEventNameWithNumbers()
+        {
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
+            Event newEvent = new Event
+                { Id = 99999, Type = "Birthday", Size = "Small", Name = "event123", Status = "" };
+            bool validEvent = verificationService.VerifyEvent(newEvent);
+
             Assert.IsFalse(validEvent);
-            Assert.IsFalse(validEvent2);
-            Assert.IsTrue(validEvent3);
+        }
+
+        [TestMethod]
+        public void Test_VerifyEmptyBudgetType()
+        {
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
+            Event newEvent = new Event
+                { Id = 99999, Type = "", Size = "Small", Name = "birthdayEvent", Status = "" };
+            bool validEvent = verificationService.VerifyEvent(newEvent);
+
+            Assert.IsFalse(validEvent);
         }
 
         [TestMethod]
         public void Test_BudgetPrices()
         {
-            VerificationService verificationService = new VerificationService(_locationRepository, _eventRepository, _budgetRepository);
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("123");
             bool validPrices2 = verificationService.VerifyBudgetPrice("!#$%");
             Assert.IsTrue(validPrices);
@@ -54,28 +75,58 @@ namespace NewEventTest
         }
 
         [TestMethod]
-        public void Test_FormatTime()
+        public void Test_FormatStartTimeAM()
         {
             DateAndTimeService dateAndTimeService = new DateAndTimeService();
             Dictionary<string, string> dictWithTime = new Dictionary<string, string>()
             {
-                { "StartHour", "1" }, {"StartMinutes", "20"}, {"TimeOfDayStart", "PM"},
-                { "EndHour", "2" }, {"EndMinutes", "30"}, {"TimeOfDayEnd", "PM"}
+                { "StartHour", "1" }, {"StartMinutes", "20"}, {"TimeOfDayStart", "AM"},
+                { "EndHour", "2" }, {"EndMinutes", "30"}, {"TimeOfDayEnd", "AM"}
             };
-            Dictionary<string, string> dictWithTime2 = new Dictionary<string, string>()
+            Dictionary<string, string> result = dateAndTimeService.FormatDateInfo(dictWithTime);
+            
+            Assert.AreEqual("1:20 AM", result["StartTime"]);
+
+        }
+
+        [TestMethod]
+        public void Test_FormatEndTimePM()
+        {
+            DateAndTimeService dateAndTimeService = new DateAndTimeService();
+            Dictionary<string, string> dictWithTime = new Dictionary<string, string>()
             {
-                { "StartHour", "11" }, {"StartMinutes", "20"}, {"TimeOfDayStart", "AM"},
+                { "StartHour", "7" }, {"StartMinutes", "20"}, {"TimeOfDayStart", "PM"},
                 { "EndHour", "5" }, {"EndMinutes", "00"}, {"TimeOfDayEnd", "PM"}
             };
             Dictionary<string, string> result = dateAndTimeService.FormatDateInfo(dictWithTime);
-            Dictionary<string, string> result2 = dateAndTimeService.FormatDateInfo(dictWithTime2);
-            Assert.AreEqual("1:20 PM", result["StartTime"]);
-            Assert.AreEqual("2:30 PM", result["EndTime"]);
-            Assert.AreEqual("11:20 AM", result2["StartTime"]);
-            Assert.AreEqual("5:00 PM", result2["EndTime"]);
 
+            Assert.AreEqual("7:20 PM", result["StartTime"]);
         }
-            
-        
+
+        [TestMethod]
+        public void Test_GetOperationalHoursStart()
+        {
+            DateAndTimeService dateAndTimeService = new DateAndTimeService();
+            string dayInfo = "10:00–05:00";
+            DateTime date = new DateTime(2023, 12, 31, 5, 10, 00);
+            DateTime result = dateAndTimeService.GetOperationalHour(dayInfo, EventTimeStages.Start, date);
+            DateTime expectedDate = new DateTime(2023, 12, 31, 10, 00, 00);
+
+            Assert.AreEqual(expectedDate, result);
+        }
+        [TestMethod]
+        public void Test_GetOperationalHoursEnd()
+        {
+            DateAndTimeService dateAndTimeService = new DateAndTimeService();
+            string dayInfo = "10:00–05:00";
+            DateTime date = new DateTime(2023, 12, 31, 5, 10, 00);
+            DateTime result = dateAndTimeService.GetOperationalHour(dayInfo, EventTimeStages.End, date);
+            DateTime expectedDate = new DateTime(2023, 12, 31, 05, 00, 00);
+
+            Assert.AreEqual(expectedDate, result);
+        }
+
+
+
     }
 }
