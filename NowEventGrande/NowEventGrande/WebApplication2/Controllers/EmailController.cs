@@ -1,11 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MimeKit;
-using MimeKit.Text;
-using WebApplication2.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
 using WebApplication2.Services.EmailService;
 

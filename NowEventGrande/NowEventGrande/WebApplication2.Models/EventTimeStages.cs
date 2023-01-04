@@ -1,4 +1,4 @@
-﻿namespace WebApplication2.Services.VerificationService
+﻿namespace WebApplication2.Models
 {
     public enum EventTimeStages
     {

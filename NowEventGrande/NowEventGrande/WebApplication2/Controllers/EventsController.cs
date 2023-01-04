@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.VerificationService;
 using EventData = WebApplication2.Data.EventData;
-using WebApplication2.Services.AuthenticationService;
 using WebApplication2.Services.DateAndTimeService;
 
 namespace WebApplication2.Controllers
@@ -17,7 +13,6 @@ namespace WebApplication2.Controllers
     public class EventsController : ControllerBase
     {
         private readonly ILogger<EventsController> _logger;
-        // private readonly IGuestRepository _guestRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IVerificationService _verificationService;
         // private readonly IUserAuthenticationService _userAuthenticationService;
@@ -35,44 +30,6 @@ namespace WebApplication2.Controllers
             _dateAndTimeService = dateAndTimeService;
         }
 
-        //
-        // [HttpPost("SaveGuest")]
-        // public IActionResult SaveGuest([FromBody] Guest guest)
-        // {
-        //     bool validGuest = _verificationService.VerifyGuest(guest);
-        //     if (validGuest)
-        //     {
-        //         _guestRepository.AddGuest(guest);
-        //         return Ok(guest);
-        //     }
-        //     else
-        //         return BadRequest(guest);
-        // }
-
-        // [HttpGet("{id:int}/all")]
-        // public IEnumerable<Guest> GetAllGuests(int id)
-        // {
-        //     return _guestRepository.AllGuestsByEventId(id);
-        // }
-        //
-        // [HttpGet("{id:int}/all/descending")]
-        // public IEnumerable<Guest> GuestsSortedDescending(int id)
-        // {
-        //     return _guestRepository.SortDescending().Where(x => x.EventId == id).ToArray();
-        // }
-        //
-        // [HttpGet("{id:int}/all/ascending")]
-        // public IEnumerable<Guest> GuestsSortedAscending(int id)
-        // {
-        //     return _guestRepository.SortAscending().Where(x => x.EventId == id).ToArray();
-        // }
-        //
-        // [HttpDelete("removeGuest/{id:int}")]
-        // public IActionResult RemoveGuest(int id)
-        // {
-        //     _guestRepository.RemoveGuest(id);
-        //     return Ok(id);
-        // }
 
         [HttpPost("CreateNewEvent")]
         [Authorize]
@@ -162,9 +119,7 @@ namespace WebApplication2.Controllers
         public bool CheckIfLargeSize(int id)
         {
             return _eventRepository.CheckIfLargeSize(id);
-           
         }
-
 
 
     }

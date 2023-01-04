@@ -63,9 +63,6 @@ namespace WebApplication2.Controllers
 
                 if (result.Succeeded)
                 {
-                    var token = await _userAuthenticationService.CreateTokenAsync(user);
-                    var test = token;
-
                     return Ok(new { Token = await _userAuthenticationService.CreateTokenAsync(user) });
                 }
 
@@ -85,8 +82,8 @@ namespace WebApplication2.Controllers
         [Authorize]
         public IActionResult GetCurrentUserId()
         {
-            var result = HttpContext.User.Identity;
-            string userId = _userAuthenticationService.GetCurrentUserId(result.Name);
+            // var result = HttpContext.User.Identity.Name;
+            string userId = _userAuthenticationService.GetCurrentUserId(HttpContext.User.Identity.Name);
             return Ok(userId);
         }
 

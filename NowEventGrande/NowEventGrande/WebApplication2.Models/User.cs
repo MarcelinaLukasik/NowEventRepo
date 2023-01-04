@@ -16,8 +16,6 @@ namespace WebApplication2.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        // public string UserName { get; set; }
-
 
     }
 }

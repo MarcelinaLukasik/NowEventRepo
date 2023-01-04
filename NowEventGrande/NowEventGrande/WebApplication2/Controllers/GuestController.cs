@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.VerificationService;
@@ -17,7 +16,6 @@ namespace WebApplication2.Controllers
             _guestRepository = guestRepository;
             _verificationService = verificationService;
         }
-
 
         [HttpPost("SaveGuest")]
         public IActionResult SaveGuest([FromBody] Guest guest)
@@ -53,8 +51,10 @@ namespace WebApplication2.Controllers
         [HttpDelete("removeGuest/{id:int}")]
         public IActionResult RemoveGuest(int id)
         {
-            _guestRepository.RemoveGuest(id);
-            return Ok(id);
+            bool isRemoved = _guestRepository.RemoveGuest(id);
+            if (isRemoved)
+                return Ok(id);
+            else return BadRequest(id);
         }
     }
 }

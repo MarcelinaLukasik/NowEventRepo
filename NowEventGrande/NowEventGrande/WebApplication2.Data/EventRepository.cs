@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using WebApplication2.Models;
 
-
 namespace WebApplication2.Data
 {
     public class EventRepository : IEventRepository
@@ -131,15 +130,17 @@ namespace WebApplication2.Data
             info["Status"] = eventById.Status;
             return info;
         }
-
-        public DateTime GetEventStartTime(int id)
+        public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)
         {
-            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
-        }
-
-        public DateTime GetEventEndTime(int id)
-        {
-            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+            switch (eventTimeStage)
+            {
+                case EventTimeStages.Start:
+                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
+                case EventTimeStages.End:
+                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public bool ManageEventData(int id, string dataToChange, EventData eventDataCol)
