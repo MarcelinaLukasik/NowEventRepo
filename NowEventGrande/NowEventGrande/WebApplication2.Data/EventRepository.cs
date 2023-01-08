@@ -114,13 +114,11 @@ namespace WebApplication2.Data
             eventById.Status = status;
             _appDbContext.SaveChanges();
         }
-
         public string GetStatus(int id)
         {
             var eventById = GetEventById(id);
             return eventById.Status;
         }
-
         public Dictionary<string, string> GetInfo(int id)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();

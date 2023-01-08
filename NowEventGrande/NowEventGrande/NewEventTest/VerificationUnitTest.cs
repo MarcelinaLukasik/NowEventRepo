@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Services.DateAndTimeService;
 using WebApplication2.Services.VerificationService;
+using Moq;
 
 namespace NewEventTest
 {
@@ -15,16 +17,29 @@ namespace NewEventTest
         private readonly IDateAndTimeService _dateAndTimeService;
 
         [TestMethod]
-        public void Test_VerifyGuestAllowedChars()
+        public void Test_IncorrectLastNameInGuestInfo()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
                 _eventRepository, _budgetRepository, _dateAndTimeService);
             Guest guest = new Guest() { FirstName = "John", LastName = "123"};
-            Guest guest2 = new Guest() { FirstName = "John", LastName = "Doe" };
             bool result = verificationService.VerifyGuestName(guest);
-            bool result2 = verificationService.VerifyGuestName(guest2);
             Assert.IsFalse(result);
-            Assert.IsTrue(result2);
+            // Guest guest = new Guest() { FirstName = "John", LastName = "Ryrt"};
+            // var mock = new Mock<VerificationService>();
+            // // mock.Setup(p => p.VerifyGuestName(guest)).CallBase();
+            // var result = mock.Object.VerifyGuestName(guest);
+            // Assert.IsFalse(result);
+            // mock.Verify(p => p.VerifyGuestName(guest), Times.Once);
+        }
+
+        [TestMethod]
+        public void Test_CorrectGuestInfo()
+        {
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
+            Guest guest = new Guest() { FirstName = "John", LastName = "Doe" };
+            bool result = verificationService.VerifyGuestName(guest);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -64,14 +79,21 @@ namespace NewEventTest
         }
 
         [TestMethod]
-        public void Test_BudgetPrices()
+        public void Test_VerifyCorrectBudgetPrices()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
                 _eventRepository, _budgetRepository, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("123");
-            bool validPrices2 = verificationService.VerifyBudgetPrice("!#$%");
             Assert.IsTrue(validPrices);
-            Assert.IsFalse(validPrices2);
+        }
+
+        [TestMethod]
+        public void Test_IncorrectCharsInBudgetPrices()
+        {
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetRepository, _dateAndTimeService);
+            bool validPrices = verificationService.VerifyBudgetPrice("!#$%");
+            Assert.IsFalse(validPrices);
         }
 
         [TestMethod]
@@ -125,8 +147,54 @@ namespace NewEventTest
 
             Assert.AreEqual(expectedDate, result);
         }
+        //TODO move to separate file with eventrepo tests
+        [TestMethod]
+        public void Test_GetStatus()
+        {
+            var mockSet = new Mock<DbSet<Event>>();
+            var events = new List<Event>() {
+                new Event() {
+                    Id = 9999,
+                    Size = "Large",
+                    Type = "Festival",
+                    Name = "FestivalEvent",
+                    Status = "Incomplete"
 
+                }
+            };
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseInMemoryDatabase(databaseName: "NowEvent")
+                .Options;
+            var queryable = events.AsQueryable();
+            mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(queryable.Expression);
+            using (var context = new AppDbContext(options))
+            {
+                context.Events.Add(new Event
+                {
+                    Id = 9999,
+                    Size = "Large",
+                    Type = "Festival",
+                    Name = "FestivalEvent",
+                    Status = "Incomplete"
 
+                });
+
+                context.SaveChanges();
+            }
+            using (var context = new AppDbContext(options))
+            {
+                EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
+                var result = eventRepository.GetStatus(9999);
+
+                Assert.AreEqual("Incomplete", result);
+            }
+        }
+
+        [TestMethod]
+        public void Test_GetEventStartDate()
+        {
+
+        }
 
     }
 }
