@@ -10,9 +10,7 @@ namespace WebApplication2.Data
         {
         }
 
-        // public DbSet<Client> Clients { get; set; }
-        // public DbSet<ClientAddress> ClientAddress{ get; set; }
-        public DbSet<Event> Events{ get; set; }
+        public virtual DbSet<Event> Events{ get; set; }
         public DbSet<EventAddress> EventAddress{ get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Budget> Budget { get; set; }
@@ -20,7 +18,6 @@ namespace WebApplication2.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //new DbInitializer(modelBuilder).Seed();
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Event>()
                 .HasData(

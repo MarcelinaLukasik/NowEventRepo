@@ -23,7 +23,7 @@ const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
   //TODO change to post with choosen sort value
   useEffect(() => {
       async function fetchData() {
-        const res = await fetch(`/events/${currentEventId}/all`);      
+        const res = await fetch(`/guest/${currentEventId}/all`);      
         res
           .json()
           .then(res => setState(res))
@@ -34,7 +34,7 @@ const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/events/${currentEventId}/all`);      
+      const res = await fetch(`/guest/${currentEventId}/all`);      
       res
         .json()
         .then(res => setState(res))
@@ -59,7 +59,7 @@ const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
   }
 
   async function handleSort(sortType){
-    const response = await fetch(`/events/${currentEventId}/all/${sortType}`);
+    const response = await fetch(`/guest/${currentEventId}/all/${sortType}`);
     const result = await response.json();
     setState(result);
   }
@@ -77,7 +77,7 @@ const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
 
   async function handlePost(){ 
         async function fetchData() {
-          const res = await fetch(`/events/removeGuest/${id}`, {
+          const res = await fetch(`/guest/removeGuest/${id}`, {
             method: "delete",
             headers: {
               "Content-Type": "application/json",

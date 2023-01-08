@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using WebApplication2.Services.AuthenticationService;
 
 namespace WebApplication2.Controllers
@@ -25,12 +19,6 @@ namespace WebApplication2.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _userAuthenticationService = userAuthenticationService;
-        }
-
-        [HttpGet]
-        public IActionResult Test()
-        {
-            return Ok("here");
         }
 
         [HttpPost("Register")]
@@ -51,7 +39,6 @@ namespace WebApplication2.Controllers
                 if (result.Succeeded)
                 {
                     var res = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
-                    // await _signInManager.SignInAsync(user, false);
                     return Ok(res);
                 }
 
@@ -59,13 +46,9 @@ namespace WebApplication2.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
             }
-
             return BadRequest();
-
         }
 
         [HttpPost("Login")]
@@ -80,14 +63,10 @@ namespace WebApplication2.Controllers
 
                 if (result.Succeeded)
                 {
-                    var token = await _userAuthenticationService.CreateTokenAsync(user);
-                    var test = token;
-
                     return Ok(new { Token = await _userAuthenticationService.CreateTokenAsync(user) });
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
-
             }
             return BadRequest(user);
         }
@@ -96,7 +75,6 @@ namespace WebApplication2.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-
             return Ok("Logout");
         }
 
@@ -104,8 +82,8 @@ namespace WebApplication2.Controllers
         [Authorize]
         public IActionResult GetCurrentUserId()
         {
-            var result = HttpContext.User.Identity;
-            string userId = _userAuthenticationService.GetCurrentUserId(result.Name);
+            // var result = HttpContext.User.Identity.Name;
+            string userId = _userAuthenticationService.GetCurrentUserId(HttpContext.User.Identity.Name);
             return Ok(userId);
         }
 

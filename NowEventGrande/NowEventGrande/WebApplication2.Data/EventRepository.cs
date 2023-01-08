@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using WebApplication2.Models;
-
 
 namespace WebApplication2.Data
 {
     public class EventRepository : IEventRepository
     {
         private readonly AppDbContext _appDbContext;
-        
-        public EventRepository(AppDbContext appDbContext)
+        private readonly IBudgetRepository _budgetRepository;
+        private readonly ILocationAndTimeRepository _locationAndTimeRepository;
+
+        public EventRepository(AppDbContext appDbContext, IBudgetRepository budgetRepository,
+            ILocationAndTimeRepository locationAndTimeRepository)
         {
             _appDbContext = appDbContext;
+            _budgetRepository = budgetRepository;
+            _locationAndTimeRepository = locationAndTimeRepository;
         }
         public int AddEvent(Event newEvent)
         {
-            newEvent.Status = "Incomplete";
+            newEvent.Status = EventStatuses.Incomplete;
             _appDbContext.Events.Add(newEvent);
             _appDbContext.SaveChanges();
 
-            Budget budget = CreateBudget(newEvent.Id);
-            _appDbContext.Budget.Add(budget);
-            _appDbContext.SaveChanges();
+            Budget budget = _budgetRepository.CreateBudget(newEvent.Id);
+            _budgetRepository.AddBudget(budget);
             return newEvent.Id;
         }
 
@@ -63,16 +60,7 @@ namespace WebApplication2.Data
             return result;
         }
 
-        public Budget CreateBudget(int eventId)
-        {
-            Budget budget = new Budget();
-            budget.Total = 0;
-            budget.RentPrice = 0;
-            budget.DecorationPrice = 0;
-            budget.FoodPrice = 0;
-            budget.EventId = eventId;
-            return budget;
-        }
+        
 
         public Event GetEventById(int id)
         {
@@ -87,27 +75,24 @@ namespace WebApplication2.Data
 
         public bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
-            var eventById = GetEventById(id);
-            bool isCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
+            bool isDateCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
             bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
             bool correctEndTime = DateTime.TryParse(formattedDateInfo["EndTime"], out var end);
 
-            if (isCorrect && correctStartTime && correctEndTime)
+            if (isDateCorrect && correctStartTime && correctEndTime)
             {
+                var eventById = GetEventById(id);
                 int result = DateTime.Compare(date, DateTime.Now);
                 if (result < 0)
                 {
                     return false;
                 }
                 else
-                    eventById.Date = date;
-
-                DateTime eventStartDate = date.Date.Add(start.TimeOfDay);
-                DateTime eventEndDate = date.Date.Add(end.TimeOfDay);
-                eventById.EventStart = eventStartDate;
-                eventById.EventEnd = eventEndDate;
-                _appDbContext.SaveChanges();
-                return true;
+                {
+                    _locationAndTimeRepository.SaveDateAndTime(eventById, date, start, end);
+                    return true;
+                }
+                
             }
             else return false;
         }
@@ -129,13 +114,11 @@ namespace WebApplication2.Data
             eventById.Status = status;
             _appDbContext.SaveChanges();
         }
-
         public string GetStatus(int id)
         {
             var eventById = GetEventById(id);
             return eventById.Status;
         }
-
         public Dictionary<string, string> GetInfo(int id)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
@@ -145,15 +128,17 @@ namespace WebApplication2.Data
             info["Status"] = eventById.Status;
             return info;
         }
-
-        public DateTime GetEventStartTime(int id)
+        public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)
         {
-            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
-        }
-
-        public DateTime GetEventEndTime(int id)
-        {
-            return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+            switch (eventTimeStage)
+            {
+                case EventTimeStages.Start:
+                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
+                case EventTimeStages.End:
+                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public bool ManageEventData(int id, string dataToChange, EventData eventDataCol)

@@ -45,14 +45,14 @@ function Summary() {
     }
 
     async function fetchProgress() {
-      const res = await fetch(`/events/${eventId}/GetChecklistProgress`);      
+      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
       res
         .json()
         .then(res => setCount(res));
     }
 
     async function checkStatus() {
-        const res = await fetch(`/events/${id}/CheckStatus`);
+        const res = await fetch(`/progress/${id}/CheckStatus`);
     }  
 
     async function getInfo() {

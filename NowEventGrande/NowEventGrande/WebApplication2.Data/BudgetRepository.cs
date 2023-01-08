@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApplication2.Models;
+﻿using WebApplication2.Models;
 
 namespace WebApplication2.Data
 {
@@ -15,6 +9,17 @@ namespace WebApplication2.Data
         public BudgetRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
+        }
+
+        public Budget CreateBudget(int eventId)
+        {
+            Budget budget = new Budget();
+            budget.Total = 0;
+            budget.RentPrice = 0;
+            budget.DecorationPrice = 0;
+            budget.FoodPrice = 0;
+            budget.EventId = eventId;
+            return budget;
         }
 
         public void AddBudget(Budget budget)
@@ -42,6 +47,8 @@ namespace WebApplication2.Data
                     case BudgetPrices.Rent:
                         budgedToChange.RentPrice = price;
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(budgetPrice), budgetPrice, null);
                 }
                 budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
                 await _appDbContext.SaveChangesAsync();
@@ -71,9 +78,8 @@ namespace WebApplication2.Data
                         .Select(x => x.FoodPrice).FirstOrDefault();
                     return foodPrice;
                 default:
-                    return -1;
+                    throw new ArgumentOutOfRangeException();
             }
-            // return rentPrice != 0 && decorPrice != 0 && foodPrice != 0;
         }
 
         public Dictionary<BudgetPrices, decimal> GetAllPrices(int eventId)

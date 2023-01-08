@@ -1,23 +1,28 @@
 ﻿using System.Net.Mail;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using WebApplication2.Services.DateAndTimeService;
 
 namespace WebApplication2.Services.VerificationService
 {
     public class VerificationService : IVerificationService
     {
-        private readonly ILocationRepository _locationRepository;
+        private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
+        private readonly IDateAndTimeService _dateAndTimeService;
         private Dictionary<string, string> _verificationInfo = new Dictionary<string, string>();
-        private Dictionary<string, string> _openingHours = new Dictionary<string, string>();
+        private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
+        private DateTime _openingHour;
+        private DateTime _closingHour;
 
-        public VerificationService(ILocationRepository locationRepository, IEventRepository eventRepository, 
-            IBudgetRepository budgetRepository)
+        public VerificationService(ILocationAndTimeRepository locationRepository, IEventRepository eventRepository, 
+            IBudgetRepository budgetRepository, IDateAndTimeService dateAndTimeService)
         {
             _locationRepository = locationRepository;
             _eventRepository = eventRepository;
             _budgetRepository = budgetRepository;
+            _dateAndTimeService = dateAndTimeService;
         }
 
         public Dictionary<string, string> GetVerificationInfo(int eventId)
@@ -48,116 +53,25 @@ namespace WebApplication2.Services.VerificationService
             }
         }
 
-        public void VerifyPlaceHours(string allHours, int id)
+        public void VerifyPlaceHours(string allDaysAndHours, int id)
         {
-            var hours = allHours.Split('\u002C');
-            foreach (var hour in hours)
-            {
-                var day = hour.Substring(0, hour.Length - 13);
-                var dayHours = hour.Substring(hour.Length - 11);
-                _openingHours[day] = dayHours;
-            }
-
-            // var startHour = _eventRepository.GetEventStartTime(id).ToShortTimeString().Replace(":", ",");
-            // var startHour = DateTime.Parse(eventStartHours);
-            // var endHour = _eventRepository.GetEventEndTime(id).ToShortTimeString().Replace(":", ",");
-            // var endHour = DateTime.Parse(eventEndHours);
-            var startHour = _eventRepository.GetEventStartTime(id);
-            var endHour = _eventRepository.GetEventEndTime(id);
-
-            var dayOfWeek = _eventRepository.GetEventStartDate(id).DayOfWeek;
+            _allOpeningHours = _dateAndTimeService.FormatAllOpeningDaysAndHours(allDaysAndHours);
+            var startDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.Start);
+            var endDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.End);
+            DayOfWeek dayOfWeek = _eventRepository.GetEventStartDate(id).DayOfWeek;
             System.Globalization.CultureInfo pl = new System.Globalization.CultureInfo("pl-PL");
             string dayOfWeekPl = pl.DateTimeFormat.DayNames[(int)dayOfWeek];
 
-            foreach (var day in _openingHours)
+            foreach (var day in _allOpeningHours)
             {
-                if (day.Key == dayOfWeekPl.ToLower())
-                {
-                    // var formatedHours = day.Value.Replace(":", ",");
-                    var result = day.Value.Split("–");
-                    //TODO try to compare with TimeOfDay instead of parsing to decimals
-                    // bool test = timeStart.TimeOfDay < choosedTime.TimeOfDay;
-                    //TODO set startHour date to openingHour date
-                    var openingHour = DateTime.Parse(result[0]);
-                    //TODO if hour over midnight add one day
-                    var closingHour = DateTime.Parse(result[1]);
+                if (day.Key != dayOfWeekPl.ToLower()) continue;
 
-                    // if ()
-                    // if (closingHour - openingHour < 0)
-                    // {
-                        if (openingHour > startHour || startHour > closingHour)
-                        {
-                            _verificationInfo["EventStartStatus"] =
-                                $"The start time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {result[0].Replace(",", ":")}.";
-                        }
-                        else
-                        {
-                            _verificationInfo["EventStartStatus"] =
-                                "The start time of the event match the operating hours of the selected venue. Yay!";
-                        }
-
-                        if (openingHour > endHour || endHour > closingHour)
-                        {
-                            _verificationInfo["EventEndStatus"] =
-                                $"The end time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is closing at {result[1].Replace(",", ":")}.";
-                        }
-                        else
-                        {
-                            _verificationInfo["EventEndStatus"] =
-                                "The end time of the event match the operating hours of the selected venue. Nice!";
-                        }
-                    // }
-
-                    // if (closingHour - openingHour < 0)
-                    // {
-                    //     if (openingHour > startHour || startHour > closingHour)
-                    //     {
-                    //         _verificationInfo["EventStartStatus"] =
-                    //             $"The start time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {result[0].Replace(",", ":")}.";
-                    //     }
-                    //     else
-                    //     {
-                    //         _verificationInfo["EventStartStatus"] =
-                    //             "The start time of the event match the operating hours of the selected venue. Yay!";
-                    //     }
-                    //
-                    //     if (openingHour > endHour || endHour > closingHour)
-                    //     {
-                    //         _verificationInfo["EventEndStatus"] =
-                    //             $"The end time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is closing at {result[1].Replace(",", ":")}.";
-                    //     }
-                    //     else
-                    //     {
-                    //         _verificationInfo["EventEndStatus"] =
-                    //             "The end time of the event match the operating hours of the selected venue. Nice!";
-                    //     }
-                    // }
-
-                    // if (closingHour - openingHour > 0)
-                    // {
-                        if (openingHour > startHour || startHour > closingHour)
-                        {
-                            _verificationInfo["EventStartStatus"] =
-                                $"The start time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {result[0].Replace(",", ":")}.";
-                        }
-                        else
-                        {
-                            _verificationInfo["EventStartStatus"] =
-                                "The start time of the event match the operating hours of the selected venue. Yay!";
-                        }
-
-                        if (openingHour > endHour || endHour > closingHour)
-                        {
-                            _verificationInfo["EventEndStatus"] =
-                                $"The end time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is closing at {result[1].Replace(",", ":")}.";
-                        }
-                        else
-                        {
-                            _verificationInfo["EventEndStatus"] =
-                                "The end time of the event match the operating hours of the selected venue. Nice!";
-                        }
-                    // }
-                }
+                _openingHour = _dateAndTimeService.GetOperationalHour(day.Value, EventTimeStages.Start, startDate);
+                _closingHour = _dateAndTimeService.GetOperationalHour(day.Value, EventTimeStages.End, endDate);
+                bool isStartTimeCorrect = CompareOpeningAndClosingHours(startDate);
+                bool isEndTimeCorrect = CompareOpeningAndClosingHours(endDate);
+                SetEventTimeStatus(dayOfWeek, isStartTimeCorrect, EventTimeStages.Start);
+                SetEventTimeStatus(dayOfWeek, isEndTimeCorrect, EventTimeStages.End);
             }
         }
 
@@ -173,33 +87,19 @@ namespace WebApplication2.Services.VerificationService
             {
                 validMail = false;
             }
-            if (validName && validMail)
-            {
-                return true;
-            }
-            else
-                return false;
+            return validName && validMail;
         }
 
         public bool VerifyGuestName(Guest guest)
         {
             bool validFirstName = guest.FirstName.All(Char.IsLetter);
             bool validLastName = guest.LastName.All(Char.IsLetter);
-
-            if (validFirstName && validLastName)
-            {
-                return true;
-            }
-            else return false;
+            return validFirstName && validLastName;
         }
 
         public bool VerifyEvent(Event newEvent)
         {
-            if (newEvent.Type == "")
-            {
-                return false;
-            }
-            return newEvent.Name.All(Char.IsLetter);
+            return newEvent.Type != "" && newEvent.Name.All(Char.IsLetter);
         }
 
         public bool CheckBudgetFullStatus(int eventId)
@@ -210,13 +110,54 @@ namespace WebApplication2.Services.VerificationService
                 if (price.Value <= 0)
                     return false;
             }
-
             return true;
         }
 
         public bool VerifyBudgetPrice(string budgetPrice)
         {
             return decimal.TryParse(budgetPrice, out _);
+        }
+
+        public bool CompareOpeningAndClosingHours(DateTime chosenHour)
+        {
+            int openingCompareResult = DateTime.Compare(chosenHour, _openingHour);
+            int closingCompareResult = DateTime.Compare(_closingHour, chosenHour);
+            return openingCompareResult >= 0 || closingCompareResult >= 0;
+        }
+
+        public void SetEventTimeStatus(DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )
+        {
+            var openingTimeOnly = _openingHour.ToString("HH:mm");
+            var closingTimeOnly = _closingHour.ToString("HH:mm");
+
+            switch (timeStage)
+            {
+                case EventTimeStages.Start:
+                    if (!isTimeCorrect)
+                    {
+                        
+                        _verificationInfo["EventStartStatus"] =
+                            $"The start time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                    }
+                    else
+                        _verificationInfo["EventStartStatus"] =
+                            "The start time of the event match the operating hours of the selected venue. Yay!";
+                    break;
+
+                case EventTimeStages.End:
+                    if (!isTimeCorrect)
+                    {
+                        _verificationInfo["EventEndStatus"] =
+                            $"The end time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                    }
+                    else
+                        _verificationInfo["EventEndStatus"] =
+                            "The end time of the event match the operating hours of the selected venue. Yay!";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(timeStage), timeStage, null);
+            }
         }
 
     }

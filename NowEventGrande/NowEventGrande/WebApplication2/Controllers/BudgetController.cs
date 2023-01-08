@@ -19,42 +19,27 @@ namespace WebApplication2.Controllers
             _verificationService = verificationService;
         }
 
-        [HttpPatch("{eventId:int}/Update/RentPrice")]
-        public async Task<IActionResult> UpdateRentPrice(int eventId, [FromBody] string rentPrice)
+        [HttpPatch("{eventId:int}/Update/{typeToChange}")]
+        public async Task<IActionResult> UpdateRentPrice(int eventId, string typeToChange, [FromBody] string rentPrice)
         {
             bool validPrice = _verificationService.VerifyBudgetPrice(rentPrice);
-            // var isDecimal = decimal.TryParse(rentPrice, out decimal price);
             if (validPrice)
             {
-                await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Rent);
+                switch (typeToChange)
+                {
+                    case "RentPrice":
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Rent);
+                        break;
+                    case "DecorationPrice":
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Decoration);
+                        break;
+                    case "FoodPrice":
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Food);
+                        break;
+                }
                 return Ok(rentPrice);
             }
             else return BadRequest(rentPrice);
-
-        }
-
-        [HttpPatch("{eventId:int}/Update/DecorationPrice")]
-        public async Task<IActionResult> UpdateDecorPrice(int eventId, [FromBody] string decorationPrice)
-        {
-            bool validPrice = _verificationService.VerifyBudgetPrice(decorationPrice);
-            if (validPrice)
-            {
-                await _budgetRepository.ChangePrice(decimal.Parse(decorationPrice), eventId, BudgetPrices.Decoration);
-                return Ok(decorationPrice);
-            }
-            else return BadRequest(decorationPrice);
-        }
-
-        [HttpPatch("{eventId:int}/Update/FoodPrice")]
-        public async Task<IActionResult> UpdateFoodPrice(int eventId, [FromBody] string foodPrice)
-        {
-            bool validPrice = _verificationService.VerifyBudgetPrice(foodPrice);
-            if (validPrice)
-            {
-                await _budgetRepository.ChangePrice(decimal.Parse(foodPrice), eventId, BudgetPrices.Food);
-                return Ok(foodPrice);
-            }
-            else return BadRequest(foodPrice);
 
         }
 

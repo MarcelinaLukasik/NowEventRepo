@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using WebApplication2.Models;
+﻿using WebApplication2.Models;
 
 namespace WebApplication2.Data
 {
@@ -30,22 +24,23 @@ namespace WebApplication2.Data
             return _appDbContext.Guests.Where(guests => guests.EventId == eventId);
         }
 
-        public Guest GetGuestById(int id)
-        {
-            return _appDbContext.Guests.First(p => p.Id == id);
-        }
-
         public void AddGuest(Guest guest)
         {
             _appDbContext.Guests.Add(guest);
             _appDbContext.SaveChanges();
         }
 
-        public void RemoveGuest(int id)
+        public bool RemoveGuest(int id)
         {
-            var guestToRemove = _appDbContext.Guests.First(p => p.Id == id);
-            _appDbContext.Guests.Remove(guestToRemove);
-            _appDbContext.SaveChanges();
+            var guestToRemove = _appDbContext.Guests.FirstOrDefault(g => g.Id == id);
+            if (guestToRemove != null)
+            {
+                _appDbContext.Guests.Remove(guestToRemove);
+                _appDbContext.SaveChanges();
+                return true;
+            }
+            else return false;
+
         }
 
         public IEnumerable<Guest> SortDescending()

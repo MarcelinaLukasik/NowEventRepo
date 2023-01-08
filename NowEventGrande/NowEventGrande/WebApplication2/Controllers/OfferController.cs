@@ -29,6 +29,13 @@ namespace WebApplication2.Controllers
             return Ok(offers);
         }
 
+        [HttpPost("PostOffer")]
+        public IActionResult AddOffer([FromBody] Offer offer)
+        {
+            _offerRepository.AddOffer(offer);
+            return Ok(offer);
+        }
+
         /*[HttpGet]*/
         /*public IEnumerable<Offer> GetAll()
         {
