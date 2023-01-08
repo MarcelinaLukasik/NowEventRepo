@@ -6,7 +6,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using NowEvent.Validators;
 using NowEvent;
 using NowEvent.Data;
 using NowEvent.Models;
@@ -14,6 +13,7 @@ using NowEvent.Services.AuthenticationService;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.EmailService;
 using NowEvent.Services.VerificationService;
+using NowEvent.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,7 +90,6 @@ builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService
 builder.Services.AddScoped<IDateAndTimeService, DateAndTimeService>();
 
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
-
 
 var app = builder.Build();
 

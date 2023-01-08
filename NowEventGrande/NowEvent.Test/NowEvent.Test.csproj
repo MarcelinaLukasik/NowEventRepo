@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NowEvent.Data\NowEvent.Data.csproj" />
+    <ProjectReference Include="..\NowEvent.Models\NowEvent.Models.csproj" />
+    <ProjectReference Include="..\NowEvent\NowEvent.csproj" />
     <ProjectReference Include="..\WebApplication2\NowEvent.csproj" />
   </ItemGroup>
 

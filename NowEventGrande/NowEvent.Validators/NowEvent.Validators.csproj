@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApplication2.Models\NowEvent.Models.csproj" />
+    <ProjectReference Include="..\NowEvent.Models\NowEvent.Models.csproj" />
   </ItemGroup>
 
 </Project>
