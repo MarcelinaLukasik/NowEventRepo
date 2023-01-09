@@ -60,28 +60,29 @@ namespace NowEvent.Controllers
 
 
         [HttpPost("{id:int}/SaveDate")]
-        public IActionResult SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
+        public async Task<IActionResult> SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
         {
             Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
-            return _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
+            return await _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
 
         [HttpGet("{id:int}/GetEventStartDate")]
-        public IActionResult GetEventStartDate(int id)
+        public async Task<IActionResult> GetEventStartDate(int id)
         {
-            return Ok(_eventRepository.GetEventStartDate(id).ToString("yyyy-MM-dd'T'HH:mm:ss"));
+            var getEvent = await _eventRepository.GetEventStartDate(id);
+            return Ok();
         }
 
         [HttpGet("{id:int}/GetEventStatus")]
-        public string GetEventStatus(int id)
+        public async Task<string> GetEventStatus(int id)
         {
-            return _eventRepository.GetStatus(id);
+            return await _eventRepository.GetStatus(id);
         }
 
         [HttpGet("{id:int}/GetEventInfo")]
-        public Dictionary<string, string> GetEventInfo(int id)
+        public async Task<Dictionary<string, string>> GetEventInfo(int id)
         {
-            return _eventRepository.GetInfo(id);
+            return await _eventRepository.GetInfo(id);
         }
 
         [HttpPost("{id:int}/SetSize")]

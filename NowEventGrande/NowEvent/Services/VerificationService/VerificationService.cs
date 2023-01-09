@@ -11,7 +11,7 @@ namespace NowEvent.Services.VerificationService
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
         private readonly IDateAndTimeService _dateAndTimeService;
-        private Dictionary<string, string> _verificationInfo = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>();
         private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
         private DateTime _openingHour;
         private DateTime _closingHour;
@@ -53,14 +53,14 @@ namespace NowEvent.Services.VerificationService
             }
         }
 
-        public void VerifyPlaceHours(string allDaysAndHours, int id)
+        public async Task VerifyPlaceHours(string allDaysAndHours, int id)
         {
             _allOpeningHours = _dateAndTimeService.FormatAllOpeningDaysAndHours(allDaysAndHours);
             var startDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.Start);
             var endDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.End);
-            DayOfWeek dayOfWeek = _eventRepository.GetEventStartDate(id).DayOfWeek;
+            var dayOfWeek = await _eventRepository.GetEventStartDate(id);
             System.Globalization.CultureInfo pl = new System.Globalization.CultureInfo("pl-PL");
-            string dayOfWeekPl = pl.DateTimeFormat.DayNames[(int)dayOfWeek];
+            string dayOfWeekPl = pl.DateTimeFormat.DayNames[(int)dayOfWeek.DayOfWeek];
 
             foreach (var day in _allOpeningHours)
             {
@@ -70,8 +70,8 @@ namespace NowEvent.Services.VerificationService
                 _closingHour = _dateAndTimeService.GetOperationalHour(day.Value, EventTimeStages.End, endDate);
                 bool isStartTimeCorrect = CompareOpeningAndClosingHours(startDate);
                 bool isEndTimeCorrect = CompareOpeningAndClosingHours(endDate);
-                SetEventTimeStatus(dayOfWeek, isStartTimeCorrect, EventTimeStages.Start);
-                SetEventTimeStatus(dayOfWeek, isEndTimeCorrect, EventTimeStages.End);
+                SetEventTimeStatus(dayOfWeek.DayOfWeek, isStartTimeCorrect, EventTimeStages.Start);
+                SetEventTimeStatus(dayOfWeek.DayOfWeek, isEndTimeCorrect, EventTimeStages.End);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
 
 namespace NowEvent.Data
@@ -16,19 +17,19 @@ namespace NowEvent.Data
             _appDbContext = appDbContext;
         }
 
-        public void AddOffer(Offer offer)
+        public async Task AddOffer(Offer offer)
         {
-            _appDbContext.Offer.Add(offer);
-            _appDbContext.SaveChanges();
+            await _appDbContext.Offer.AddAsync(offer);
+            await _appDbContext.SaveChangesAsync();
         }
-        public IEnumerable<Offer> GetAllOffers()
+        public async Task<IEnumerable<Offer>> GetAllOffers()
         {
-            return _appDbContext.Offer;
+            return await _appDbContext.Offer.ToListAsync();
         }
 
-        public Offer GetOfferById(int id)
+        public async Task<Offer> GetOfferById(int id)
         {
-            return _appDbContext.Offer.FirstOrDefault(o => o.Id == id);
+            return await _appDbContext.Offer.FindAsync(id);
         }
     }
 }
