@@ -31,3 +31,7 @@ yarn-error.log*
 /NowEventGrande/NowEventGrande/Validators/obj/Debug/net6.0/NowEvent.Validators.csproj.AssemblyReference.cache
 /NowEventGrande/NowEventGrande/Validators/obj/Debug/net6.0/NowEvent.Validators.GeneratedMSBuildEditorConfig.editorconfig
 /NowEventGrande/NowEventGrande/NewEventAppTest/obj/Debug
+/NowEventGrande/Validators/obj
+/NowEventGrande/WebApplication2/obj
+/NowEventGrande/WebApplication2.Data/obj
+/NowEventGrande/WebApplication2.Models/obj
