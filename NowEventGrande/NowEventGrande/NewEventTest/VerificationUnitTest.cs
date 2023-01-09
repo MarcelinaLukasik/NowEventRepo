@@ -24,12 +24,6 @@ namespace NewEventTest
             Guest guest = new Guest() { FirstName = "John", LastName = "123"};
             bool result = verificationService.VerifyGuestName(guest);
             Assert.IsFalse(result);
-            // Guest guest = new Guest() { FirstName = "John", LastName = "Ryrt"};
-            // var mock = new Mock<VerificationService>();
-            // // mock.Setup(p => p.VerifyGuestName(guest)).CallBase();
-            // var result = mock.Object.VerifyGuestName(guest);
-            // Assert.IsFalse(result);
-            // mock.Verify(p => p.VerifyGuestName(guest), Times.Once);
         }
 
         [TestMethod]

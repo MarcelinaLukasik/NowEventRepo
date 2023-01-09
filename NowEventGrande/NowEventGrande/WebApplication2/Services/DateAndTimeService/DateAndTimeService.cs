@@ -14,6 +14,7 @@ namespace WebApplication2.Services.DateAndTimeService
 
         public Dictionary<string, string> FormatAllOpeningDaysAndHours(string allDaysAndHours)
         {
+            //TODO secure when no hours found
             var daysAndHours = allDaysAndHours.Split('\u002C');
             foreach (var dayAndHour in daysAndHours)
             {
