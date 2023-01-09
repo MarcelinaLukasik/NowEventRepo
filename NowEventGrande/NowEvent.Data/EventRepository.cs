@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
 
 namespace NowEvent.Data
@@ -27,7 +28,7 @@ namespace NowEvent.Data
             return newEvent.Id;
         }
 
-        public PagedResult<Event> GetAll(OfferQuery query)
+        public async Task<PagedResult<Event>> GetAll(OfferQuery query)
         {
             var baseQuery = _appDbContext.Events
                 .Where(r => query.SearchPhrase == null || (r.Name.ToLower().Contains(query.SearchPhrase.ToLower())
@@ -48,12 +49,10 @@ namespace NowEvent.Data
                    : baseQuery.OrderByDescending(selectedColumn);
             }
 
-            var offers = baseQuery
-            // pomijamy oferty o określoną ilość
-            .Skip(query.PageSize * (query.PageNumber - 1))
-            // bierzemy określolną ilość ofert
+            var offers = await baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
             .Take(query.PageSize)
-            .ToList();
+            .ToListAsync();
 
             var totalItemsCount = baseQuery.Count();
             var result = new PagedResult<Event>(offers, totalItemsCount, query.PageSize, query.PageNumber);
@@ -62,9 +61,9 @@ namespace NowEvent.Data
 
         
 
-        public Event GetEventById(int id)
+        public async Task<Event> GetEventById(int id)
         {
-            return _appDbContext.Events.FirstOrDefault(x => x.Id == id);
+            return await _appDbContext.Events.FindAsync(id);
         }
 
         public IQueryable GetEventsByUserId(string id)
@@ -73,7 +72,7 @@ namespace NowEvent.Data
         }
 
 
-        public bool SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
+        public async Task<bool> SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
             bool isDateCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
             bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
@@ -81,7 +80,7 @@ namespace NowEvent.Data
 
             if (isDateCorrect && correctStartTime && correctEndTime)
             {
-                var eventById = GetEventById(id);
+                var eventById = await GetEventById(id);
                 int result = DateTime.Compare(date, DateTime.Now);
                 if (result < 0)
                 {
@@ -97,32 +96,33 @@ namespace NowEvent.Data
             else return false;
         }
 
-        public bool CheckDateAndTimeByEventId(int id)
+        public async Task<bool> CheckDateAndTimeByEventId(int id)
         {
-            return GetEventById(id).Date > DateTime.Now;
+            var eventId = await GetEventById(id);
+            return eventId.Date > DateTime.Now;
         }
 
-        public DateTime GetEventStartDate(int id)
+        public async Task<DateTime> GetEventStartDate(int id)
         {
-            var eventById = GetEventById(id);
+            var eventById = await GetEventById(id);
             return eventById.EventStart;
         }
 
-        public void SetStatus(int id, string status)
+        public async Task SetStatus(int id, string status)
         {
-            var eventById = GetEventById(id);
+            var eventById = await GetEventById(id);
             eventById.Status = status;
-            _appDbContext.SaveChanges();
+            _appDbContext.SaveChangesAsync();
         }
-        public string GetStatus(int id)
+        public async Task<string> GetStatus(int id)
         {
-            var eventById = GetEventById(id);
+            var eventById = await GetEventById(id);
             return eventById.Status;
         }
-        public Dictionary<string, string> GetInfo(int id)
+        public async Task<Dictionary<string, string>> GetInfo(int id)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
-            var eventById = GetEventById(id);
+            var eventById = await GetEventById(id);
             info["Type"] = eventById.Type;
             info["Name"] = eventById.Name;
             info["Status"] = eventById.Status;

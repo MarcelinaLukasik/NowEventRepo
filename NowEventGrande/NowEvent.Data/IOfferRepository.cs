@@ -4,7 +4,7 @@ namespace NowEvent.Data;
 
 public interface IOfferRepository
 {
-    IEnumerable<Offer> GetAllOffers();
-    Offer GetOfferById(int id);
-    void AddOffer(Offer offer);
+    Task<IEnumerable<Offer>> GetAllOffers();
+    Task<Offer> GetOfferById(int id);
+    Task AddOffer(Offer offer);
 }

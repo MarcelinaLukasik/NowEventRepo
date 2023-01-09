@@ -24,7 +24,7 @@ namespace NowEvent.Controllers
 
         //TODO checkStatus, then setStatus based on checkStatus return value, ask where enum should be
         [HttpGet("{id:int}/CheckStatus")]
-        public bool CheckIfComplete(int id)
+        public async Task<bool> CheckIfComplete(int id)
         {
             var guests = _guestRepository.AllGuestsByEventId(id);
             if (!guests.Any())
@@ -40,7 +40,8 @@ namespace NowEvent.Controllers
                 return false;
             }
 
-            if (!_eventRepository.CheckDateAndTimeByEventId(id))
+            var checkDate = await _eventRepository.CheckDateAndTimeByEventId(id);
+            if (!checkDate)
             {
                 _eventRepository.SetStatus(id, EventStatuses.Incomplete);
                 return false;
@@ -54,7 +55,7 @@ namespace NowEvent.Controllers
         }
 
         [HttpGet("{id:int}/GetChecklistProgress")]
-        public int GetChecklistProgress(int id)
+        public async Task<int> GetChecklistProgress(int id)
         {
             var checklistCount = 0;
             var guests = _guestRepository.AllGuestsByEventId(id);
@@ -68,8 +69,8 @@ namespace NowEvent.Controllers
             {
                 checklistCount++;
             }
-
-            if (_eventRepository.CheckDateAndTimeByEventId(id))
+            var checkDate = await _eventRepository.CheckDateAndTimeByEventId(id);
+            if (checkDate)
             {
                 checklistCount++;
             }

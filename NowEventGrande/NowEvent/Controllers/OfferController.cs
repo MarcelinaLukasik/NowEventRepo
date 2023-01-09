@@ -23,24 +23,25 @@ namespace NowEvent.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<Event>> GetAll([FromQuery]OfferQuery query)
+        public async Task<ActionResult<IEnumerable<Event>>> GetAll([FromQuery]OfferQuery query)
         {
-            var offers = _eventRepository.GetAll(query);
+            var offers = await _eventRepository.GetAll(query);
             return Ok(offers);
         }
 
-        [HttpPost("PostOffer")]
-        public IActionResult AddOffer([FromBody] Offer offer)
+        [HttpGet("{id}")]
+        public async Task<Event> GetByIdAsync(int id)
         {
-            _offerRepository.AddOffer(offer);
+            return await _eventRepository.GetEventById(id);
+        }
+
+        [HttpPost("PostOffer")]
+        public async Task<IActionResult> AddOffer([FromBody] Offer offer)
+        {
+            await _offerRepository.AddOffer(offer);
             return Ok(offer);
         }
 
-        /*[HttpGet]*/
-        /*public IEnumerable<Offer> GetAll()
-        {
-            return _offerRepository.GetAllOffers().ToList();
-            //return _eventRepository.GetOffersWithInCompleteStatus().ToList();
-        }*/
+
     }
 }
