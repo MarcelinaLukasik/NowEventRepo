@@ -53,6 +53,8 @@ export const OffersMainPage = () => {
         return data;
     }
 
+    
+
     const handlePageClick = async (data) => {
         console.log(data.selected)
         let currPage = data.selected + 1;
