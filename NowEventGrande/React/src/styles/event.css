@@ -55,9 +55,13 @@
   );
 }
 
+h2 {
+  margin-bottom: 30px;
+}
+
 .event h3 {
   font-family: Calibri;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .column-3 {
@@ -357,11 +361,11 @@ ol li:before {
 
 
 .countdown {
-  background-color: #ab77ff;
+  background-color: #000000;
   border-radius: 20px;
-  margin: 0px;
-  padding: 0px;
-  font-size: 48px !important;
+  margin: 30px;
+  padding: 16px;
+  font-size: 58px !important;
   
 }
 

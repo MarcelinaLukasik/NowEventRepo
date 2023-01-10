@@ -2,16 +2,13 @@ import SideBar from "./SideBar";
 import Assistance from "./Assistance";
 import React from 'react';
 import '../styles/guests.css';
-import {Col} from "react-bootstrap";
-import lighbulbIcon from '../images/icons/light_bulb_small.png';
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import {handleStyle} from "./HandleProgress";
-import Counter from 'react-countdown-customizable';
+import Counter from 'react-countdown';
 
-function Summary() {
-    const [isOpen, setOpen] = useState(false);
-    const openInput = () => {setOpen(!isOpen);}
+
+function Summary() {   
     const location = useLocation();
     const eventId = location.state.EventId;
     const [id, setEventId] = useState(eventId);
