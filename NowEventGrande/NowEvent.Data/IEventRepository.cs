@@ -5,11 +5,12 @@ namespace NowEvent.Data
     public interface IEventRepository
     {
         int AddEvent(Event newEvent);
-        Task<Event> GetEventById(int id);
+        Task<Event> GetEventByIdAsync(int id);
+        Event GetEventById(int id);
         IQueryable GetEventsByUserId(string id);
         Task<bool> SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo);
         Task<bool> CheckDateAndTimeByEventId(int id);
-        Task<DateTime> GetEventStartDate(int id);
+        DateTime GetEventStartDate(int id);
         Task SetStatus(int id, string status);
         Task<string> GetStatus(int id);
         Task<Dictionary<string, string>> GetInfo(int id);

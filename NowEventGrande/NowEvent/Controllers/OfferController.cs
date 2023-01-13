@@ -32,7 +32,7 @@ namespace NowEvent.Controllers
         [HttpGet("{id}")]
         public async Task<Event> GetByIdAsync(int id)
         {
-            return await _eventRepository.GetEventById(id);
+            return await _eventRepository.GetEventByIdAsync(id);
         }
 
         [HttpPost("PostOffer")]

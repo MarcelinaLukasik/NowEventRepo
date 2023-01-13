@@ -53,12 +53,12 @@ namespace NowEvent.Services.VerificationService
             }
         }
 
-        public async Task VerifyPlaceHours(string allDaysAndHours, int id)
+        public void VerifyPlaceHours(string allDaysAndHours, int id)
         {
             _allOpeningHours = _dateAndTimeService.FormatAllOpeningDaysAndHours(allDaysAndHours);
             var startDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.Start);
             var endDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.End);
-            var dayOfWeek = await _eventRepository.GetEventStartDate(id);
+            var dayOfWeek =  _eventRepository.GetEventStartDate(id);
             System.Globalization.CultureInfo pl = new System.Globalization.CultureInfo("pl-PL");
             string dayOfWeekPl = pl.DateTimeFormat.DayNames[(int)dayOfWeek.DayOfWeek];
 
