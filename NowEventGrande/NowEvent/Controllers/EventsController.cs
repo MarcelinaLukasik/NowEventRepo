@@ -67,9 +67,9 @@ namespace NowEvent.Controllers
         }
 
         [HttpGet("{id:int}/GetEventStartDate")]
-        public async Task<IActionResult> GetEventStartDate(int id)
+        public IActionResult GetEventStartDate(int id)
         {
-            var getEvent = await _eventRepository.GetEventStartDate(id);
+            var getEvent = _eventRepository.GetEventStartDate(id);
             return Ok();
         }
 
