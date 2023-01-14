@@ -49,7 +49,7 @@ export const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <Link to={`/offer/${offer.id}/contact`} className="button-contact">Contact</Link>
+                    <Link to={`/offer/${offerId}/contact`} className="button-contact">Contact</Link>
                 </div>
             </Container>
         </div>
