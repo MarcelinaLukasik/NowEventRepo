@@ -106,8 +106,8 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active {
   margin-left: 14px;
 }
 .social-icon a {
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   background: rgb(208, 189, 189);
   display: inline-flex;
   border-radius: 50%;
@@ -119,8 +119,8 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active {
 }
 .social-icon a::before {
   content: "";
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   position: absolute;
   background-color: #ffffff;
   border-radius: 50%;

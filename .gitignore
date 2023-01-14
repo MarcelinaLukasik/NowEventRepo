@@ -55,3 +55,10 @@ yarn-error.log*
 /NowEventGrande/NowEventGrande/NewEventTest/bin/Debug/net6.0
 /NowEventGrande/NowEventGrande/NewEventTest/obj/Debug/net6.0
 /NowEventGrande/NowEventGrande/NewEventTest/obj
+/NowEventGrande/WebApplication2.Models/obj
+/NowEventGrande/WebApplication2.Data/obj
+/NowEventGrande/WebApplication2/obj
+/NowEventGrande/Validators/obj
+/NowEventGrande/package-lock.json
+/NowEventGrande/package.json
+/.gitignore

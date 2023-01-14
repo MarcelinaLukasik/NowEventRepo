@@ -29,7 +29,7 @@ namespace NowEvent.Controllers
             return Ok(offers);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("singleOffer/{id}")]
         public async Task<Event> GetByIdAsync(int id)
         {
             return await _eventRepository.GetEventByIdAsync(id);

@@ -24,8 +24,8 @@ export const OffersMainPage = () => {
     }, [query]);
 
     const fetchOffers = async () => {
-        const data = await fetch(query ? `/offer?searchPhrase=${query}&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=DESC` 
-        : `/offer?searchPhrase=&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=DESC`);
+        const data = await fetch(query ? `/offer?searchPhrase=${query}&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=DESC`
+            : `/offer?searchPhrase=&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=DESC`);
         const offers = await data.json();
         console.log(offers);
         setOffer(offers.items);
@@ -47,8 +47,8 @@ export const OffersMainPage = () => {
     }
 
     const fetchOffersByCurrentPage = async (currentPage) => {
-        const res = await fetch(query ? `/offer?searchPhrase=${query}&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=ASC` 
-        : `/offer?searchPhrase=&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=ASC`);
+        const res = await fetch(query ? `/offer?searchPhrase=${query}&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=ASC`
+            : `/offer?searchPhrase=&pageSize=10&pageNumber=${currentPage}&sortBy=Name&sortDirection=ASC`);
         const data = await res.json();
         return data;
     }
@@ -68,11 +68,11 @@ export const OffersMainPage = () => {
             SortBy: "Name",
             sortDirection: 'ASC'
             //page: 0s
-            
+
         })
     }
 
-  console.log(alloffers);
+    console.log(alloffers);
     return (
         <div className="offers">
             <Container className='container_offers'>
@@ -90,22 +90,22 @@ export const OffersMainPage = () => {
                     </AnimatePresence>
                 </motion.div>
                 <ReactPaginate
-                breakLabel={"..."}
-                nextLabel={"next >"}
-                pageCount={alloffers.totalPages}
-                previousLabel={"< previous"}
-                marginPagesDisplayed={2}
-                onPageChange={handlePageClick}
-                containerClassName={'pagination justify-content-center'}
-                pageClassName={'page-item'}
-                pageLinkClassName={'page-link'}
-                previousClassName={'page-item'}
-                previousLinkClassName={'page-link'}
-                nextClassName={'page-item'}
-                nextLinkClassName={'page-link'}
-                breakClassName={'page-item'}
-                breakLinkClassName={'page-link'}
-                activeClassName={'active'}
+                    breakLabel={"..."}
+                    nextLabel={"next >"}
+                    pageCount={alloffers.totalPages}
+                    previousLabel={"< previous"}
+                    marginPagesDisplayed={2}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination justify-content-center'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    activeClassName={'active'}
                 />
             </Container>
         </div>

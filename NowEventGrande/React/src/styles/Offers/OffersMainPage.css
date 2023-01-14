@@ -26,6 +26,7 @@
 .offer_tile h2 {
   text-align: center;
   text-transform: uppercase;
+  font-size: 1.8rem;
 }
 
 .offer_tile img {
@@ -54,13 +55,15 @@
 .offer_type {
 }
 
-.offer_tile button {
+.offer_tile .button {
   display: block;
   margin: 0 auto;
-  text-transform: uppercase;
+    width: 50%;
+    text-transform: uppercase;
+    text-align: center;
   border: none;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   color: #fff;
   border: 2px solid #fff;
   font-weight: bold;
