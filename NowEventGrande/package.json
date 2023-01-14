@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@react-google-maps/api": "^2.17.0",
+    "axios": "^1.2.2",
     "framer-motion": "^7.6.18",
     "react-animated-progress-bar": "^1.1.1",
     "react-bootstrap-icons": "^1.9.1",
@@ -12,8 +13,10 @@
     "react-ios-time-picker": "^0.2.2",
     "react-on-screen": "^2.1.1",
     "react-paginate": "^8.1.4",
+    "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
     "react-time-picker": "^5.1.0",
+    "redux": "^4.2.0",
     "timepicker-ui": "^2.5.0"
   }
 }

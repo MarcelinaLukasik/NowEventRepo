@@ -22,6 +22,7 @@ import CreatedEvents from './Event/CreatedEvents';
 import Offers from './pages/Offers';
 import Registration from './pages/Registration';
 import SignIn from './pages/SignIn';
+import { ProductDetails } from './componentPages/OffersPage/ProductDetails';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -44,6 +45,7 @@ function AllRoutes() {
                     <Route path="CreatedEvents" element={<CreatedEvents />} />
                     <Route path="user2" element={<FetchApi2 />} />
                     <Route path="alloffer" element={<Offers />} />
+                    <Route path="offer/:offerId" element={<ProductDetails />} />
                     <Route path="/Event/:id/guests" element={<Guests />} />
                     <Route path="/Event/:id/budget" element={<Budget />} />
                     <Route path="/Event/:id/main" element={<EventMain />} />
