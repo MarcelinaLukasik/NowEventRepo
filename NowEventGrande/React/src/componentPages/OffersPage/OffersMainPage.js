@@ -32,7 +32,7 @@ export const OffersMainPage = () => {
         setFiltered(offers.items);
         setAllOffers(offers);
         setSearchPhrase({
-            query: query,
+            query: query == null ? "" : query,
             pageSize: 10,
             pageNumber: currentPage == null ? 1 : currentPage,
             SortBy: "Name",
