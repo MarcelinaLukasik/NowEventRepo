@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Routes, Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import '../../styles/Offers/ProductDetail.css'
 import { Container } from 'react-bootstrap'
@@ -15,9 +15,9 @@ export const ProductDetails = () => {
 
     const fetchOffer = async () => {
         const data = await fetch(`/offer/singleOffer/${offerId}`);
-        const offers = await data.json();
-        console.log(offers);
-        setOffer(offers);
+        const offer = await data.json();
+        console.log(offer);
+        setOffer(offer);
 
     }
     return (
@@ -49,7 +49,7 @@ export const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <Link to={`/offer/${offer.id}/contact`} className="button-contact">Contact</Link>
+                    <Link to={`/singleoffer/${offerId}/contact`} className="button-contact">Contact</Link>
                 </div>
             </Container>
         </div>
