@@ -14,7 +14,7 @@ export const OffersList = ({ offer }) => {
             </div>
             {/* TODO: Cut date on backend side */}
             <h3>Start: {offer.date.split("T")[0]}</h3>
-            <Link to={`/offer/${offer.id}`} className="button">More Info</Link>
+            <Link to={`/singleoffer/${offer.id}`} className="button">More Info</Link>
 
         </motion.div>
     )
