@@ -124,12 +124,7 @@ namespace NowEvent.Services.VerificationService
             int closingCompareResult = DateTime.Compare(_closingHour, chosenHour);
             bool isOpeningCorrect = openingCompareResult >= 0;
             bool isClosingCorrect = closingCompareResult >= 0;
-            if (isOpeningCorrect && isClosingCorrect)
-            {
-                return true;
-            }
-
-            return false;
+            return isOpeningCorrect && isClosingCorrect;
         }
 
         public void SetEventTimeStatus(DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )

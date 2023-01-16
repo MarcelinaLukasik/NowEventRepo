@@ -21,21 +21,21 @@ export const Benefit = () => {
                             <img src={benefit3} alt="img" />
                         </span>
                         <h2>Time saving</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate totam voluptates dolorum consequatur suscipit ad unde facere ratione eveniet nostrum.</p>
+                        <p>NowEvent offers many features, but don't worry. Creating a new event is quick and uncomplicated.</p>
                     </Col>
                     <Col cs={12} md={6} xl={7} className="benefit-header py-1">
                         <span>
                             <img src={benefit2} alt="img" />
                         </span>
                         <h2>Comfortable</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate totam voluptates dolorum consequatur suscipit ad unde facere ratione eveniet nostrum.</p>
+                        <p>You can create your dream event without leaving home, and let someone else do all the job.</p>
                     </Col>
                     <Col cs={12} md={6} xl={7} className="benefit-header py-1">
                         <span>
                             <img src={benefit1} alt="img" />
                         </span>
                         <h2>Happiness</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate totam voluptates dolorum consequatur suscipit ad unde facere ratione eveniet nostrum.</p>
+                        <p>You can have fun without the stress of planning and organizing your event. Finally!</p>
                     </Col>
                     <Col cs={12} md={6} xl={7} className="btn-join">
                         <Nav.Link as={Link} to="/event">
