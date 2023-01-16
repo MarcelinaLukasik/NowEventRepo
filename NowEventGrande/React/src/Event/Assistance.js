@@ -4,13 +4,7 @@ import { useState, useEffect } from "react";
 import EventInfoPanel from "./EventInfoPanel";
 
 function Assistance(props) {
-    const [isOpen, setOpen] = useState(false);
-    const openInput = () => {setOpen(!isOpen)};
     const [placeDetails, setPlaceDetails] = useState();
-
-    function getInfo(){
-        openInput();
-    }
 
     useEffect(() => {
         fetchVerification();
@@ -29,9 +23,9 @@ function Assistance(props) {
 
     return (
         <div>
-          <img src={lightbulb_1} alt="img" className="assistanceIcon" onClick={getInfo}/>
+          <img src={lightbulb_1} alt="img" className="assistanceIcon"/>
           {
-              isOpen && <EventInfoPanel placeDetails={placeDetails} />
+              placeDetails && <EventInfoPanel placeDetails={placeDetails} />
           }                  
         </div>
       );

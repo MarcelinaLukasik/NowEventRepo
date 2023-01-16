@@ -24,8 +24,6 @@ function Location() {
     const [endHour, setEndHour] = useState("00");
     const [endMinutes, setEndMinutes] = useState("00");
     const [isValid, setValid] = useState(true);
-    // const [eventTime, setEventTime] = useState("");
-    // const Completionist = () => <span>Time to party!</span>;
 
     useEffect(() => {
         fetchRequest();
