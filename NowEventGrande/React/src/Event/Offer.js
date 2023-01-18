@@ -15,6 +15,7 @@ function Offer() {
     const [status, setStatus] = useState(false);
     const [buttonSubmit, setButtonSubmit] = useState('Post My Offer');
     const [statusMsg, setStatusMsg] = useState({});
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -28,11 +29,17 @@ function Offer() {
 
     async function handlePostOffer(e) {
         e.preventDefault();
-        setButtonSubmit("Sending...")
+    
+        setButtonSubmit("Sending...");
+        PostOffer();
+        
+    }
+
+    async function PostOffer(){
         const response = await fetch('/offer/PostOffer', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({ ClientId: 0, EventId: eventId, Status: "Open" })
+            body: JSON.stringify({ EventId: eventId, Status: "Open" })
         });
         setButtonSubmit("Post My Offer");
         if (response.status === 200) {

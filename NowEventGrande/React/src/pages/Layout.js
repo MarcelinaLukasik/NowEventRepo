@@ -54,7 +54,7 @@ const Layout = () => {
               </Nav.Link>
               <NavDropdown className="dropdown" title="My projects" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/CreatedEvents">My events</NavDropdown.Item>
-                <NavDropdown.Item href="user2">My offers</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/CreatedOffers">My offers</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
