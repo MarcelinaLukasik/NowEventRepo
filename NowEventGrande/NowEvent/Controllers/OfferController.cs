@@ -42,6 +42,14 @@ namespace NowEvent.Controllers
             return Ok(offer);
         }
 
+        [HttpPost("GetOffersByUserId")]
+        [Authorize]
+        public IQueryable GetOffersByUserId([FromBody] string id)
+        {
+            return _offerRepository.GetOffersByUserId(id);
+   
+        }
+
 
     }
 }

@@ -115,6 +115,7 @@ namespace NowEvent.Controllers
             var result = _eventRepository.GetEventsByUserId(id);
             return result;
         }
+        
 
         [HttpGet("{id:int}/CheckIfLargeSize")]
         public bool CheckIfLargeSize(int id)

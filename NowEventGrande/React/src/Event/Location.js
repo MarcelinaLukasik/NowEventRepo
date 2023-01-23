@@ -24,6 +24,7 @@ function Location() {
     const [endHour, setEndHour] = useState("00");
     const [endMinutes, setEndMinutes] = useState("00");
     const [isValid, setValid] = useState(true);
+    const [buttonSubmit, setButtonSubmit] = useState('Save');
 
     useEffect(() => {
         fetchRequest();
@@ -51,7 +52,9 @@ function Location() {
         setRes(dataJ.slip.advice);
     };
 
-    async function handleDateSave() {
+    async function handleDateSave(evt) {
+        evt.preventDefault();
+        setButtonSubmit("Saving...");
         const res = await fetch(`/events/${id}/SaveDate`, {
         method: "POST",
         headers: {
@@ -70,8 +73,9 @@ function Location() {
           else{
             setValid(true);
             fetchProgress();
+            setButtonSubmit("Save");
           }
-    } 
+    }
 
     return (
         <div className="event">
@@ -113,9 +117,6 @@ function Location() {
                                 </div>                  
                         </div>
                         <div className="Event-col-3">
-                            {/* <div>
-                            {res}
-                            </div> */}
                             <div className="clockContainer">
                             <h3 className="clockTitle">Start:</h3>
                             <div className="clock">
@@ -160,7 +161,9 @@ function Location() {
                         </div>                             
                     </div>
                     <div className="row">
-                        <input type="button" className="saveDate" value="Save date" onClick={handleDateSave}/>
+                        <button type="button" className="saveDate" value="Save date" onClick={handleDateSave} >
+                            <span>{buttonSubmit}</span>
+                        </button>
                     </div>
                     <div className="row">
                         <Address eventId={eventId} fetchProgress={fetchProgress}/>  

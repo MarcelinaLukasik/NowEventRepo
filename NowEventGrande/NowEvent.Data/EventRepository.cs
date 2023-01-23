@@ -128,9 +128,11 @@ namespace NowEvent.Data
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
             var eventById = await GetEventByIdAsync(id);
+            var eventAddress = await _locationAndTimeRepository.GetEventAddress(id);
             info["Type"] = eventById.Type;
             info["Name"] = eventById.Name;
             info["Status"] = eventById.Status;
+            info["Address"] = eventAddress;
             return info;
         }
         public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)
