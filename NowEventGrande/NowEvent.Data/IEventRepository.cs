@@ -16,6 +16,7 @@ namespace NowEvent.Data
         bool ManageEventData(int id, string dataToChange, EventData eventDataCol);
         void SetEventData(Event eventById, string dataToChange, EventData eventDataCol);
         public Task<PagedResult<Event>> GetAll(OfferQuery query);
+        public Task<List<Event>> GetAllOffers();
         bool CheckIfLargeSize(int id);
         DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage);
     }

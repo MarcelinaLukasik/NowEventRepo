@@ -93,7 +93,7 @@ builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
 var app = builder.Build();
 
-
+builder.Services.AddCors();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -103,6 +103,11 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3000");
+});
 
 app.UseAuthentication();
 
