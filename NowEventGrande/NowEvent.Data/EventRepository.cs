@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NowEvent.Data
 {
@@ -26,6 +27,10 @@ namespace NowEvent.Data
             Budget budget = _budgetRepository.CreateBudget(newEvent.Id);
             _budgetRepository.AddBudget(budget);
             return newEvent.Id;
+        }
+        public async Task<List<Event>> GetAllOffers()
+        {
+            return await _appDbContext.Events.ToListAsync();
         }
 
         public async Task<PagedResult<Event>> GetAll(OfferQuery query)

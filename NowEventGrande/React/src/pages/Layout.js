@@ -34,7 +34,6 @@ const Layout = () => {
 
   const onUpdateActiveLink = (link) => {
     setActiveLink(link);
-    console.log(link);
   }
 
   return (

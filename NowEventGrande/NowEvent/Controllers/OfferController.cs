@@ -23,9 +23,9 @@ namespace NowEvent.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAll([FromQuery]OfferQuery query)
+        public async Task<ActionResult<IEnumerable<Event>>> GetAll()
         {
-            var offers = await _eventRepository.GetAll(query);
+            var offers = await _eventRepository.GetAllOffers();
             return Ok(offers);
         }
 
