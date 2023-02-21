@@ -27,8 +27,6 @@ namespace NowEvent.Controllers
         {
             var offers = await _eventRepository.GetAllOffers();
             return Ok(offers);
-            //var offers = await _eventRepository.GetAll(query);
-            //return Ok(offers);
         }
 
         [HttpGet("singleOffer/{id}")]
