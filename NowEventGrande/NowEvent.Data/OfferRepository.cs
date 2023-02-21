@@ -31,5 +31,14 @@ namespace NowEvent.Data
         {
             return await _appDbContext.Offer.FindAsync(id);
         }
+
+        public IQueryable GetOffersByUserId(string id)
+        {
+            var result = _appDbContext.Offer.Join(_appDbContext.Events, 
+                    offer => offer.EventId, evt => evt.Id,
+                (offer, evt) => new { Offer = offer, Evt = evt})
+                .Where(offerAndEvt => offerAndEvt.Evt.ClientId == id).Select(o => new { o.Evt.Name, o.Offer.Status}); 
+            return result;
+        }
     }
 }

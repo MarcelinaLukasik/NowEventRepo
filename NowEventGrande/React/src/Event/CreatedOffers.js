@@ -7,17 +7,16 @@ import { Nav } from "react-bootstrap"
 import { ArrowRightCircle } from "react-bootstrap-icons";
 import '../styles/banner.css';
 
-function CreatedEvents(){
-    const [events, setEvents] = useState([]);
+function CreatedOffers(){
+    const [offers, setOffers] = useState([]);
     const user = localStorage.getItem('user');
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserId();
     },[])
 
-    async function GetUserEvents(result){
-        const res = await fetch(`/events/GetEventsByUserId`, {
+    async function GetUserOffers(result){
+        const res = await fetch(`/offer/GetOffersByUserId`, {
             Authorization: !user ? {} : { 'Authorization': 'Bearer ' + user.accessToken },
             method: "POST",
             headers: {
@@ -25,7 +24,7 @@ function CreatedEvents(){
             },
             body: JSON.stringify(result)
         }); 
-        res.json().then(res => setEvents(res));     
+        res.json().then(res => setOffers(res));     
     }
     async function fetchUserId(){
         const res = await fetch('../account/GetCurrentUserId',{
@@ -39,36 +38,31 @@ function CreatedEvents(){
           else{       
             await res.text()
             .then((result)=> { 
-                GetUserEvents(result);
+                GetUserOffers(result);
             }) 
             .catch(res)       
           }
     }
 
-    function goToEvent(evt){
-            evt.preventDefault();
-            const eventId = evt.currentTarget.value;
-            navigate(`/event/${eventId}/summary`, {state: {EventId: eventId}});
-    }
     return (
         <div className='event'> 
-            {!user && <div className='notSignedInInfo'>You need to be signed in to see your events.
+            {!user && <div className='notSignedInInfo'>You need to be signed in to see your offers.
             </div>}   
-            {user && events.length !== 0 &&     
+            {user && offers.length !== 0 &&     
             <div>
-                <h2>Your current events:</h2>
+                <h2>Your current offers:</h2>
                 <div className="row longTileContainer">
                     <div className="Event-col-3">
-                    {Array.from(events).map((item, i) => {
+                    {Array.from(offers).map((item, i) => {
                         return (
                             <form key={i}  >
-                                <button className="longTile" value={item.id} onClick={goToEvent}>
+                                <button className="longTile" value={item.name}>
                                 <h2 className="longTileText">{item.name}</h2>
                                 <p className="longTileTextSmall">{item.status}</p>
                                 </button>
                             </form>)
                             })} 
-                    </div>   
+                    </div>            
 
                     <div className="Event-col-2">
                         <img src={emoticonsBanner} alt="not loaded" className="verticalBanner"></img> 
@@ -77,24 +71,18 @@ function CreatedEvents(){
                 </div>
             </div>    
             } 
-            {user && events.length === 0 &&
+            {user && offers.length === 0 &&
             <div className="row longTileContainer">
                         <div className="Event-col-5">
                             <div className="createdEventsInfo">
-                                Look like you don't have any events yet.
-                                Click on the button below to create your first event.
-                            </div> 
-                            
-                            <Nav.Link as={Link} to="/event">
-                                <button className="createEventButton">Create event <ArrowRightCircle size={25} /></button>
-                            </Nav.Link>
-                        
+                                Look like you don't have any offers yet.
+                                Complete your event and use "Post offer" button.
+                            </div>                        
                         </div> 
             </div>
-            }  
-        
+            }          
         </div>
     )
 }
 
-export default CreatedEvents;
+export default CreatedOffers;

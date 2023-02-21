@@ -12,33 +12,33 @@ export const Features = () => {
 
     const features = [
         {
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor",
+            title: "Guests",
+            description: "Manage your guest list",
             imgUrl: projImg2,
         },
         {
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor",
+            title: "Where and when?",
+            description: "Set the date and place for your event",
             imgUrl: projImg3,
         },
         {
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor",
+            title: "Theme",
+            description: "Something oldschool? Something modern? Your choice!",
             imgUrl: projImg2,
         },
         {
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor",
+            title: "Budget",
+            description: "Keep an eye on your expenses",
             imgUrl: projImg3,
         },
         {
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor",
+            title: "Summary",
+            description: "All the important information in one place",
             imgUrl: projImg2,
         },
         {
-            title: "Lorem Ipsum",
-            description: "Design & Development",
+            title: "Your opinion",
+            description: "Rate your experience and help other with their choice",
             imgUrl: projImg3,
         },
     ];
@@ -51,18 +51,18 @@ export const Features = () => {
                         <TrackVisibility>
                             {({ isVisible }) =>
                                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                                    <h2>features</h2>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                    <h2>Features</h2>
+                                    <p>Here are a bunch of features that will help you with planning your party:</p>
                                     <Tab.Container id="features-tabs" defaultActiveKey="first">
                                         <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
                                             <Nav.Item>
-                                                <Nav.Link eventKey="first">Tab 1</Nav.Link>
+                                                <Nav.Link eventKey="first">Create event</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                                                <Nav.Link eventKey="second">Post offer</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey="third">Tab 3</Nav.Link>
+                                                <Nav.Link eventKey="third">Inspirations</Nav.Link>
                                             </Nav.Item>
                                         </Nav>
                                         <Tab.Content id="slideInUp" className={isVisible ? "animate__animated animate__slideInUp" : ""}>
@@ -80,11 +80,13 @@ export const Features = () => {
                                                     }
                                                 </Row>
                                             </Tab.Pane>
-                                            <Tab.Pane eventKey="section">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quam, quod neque provident velit, rem explicabo excepturi id illo molestiae blanditiis, eligendi dicta officiis asperiores delectus quasi inventore debitis quo.</p>
+                                            <Tab.Pane eventKey="second">
+                                                <p>After you complete your event settings you can post it on our board and wait for contractors offers. It is really that simple.</p>
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="third">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quam, quod neque provident velit, rem explicabo excepturi id illo molestiae blanditiis, eligendi dicta officiis asperiores delectus quasi inventore debitis quo.</p>
+                                                <p>If you want to make your event look good, don't forget to check out Inspiration section with ideas and 
+                                                    cool decorations for events!
+                                                </p>
                                             </Tab.Pane>
                                         </Tab.Content>
                                     </Tab.Container>

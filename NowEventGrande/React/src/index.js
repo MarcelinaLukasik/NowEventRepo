@@ -18,6 +18,7 @@ import AfterEvent from './Event/AfterEvent';
 import Summary from './Event/Summary';
 import Details from './Event/Details';
 import CreatedEvents from './Event/CreatedEvents';
+import CreatedOffers from './Event/CreatedOffers';
 import Offers from './pages/Offers';
 import Registration from './pages/Registration';
 import SignIn from './pages/SignIn';
@@ -42,6 +43,7 @@ function AllRoutes() {
                     <Route path="contact" element={<Contact />} />
                     <Route path="Event" element={<Event />} />
                     <Route path="CreatedEvents" element={<CreatedEvents />} />
+                    <Route path="CreatedOffers" element={<CreatedOffers />} />
                     <Route path="user2" element={<FetchApi2 />} />
                     <Route path="alloffer" element={<Offers />} />
                     <Route path="/singleoffer/:offerId" element={<ProductDetails />} />

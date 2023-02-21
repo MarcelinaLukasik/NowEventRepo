@@ -93,7 +93,7 @@ function Event() {
                     </form>
                 </div>
                 <div>
-                    {!isValid && <p className="wrongInputMessage">Invalid information. Please keep in mind that you must choose event type. Special characters and numbers are not allowed in the title.</p>}
+                    {!isValid && <p className="wrongInputMessage">Invalid information. Please keep in mind that you must be logged in and choose event type. Special characters and numbers are not allowed in the title.</p>}
                 </div>    
             </div>
     )

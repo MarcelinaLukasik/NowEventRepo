@@ -20,7 +20,6 @@ const AllGuests = ({eventId, addChecklistCount, subtractChecklistCount }) => {
     setGuestCount(guestCount +1);
   }
 
-  //TODO change to post with choosen sort value
   useEffect(() => {
       async function fetchData() {
         const res = await fetch(`/guest/${currentEventId}/all`);      

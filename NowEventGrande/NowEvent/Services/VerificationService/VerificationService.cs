@@ -53,12 +53,12 @@ namespace NowEvent.Services.VerificationService
             }
         }
 
-        public async Task VerifyPlaceHours(string allDaysAndHours, int id)
+        public void VerifyPlaceHours(string allDaysAndHours, int id)
         {
             _allOpeningHours = _dateAndTimeService.FormatAllOpeningDaysAndHours(allDaysAndHours);
             var startDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.Start);
             var endDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.End);
-            var dayOfWeek = await _eventRepository.GetEventStartDate(id);
+            var dayOfWeek =  _eventRepository.GetEventStartDate(id);
             System.Globalization.CultureInfo pl = new System.Globalization.CultureInfo("pl-PL");
             string dayOfWeekPl = pl.DateTimeFormat.DayNames[(int)dayOfWeek.DayOfWeek];
 
@@ -122,7 +122,9 @@ namespace NowEvent.Services.VerificationService
         {
             int openingCompareResult = DateTime.Compare(chosenHour, _openingHour);
             int closingCompareResult = DateTime.Compare(_closingHour, chosenHour);
-            return openingCompareResult >= 0 || closingCompareResult >= 0;
+            bool isOpeningCorrect = openingCompareResult >= 0;
+            bool isClosingCorrect = closingCompareResult >= 0;
+            return isOpeningCorrect && isClosingCorrect;
         }
 
         public void SetEventTimeStatus(DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )

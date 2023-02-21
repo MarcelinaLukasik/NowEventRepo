@@ -32,7 +32,7 @@ namespace NowEvent.Controllers
         [HttpGet("singleOffer/{id}")]
         public async Task<Event> GetByIdAsync(int id)
         {
-            return await _eventRepository.GetEventById(id);
+            return await _eventRepository.GetEventByIdAsync(id);
         }
 
         [HttpPost("PostOffer")]
@@ -40,6 +40,14 @@ namespace NowEvent.Controllers
         {
             await _offerRepository.AddOffer(offer);
             return Ok(offer);
+        }
+
+        [HttpPost("GetOffersByUserId")]
+        [Authorize]
+        public IQueryable GetOffersByUserId([FromBody] string id)
+        {
+            return _offerRepository.GetOffersByUserId(id);
+   
         }
 
 

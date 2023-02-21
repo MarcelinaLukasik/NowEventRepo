@@ -24,7 +24,6 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCoun
           },
           body: JSON.stringify({FirstName: firstName, LastName: lastName, Email: email, EventId: eventId}) ,
         })
-        // .then(window.location.reload(false));
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
           setValid(false);
