@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿vusing Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
@@ -29,7 +29,7 @@ namespace NowEvent.Controllers
             return Ok(offers);
         }
 
-        [HttpGet("singleOffer/{id}")]
+        [HttpGet("{id}")]
         public async Task<Event> GetByIdAsync(int id)
         {
             return await _eventRepository.GetEventByIdAsync(id);

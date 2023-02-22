@@ -1,57 +1,66 @@
 import * as React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap'
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import '../../styles/Offers/ProductDetail.css'
-import { Container } from 'react-bootstrap'
 import sample from '../../images/sample.jpg';
-
+import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import agent from '../../app/api/agent';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 export const ProductDetails = () => {
-    let { offerId } = useParams();
-    const [offer, setOffer] = useState([]);
+
+    const { id } = useParams();
+    const [offer, setOffer] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchOffer();
-    }, []);
+        agent.Offers.productDetails(parseInt(id))
+            .then(offer => setOffer(offer))
+            .catch(error => console.log(error))
+            .finally(() => setLoading(false))
+    }, [id]);
 
-    const fetchOffer = async () => {
-        const data = await fetch(`/offer/singleOffer/${offerId}`);
-        const offer = await data.json();
-        console.log(offer);
-        setOffer(offer);
-
-    }
+    if (loading) return <LoadingComponent message='Loading offer...' />
+    console.log(offer)
     return (
-        <div className="detail-offer">
-            <Container>
-                <div className="detail-container">
-                    <div className="left-side">
-                        <div className="offer-tile-left">
-                            <img src={sample} alt="sample img" />         
-                        </div>
-                    </div>
-                    <div className="right-side">
-                        <div className="offer-tile-right">
-                            <h2>{offer.name}</h2>
-                            <h3>Date: {offer.date?.slice("T",-1)}</h3>
-                            <h3>Event Start: {offer.eventStart?.slice("T",-1)}</h3>
-                            <h3>Event End: {offer.eventEnd?.slice("T",-1)}</h3>
-                            <h3>Event localization: {offer.eventAddresses}</h3>
+        <Container className='container_offers'>
 
-                            <div className='offer_desc-detail'>
-                                <span className='offer_size'>Size: {offer.size}</span>
-                                <span className='offer_type'>Type: {offer.type}</span>
-                            </div>
-                            
-                            {console.log("Im here")}
-                            <div className='offer_desc-detail'>
-                                <span className='offer_size'>Guests: {offer.guests}</span>
-                                <span className='offer_type'>Budget: {offer.budget}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <Link to={`/singleoffer/${offerId}/contact`} className="button-contact">Contact</Link>
-                </div>
-            </Container>
-        </div>
+        <Grid container spacing={6} sx={{mt: 20} }>
+            <Grid item xs={4}>
+                <img src={sample} alt={offer.name} style={{ width: '100%' }} />
+            </Grid>
+            
+            <Grid item xs={8}>
+                <Typography variant='h4' style={{ textAlign: 'center' }}>{offer.name}</Typography>
+                <Divider sx={{ mb: 2 }} />
+                <TableContainer>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>Type</TableCell>
+                                <TableCell>{offer.type}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Size</TableCell>
+                                <TableCell>{offer.size}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Event Start</TableCell>
+                                <TableCell>{offer.eventStart}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Event End</TableCell>
+                                <TableCell>{offer.eventEnd}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Guests</TableCell>
+                                <TableCell>{offer.guests}</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
+            </Grid>
+        </Container>
     )
 }
