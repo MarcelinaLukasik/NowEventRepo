@@ -12,6 +12,7 @@ function AfterEvent() {
     const [id, setEventId] = useState(eventId);
     const [CommunicationRate, setCommunicationRate] = useState(3);
     const [QualityRate, setQualityRate] = useState(3);
+    const [SpeedRate, setSpeedRate] = useState(3);
     
 
     function MoveSlider(evt) {
@@ -23,6 +24,9 @@ function AfterEvent() {
         }
         else if (rate === "QualityRange"){
             setQualityRate(value);
+        }
+        else if (rate === "SpeedRange"){
+            setSpeedRate(value);
         }
     }
 
@@ -38,7 +42,7 @@ function AfterEvent() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({CommunicationRating: CommunicationRate, QualityRating: QualityRate ,EventId: eventId}) ,
+          body: JSON.stringify({CommunicationRating: CommunicationRate, QualityRating: QualityRate , SppedRating: SpeedRate, EventId: eventId}) ,
         })
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
@@ -74,6 +78,13 @@ function AfterEvent() {
                                         <input type="range" min="1" max="5" value={QualityRate} className="rateSlider" id="QualityRange" onInput={MoveSlider}/>
                                     </div>
                                     <h3>{QualityRate}</h3>                                 
+                                </div> 
+                                <div>
+                                    <h3>Speed:</h3>
+                                    <div className="rateSlidecontainer">
+                                        <input type="range" min="1" max="5" value={SpeedRate} className="rateSlider" id="SpeedRange" onInput={MoveSlider}/>
+                                    </div>
+                                    <h3>{SpeedRate}</h3>                                 
                                 </div> 
                                 <div>
                                 <form onSubmit={handleSubmit}>

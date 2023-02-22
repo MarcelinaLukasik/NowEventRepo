@@ -11,6 +11,7 @@ import {handleStyle} from "./HandleProgress";
 
 function Guests() {
     const location = useLocation();
+    const user = localStorage.getItem('user');
     const eventId = location.state.EventId;
     const [id, setEventId] = useState(eventId);
     const [count, setChecklistCount] = useState(0);
@@ -28,6 +29,7 @@ function Guests() {
     useEffect(() =>{  
         fetchProgress();
         checkIfLargeSize();
+        console.log(user);
     }, [])
 
     useEffect(() => {

@@ -16,6 +16,7 @@ function Summary() {
     const [eventTime, setEventTime] = useState();
     const [type, setType] = useState();
     const [title, setTitle] = useState();
+    const [address, setAddress] = useState();
     const Completionist = () => <span>Time to party!</span>;
     const [status, setStatus] = useState(false);
 
@@ -58,6 +59,7 @@ function Summary() {
         setType(result.Type);
         setTitle(result.Name);
         setStatus(result.Status);
+        setAddress(result.Address);
     }
 
     return (
@@ -100,13 +102,11 @@ function Summary() {
                         <div className="summaryStats">
                         <h3>Current status: {status}</h3> 
                         <h3>Your event type: {type}</h3>
+                        <h3>Address: {address}</h3>
                         </div>  
                               
                    </div>   
                    <div className="Event-col-3">
-                    {/* <Col cs={12} md={6} xl={6}>
-                        <img src={lighbulbIcon} alt="img" className="lightbulbIcon"/>
-                    </Col> */}
                         <div>
                             <Assistance eventId={eventId}/>   
                         </div>       

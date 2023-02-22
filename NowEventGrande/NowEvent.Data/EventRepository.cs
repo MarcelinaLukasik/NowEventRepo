@@ -66,9 +66,14 @@ namespace NowEvent.Data
 
         
 
-        public async Task<Event> GetEventById(int id)
+        public async Task<Event> GetEventByIdAsync(int id)
         {
             return await _appDbContext.Events.FindAsync(id);
+        }
+
+        public Event GetEventById(int id)
+        {
+            return _appDbContext.Events.Find(id);
         }
 
         public IQueryable GetEventsByUserId(string id)
@@ -85,7 +90,7 @@ namespace NowEvent.Data
 
             if (isDateCorrect && correctStartTime && correctEndTime)
             {
-                var eventById = await GetEventById(id);
+                var eventById = await GetEventByIdAsync(id);
                 int result = DateTime.Compare(date, DateTime.Now);
                 if (result < 0)
                 {
@@ -103,34 +108,36 @@ namespace NowEvent.Data
 
         public async Task<bool> CheckDateAndTimeByEventId(int id)
         {
-            var eventId = await GetEventById(id);
+            var eventId = await GetEventByIdAsync(id);
             return eventId.Date > DateTime.Now;
         }
 
-        public async Task<DateTime> GetEventStartDate(int id)
+        public DateTime GetEventStartDate(int id)
         {
-            var eventById = await GetEventById(id);
+            var eventById = GetEventById(id);
             return eventById.EventStart;
         }
 
         public async Task SetStatus(int id, string status)
         {
-            var eventById = await GetEventById(id);
+            var eventById = await GetEventByIdAsync(id);
             eventById.Status = status;
             _appDbContext.SaveChangesAsync();
         }
         public async Task<string> GetStatus(int id)
         {
-            var eventById = await GetEventById(id);
+            var eventById = await GetEventByIdAsync(id);
             return eventById.Status;
         }
         public async Task<Dictionary<string, string>> GetInfo(int id)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
-            var eventById = await GetEventById(id);
+            var eventById = await GetEventByIdAsync(id);
+            var eventAddress = await _locationAndTimeRepository.GetEventAddress(id);
             info["Type"] = eventById.Type;
             info["Name"] = eventById.Name;
             info["Status"] = eventById.Status;
+            info["Address"] = eventAddress;
             return info;
         }
         public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)

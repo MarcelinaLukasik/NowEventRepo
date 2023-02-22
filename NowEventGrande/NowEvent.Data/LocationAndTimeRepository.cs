@@ -1,4 +1,5 @@
-﻿using NowEvent.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NowEvent.Models;
 
 namespace NowEvent.Data
 {
@@ -45,6 +46,14 @@ namespace NowEvent.Data
             eventById.EventStart = date.Date.Add(start.TimeOfDay);
             eventById.EventEnd = date.Date.Add(end.TimeOfDay);
             _appDbContext.SaveChanges();
+        }
+
+        public async Task<string> GetEventAddress(int id)
+        {
+            string address = await _appDbContext.EventAddress.Where(x => x.EventId == id)
+                .Select(x => x.FullAddress).FirstOrDefaultAsync() ?? "No address set"; 
+                              // ?? throw new ArgumentOutOfRangeException();
+            return address;
         }
 
     }

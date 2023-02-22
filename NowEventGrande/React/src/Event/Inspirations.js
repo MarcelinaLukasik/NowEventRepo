@@ -39,7 +39,7 @@ function Inspirations() {
     return (
         <div className="event">  
             <div>              
-                <h1>Images</h1>
+                <h1>Are you ready to get inspired?</h1>
                 <div className="imagesColumns">
                     <div className="imagesColumn-1">
                     </div>

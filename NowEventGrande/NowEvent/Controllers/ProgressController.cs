@@ -48,7 +48,6 @@ namespace NowEvent.Controllers
             }
             else
             {
-                //TODO move event statuses to enum
                 _eventRepository.SetStatus(id, EventStatuses.Completed);
                 return true;
             }

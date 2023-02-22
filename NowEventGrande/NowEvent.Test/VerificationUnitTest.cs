@@ -129,7 +129,7 @@
 //        public void Test_GetOperationalHoursStart()
 //        {
 //            DateAndTimeService dateAndTimeService = new DateAndTimeService();
-//            string dayInfo = "10:00–05:00";
+//            string dayInfo = "10:00â€“05:00";
 //            DateTime date = new DateTime(2023, 12, 31, 5, 10, 00);
 //            DateTime result = dateAndTimeService.GetOperationalHour(dayInfo, EventTimeStages.Start, date);
 //            DateTime expectedDate = new DateTime(2023, 12, 31, 10, 00, 00);
@@ -140,7 +140,7 @@
 //        public void Test_GetOperationalHoursEnd()
 //        {
 //            DateAndTimeService dateAndTimeService = new DateAndTimeService();
-//            string dayInfo = "10:00–05:00";
+//            string dayInfo = "10:00â€“05:00";
 //            DateTime date = new DateTime(2023, 12, 31, 5, 10, 00);
 //            DateTime result = dateAndTimeService.GetOperationalHour(dayInfo, EventTimeStages.End, date);
 //            DateTime expectedDate = new DateTime(2023, 12, 31, 05, 00, 00);

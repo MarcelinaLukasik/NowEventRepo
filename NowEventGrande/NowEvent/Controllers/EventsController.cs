@@ -67,9 +67,9 @@ namespace NowEvent.Controllers
         }
 
         [HttpGet("{id:int}/GetEventStartDate")]
-        public async Task<IActionResult> GetEventStartDate(int id)
+        public IActionResult GetEventStartDate(int id)
         {
-            var getEvent = await _eventRepository.GetEventStartDate(id);
+            var getEvent = _eventRepository.GetEventStartDate(id);
             return Ok();
         }
 
@@ -115,6 +115,7 @@ namespace NowEvent.Controllers
             var result = _eventRepository.GetEventsByUserId(id);
             return result;
         }
+        
 
         [HttpGet("{id:int}/CheckIfLargeSize")]
         public bool CheckIfLargeSize(int id)
