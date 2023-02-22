@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿vusing Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
@@ -8,13 +8,13 @@ namespace NowEvent.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OfferController : ControllerBase
+    public class OffersController : ControllerBase
     {
-        private readonly ILogger<OfferController> _logger;
+        private readonly ILogger<OffersController> _logger;
         private readonly IOfferRepository _offerRepository;
         private readonly IEventRepository _eventRepository;
 
-        public OfferController(ILogger<OfferController> logger, IOfferRepository offerRepository, IEventRepository eventRepository)
+        public OffersController(ILogger<OffersController> logger, IOfferRepository offerRepository, IEventRepository eventRepository)
         {
             _logger = logger;
             _offerRepository = offerRepository;
@@ -29,7 +29,7 @@ namespace NowEvent.Controllers
             return Ok(offers);
         }
 
-        [HttpGet("singleOffer/{id}")]
+        [HttpGet("{id}")]
         public async Task<Event> GetByIdAsync(int id)
         {
             return await _eventRepository.GetEventById(id);

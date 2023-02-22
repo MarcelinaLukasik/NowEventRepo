@@ -1,21 +1,45 @@
-import React, { Component } from 'react';
 import sample from '../../images/sample.jpg';
 import { motion } from 'framer-motion';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-export const OffersList = ({ offer }) => {
 
+export const OffersList = ({ offer }) => {
     return (
         <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className='offer_tile'>
-            <h2>{offer.name}</h2>
-            <img src={sample} alt="sample img" />
-            <div className='offer_desc'>
-                <span className='offer_size'>Size: {offer.size}</span>
-                <span className='offer_type'>Type: {offer.type}</span>
-            </div>
-            {/* TODO: Cut date on backend side */}
-            <h3>Start: {offer.date.split("T")[0]}</h3>
-            <Link to={`/singleoffer/${offer.id}`} className="button">More Info</Link>
-
+            <Card>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgColor: 'grey.500' }}>
+                            {offer.type.charAt(0).toUpperCase()}
+                        </Avatar>
+                    }
+                    title={offer.name}
+                    titleTypographyProps={{
+                        sx: { fontWeight: 'bold', color: 'primary.main' }
+                        } }
+                />
+                <CardMedia
+                    sx={{ height: 140, width: '100%', backgroundSize: 'contain', bgcolor: 'primary.light' }}
+                    image={sample}
+                    title={offer.name}
+                />
+                <CardContent>
+                    <Box style={{ textAlign: 'center' }}>
+                        <Typography gutterBottom color='secondary' variant="h5">
+                            {offer.eventStart.split("T")[0]}
+                        </Typography>
+                        <Typography variant="body2" color="text.primary">
+                            {offer.size} / {offer.type}
+                        </Typography>
+                    </Box>
+                    
+                </CardContent>
+                <CardActions>
+                    <Button size="small" component={Link} to={`/alloffers/${offer.id}`}>
+                        View
+                    </Button>
+                </CardActions>
+            </Card>
         </motion.div>
     )
 }

@@ -6,6 +6,7 @@ import '../../styles/Offers/OffersMainPage.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import agent from '../../app/api/agent.js';
 import LoadingComponent from '../../app/layout/LoadingComponent.jsx'
+import { Grid } from "@mui/material";
 
 export const OffersMainPage = () => {
     const [offers, setOffers] = useState([]);
@@ -27,10 +28,13 @@ export const OffersMainPage = () => {
                 </div>
                 <motion.div layout className="main-offers">
                     <AnimatePresence>
-                        {console.log(offers)}
-                        {offers.map((offer) => {
-                            return <OffersList key={offer.id} offer={offer} />;
-                        })}
+                        <Grid container spacing={3}>
+                            {offers.map((offer) => (
+                                <Grid item xs={3} key={offer.id}>
+                                    <OffersList offer={offer} />
+                                </Grid >
+                            ))}
+                        </Grid>
                     </AnimatePresence>
                 </motion.div>
             </Container>
