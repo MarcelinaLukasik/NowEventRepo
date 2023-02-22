@@ -8,13 +8,13 @@ namespace NowEvent.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OffersController : ControllerBase
+    public class OfferController : ControllerBase
     {
-        private readonly ILogger<OffersController> _logger;
+        private readonly ILogger<OfferController> _logger;
         private readonly IOfferRepository _offerRepository;
         private readonly IEventRepository _eventRepository;
 
-        public OffersController(ILogger<OffersController> logger, IOfferRepository offerRepository, IEventRepository eventRepository)
+        public OfferController(ILogger<OfferController> logger, IOfferRepository offerRepository, IEventRepository eventRepository)
         {
             _logger = logger;
             _offerRepository = offerRepository;
