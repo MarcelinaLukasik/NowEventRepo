@@ -7,6 +7,7 @@ import sample from '../../images/sample.jpg';
 import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import agent from '../../app/api/agent';
 import LoadingComponent from '../../app/layout/LoadingComponent';
+import { Paper } from '@mui/material';
 export const ProductDetails = () => {
 
     const { id } = useParams();
@@ -24,16 +25,19 @@ export const ProductDetails = () => {
     console.log(offer)
     return (
         <Container className='container_offers'>
+            <Paper elevation={12}>   
 
-        <Grid container spacing={6} sx={{mt: 20} }>
+            
+        <Grid container spacing={6} sx={{mt: 20, p: 1} }>
+                
             <Grid item xs={4}>
                 <img src={sample} alt={offer.name} style={{ width: '100%' }} />
             </Grid>
             
-            <Grid item xs={8}>
+                    <Grid item xs={8}>
                 <Typography variant='h4' style={{ textAlign: 'center' }}>{offer.name}</Typography>
                 <Divider sx={{ mb: 2 }} />
-                <TableContainer>
+                <TableContainer>s
                     <Table>
                         <TableBody>
                             <TableRow>
@@ -59,8 +63,11 @@ export const ProductDetails = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                    </Grid>
+                
             </Grid>
-            </Grid>
+        </Paper>
+
         </Container>
     )
 }
