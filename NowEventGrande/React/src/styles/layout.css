@@ -10,13 +10,14 @@ html {
 }
 
 body {
-  margin-bottom: 20px;
-  font-weight: 400;
-  overflow-x: hidden;
-  position: relative;
-  background-color: rgb(69, 64, 64) !important;
-  color: #fff !important;
-  font-family: "Centra", sans-serif !important;
+    margin-bottom: 20px;
+    font-weight: 400;
+    overflow-x: hidden;
+    position: relative;
+    /*background-color: rgb(69, 64, 64) !important;*/
+    background-color: #E7EBF0 !important;
+    color: #fff !important;
+    font-family: "Centra", sans-serif !important;
 }
 
 p,
@@ -70,12 +71,13 @@ nav.navbar {
   left: 0;
   right: 0;
   z-index: 9999;
-  transition: 0.5s ease-in-out;
+    background-color: #000;
+    transition: 0.5s ease-in-out;
 }
-nav.navbar.scrolled {
-  padding: 0px;
-  background-color: #333;
-}
+    nav.navbar.scrolled {
+        padding: 0px;
+        background-color: #000;
+    }
 nav.navbar a.navbar-brand {
   color: #fff;
   width: 15%;

@@ -24,7 +24,7 @@
 .mainSlider .event-title {
   display: block;
   font-size: 4rem;
-  letter-spacing: 1;
+  letter-spacing: 1px;
   padding: 10px 0;
 
   line-height: 1;
