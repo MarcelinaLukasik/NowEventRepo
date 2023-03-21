@@ -22,7 +22,7 @@ namespace NowEvent.Controllers
             _verificationService = verificationService;
         }
 
-        //TODO checkStatus, then setStatus based on checkStatus return value, ask where enum should be
+        
         [HttpGet("{id:int}/CheckStatus")]
         public async Task<bool> CheckIfComplete(int id)
         {

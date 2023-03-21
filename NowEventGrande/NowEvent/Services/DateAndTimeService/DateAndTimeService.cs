@@ -15,19 +15,21 @@ namespace NowEvent.Services.DateAndTimeService
 
         public Dictionary<string, string> FormatAllOpeningDaysAndHours(string allDaysAndHours)
         {
-            var daysAndHours = allDaysAndHours.Split('\u002C');
-            foreach (var dayAndHour in daysAndHours)
+            if (allDaysAndHours != "undefined")
             {
-                var separatedDayAndHour = dayAndHour.Split(" ");
-                var day = separatedDayAndHour[0].Replace(":", "");
-                _allOpeningHours[day] = separatedDayAndHour[1];
+                var daysAndHours = allDaysAndHours.Split('\u002C');
+                foreach (var dayAndHour in daysAndHours)
+                {
+                    var separatedDayAndHour = dayAndHour.Split(" ");
+                    var day = separatedDayAndHour[0].Replace(":", "");
+                    _allOpeningHours[day] = separatedDayAndHour[1];
+                }
             }
             return _allOpeningHours;
         }
 
         public DateTime GetOperationalHour(string dayInfo, EventTimeStages timeStage, DateTime date)
         {
-            //TODO if hour over midnight add one day
             var openingAndClosingHours = dayInfo.Split("–");
             switch (timeStage)
             {

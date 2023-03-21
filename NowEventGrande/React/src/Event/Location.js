@@ -80,7 +80,7 @@ function Location() {
     return (
         <div className="event">
             <div className="row">
-            <div className="Event-col-4">
+                <div className="Event-col-4">
                 </div>
                     <div className="Event-col-4">    
                         <div className="progressBarContainer"> 
@@ -98,9 +98,9 @@ function Location() {
                         <h1>Event venue and date</h1>
                         <div className="row">
                             <div className="Event-col-3">
-                            <div className="sidebar">
-                                <SideBar eventId={eventId}/>
-                            </div>
+                                <div className="sidebar">
+                                    <SideBar eventId={eventId}/>
+                                </div>
                             </div>
                         <div className="Event-col-4">              
                                 <br/>                                         
@@ -153,13 +153,13 @@ function Location() {
                             </div>
     
                         </div>
-                        <div className="Event-col-2">
-                            <Col cs={12} md={6} xl={6}>
-                                <img src={calendarIcon} alt="img" className="featureIcon"/>
-                            </Col>
+                            <div className="Event-col-2">
+                                <Col cs={12} md={6} xl={6}>
+                                    <img src={calendarIcon} alt="img" className="featureIcon"/>
+                                </Col>
                             </div>                  
                         </div>                             
-                    </div>
+            </div>
                     <div className="row">
                         <button type="button" className="saveDate" value="Save date" onClick={handleDateSave} >
                             <span>{buttonSubmit}</span>
@@ -169,7 +169,7 @@ function Location() {
                         <Address eventId={eventId} fetchProgress={fetchProgress}/>  
                     </div>
                   
-                </div>
+        </div>
 
     )
 }

@@ -7,7 +7,7 @@ import { Nav } from "react-bootstrap"
 import { ArrowRightCircle } from "react-bootstrap-icons";
 import '../styles/banner.css';
 
-function CreatedOffers(){
+function PostedEvents(){
     const [offers, setOffers] = useState([]);
     const user = localStorage.getItem('user');
 
@@ -46,11 +46,11 @@ function CreatedOffers(){
 
     return (
         <div className='event'> 
-            {!user && <div className='notSignedInInfo'>You need to be signed in to see your offers.
+            {!user && <div className='notSignedInInfo'>You need to be signed in to see your posted events.
             </div>}   
             {user && offers.length !== 0 &&     
             <div>
-                <h2>Your current offers:</h2>
+                <h2>Your posted events:</h2>
                 <div className="row longTileContainer">
                     <div className="Event-col-3">
                     {Array.from(offers).map((item, i) => {
@@ -85,4 +85,4 @@ function CreatedOffers(){
     )
 }
 
-export default CreatedOffers;
+export default PostedEvents;

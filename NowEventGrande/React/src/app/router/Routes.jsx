@@ -11,10 +11,12 @@ import Offer from '../../Event/Offer';
 import Location from '../../Event/Location';
 import AfterEvent from '../../Event/AfterEvent';
 import Summary from '../../Event/Summary';
+import Details from '../../Event/Details';
 import Home from "../../pages/Home";
 import Offers from "../../pages/Offers";
 import Registration from '../../pages/Registration';
 import SignIn from '../../pages/SignIn';
+import PostedEvents from '../../Event/PostedEvents';
 
 export const router = createBrowserRouter([
     {
@@ -29,6 +31,7 @@ export const router = createBrowserRouter([
             { path: 'contact', element: <Contact /> },
             { path: 'Event', element: <Event /> },
             { path: 'CreatedEvents', element: <CreatedEvents /> },
+            { path: 'PostedEvents', element: <PostedEvents /> },
             { path: 'Event/:id/guests', element: <Guests /> },
             { path: 'Event/:id/budget', element: <Budget /> },
             { path: 'Event/:id/main', element: <EventMain /> },
@@ -36,6 +39,8 @@ export const router = createBrowserRouter([
             { path: 'Event/:id/location', element: <Location /> },
             { path: 'Event/:id/afterEvent', element: <AfterEvent /> },
             { path: 'Event/:id/summary', element: <Summary /> },
+            { path: 'Event/:id/details', element: <Details /> },
+            
 
             /*           { path: '*', element: <Navigate replace to='/not-found' /> },*/
         ]
