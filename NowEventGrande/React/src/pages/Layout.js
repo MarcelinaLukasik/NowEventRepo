@@ -51,12 +51,8 @@ const Layout = () => {
               <Nav.Link as={Link} to="/alloffers" className={activeLink === 'offers' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('offers')}>Offers
               </Nav.Link>
               <NavDropdown className="dropdown" title="My projects" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/CreatedEvents">My events</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/CreatedOffers">My offers</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/CreatedEvents">Created events</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/PostedEvents">Posted events</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <span className="navbar-text">

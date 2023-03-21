@@ -64,7 +64,10 @@ function AfterEvent() {
                             </div>
                         <div className="Event-col-6">              
                                 <br/>  
-                                <h2>Please take a moment to rate your experience</h2>                                       
+                                <h2>Please take a moment to rate your experience  
+                                    <br></br>
+                                     with the contractor:
+                                </h2>                                       
                                 <div>
                                     <h3>Communication:</h3>
                                     <div className="rateSlidecontainer">
