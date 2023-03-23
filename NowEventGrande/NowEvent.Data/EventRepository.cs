@@ -122,7 +122,7 @@ namespace NowEvent.Data
         {
             var eventById = await GetEventByIdAsync(id);
             eventById.Status = status;
-            _appDbContext.SaveChangesAsync();
+            _appDbContext.SaveChanges();
         }
         public async Task<string> GetStatus(int id)
         {

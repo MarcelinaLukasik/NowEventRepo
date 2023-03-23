@@ -8,6 +8,7 @@ import Calendar from 'react-calendar';
 import {handleStyle} from "./HandleProgress";
 import SideBar from "./SideBar";
 import Address from './Address';
+import ProgressBar from "./ProgressBar";
 
 
 function Location() {
@@ -25,24 +26,12 @@ function Location() {
     const [endMinutes, setEndMinutes] = useState("00");
     const [isValid, setValid] = useState(true);
     const [buttonSubmit, setButtonSubmit] = useState('Save');
+    const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
 
     useEffect(() => {
         fetchRequest();
-        fetchProgress();
       }, []);
 
-
-    useEffect(() => {
-      handleStyle(count);
-    }, [count]);
-
-
-    async function fetchProgress() {
-      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
-      res
-        .json()
-        .then(res => setCount(res));
-    }
 
     async function fetchRequest(key)  {
         const data = await fetch(
@@ -72,7 +61,7 @@ function Location() {
           }
           else{
             setValid(true);
-            fetchProgress();
+            setFetchCurrentProgress(true);
             setButtonSubmit("Save");
           }
     }
@@ -82,13 +71,9 @@ function Location() {
             <div className="row">
                 <div className="Event-col-4">
                 </div>
-                    <div className="Event-col-4">    
-                        <div className="progressBarContainer"> 
-                            <h3 className="progressText" >Checklist progress:</h3>  
-                                <div className="progress" id="progress">
-                                    <div className="progress-bar" id="progress-bar"></div>
-                                </div> 
-                        </div>
+                    <div className="Event-col-4">  
+                    <ProgressBar fetchCurrentProgress={fetchCurrentProgress}
+                          setFetchCurrentProgress={setFetchCurrentProgress}/>    
                     </div>
                     <div className="Event-col-4">                      
                        
@@ -166,7 +151,7 @@ function Location() {
                         </button>
                     </div>
                     <div className="row">
-                        <Address eventId={eventId} fetchProgress={fetchProgress}/>  
+                        <Address eventId={eventId} setFetchCurrentProgress={setFetchCurrentProgress}/>  
                     </div>
                   
         </div>

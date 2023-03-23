@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState} from "react";
 
-function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCount}) {
+function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCount, setFetchCurrentProgress}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -34,6 +34,7 @@ function AddGuestForm({onClick, addGuestCount, isOpen, eventId, addChecklistCoun
           setValid(true);
           addGuestCount();
           addChecklistCount();
+          setFetchCurrentProgress(true);
         }
       
     }  

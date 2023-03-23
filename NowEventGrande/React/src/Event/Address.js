@@ -84,7 +84,7 @@ function Address(props) {
         }
         else {
         setValid(true);
-        props.fetchProgress();
+        props.setFetchCurrentProgress(true);
         }
     } 
 
