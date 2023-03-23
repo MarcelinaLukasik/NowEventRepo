@@ -1,11 +1,11 @@
 import SideBar from "./SideBar";
+import ProgressBar from "./ProgressBar";
 import React from 'react';
 import {useLocation} from 'react-router-dom';
 import {Col} from "react-bootstrap";
 import calendarIcon from '../images/icons/salary.png';
 import { useState, useEffect, setErrors } from "react";
 import '../styles/event.css';
-import {handleStyle} from "./HandleProgress";
 
 
 function Budget() {
@@ -17,6 +17,7 @@ function Budget() {
     const [budget, setBudget] = useState([]);
     const [count, setCount] = useState(0);
     const [isValid, setValid] = useState(true);
+    const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
 
     const [isRentOpen, setRentOpen] = useState(false);
     const openRentInput = () => {setRentOpen(!isRentOpen);}
@@ -28,19 +29,7 @@ function Budget() {
 
     useEffect(() =>{ 
         fetchStatsData();  
-        fetchProgress();
     }, [])
-
-    useEffect(() => {
-      handleStyle(count);
-    }, [count]);
-
-    async function fetchProgress() {
-      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
-      res
-        .json()
-        .then(res => setCount(res));
-    }
 
     async function handleSubmit(evt) {
         evt.preventDefault();
@@ -48,19 +37,19 @@ function Budget() {
         if (costToChange === "rent")
         {
             handlePatch("RentPrice", rent).then(() => {
-              fetchStatsData().then(() => {openRentInput()}).then(() => {fetchProgress()});
+              fetchStatsData().then(() => {openRentInput()}).then(() => {setFetchCurrentProgress(true)});
         })
         }
         else if (costToChange === "decoration")
         {
           await handlePatch("DecorationPrice", decoration).then(() => {
-            fetchStatsData().then(() => {openDecorInput()}).then(() => {fetchProgress()});
+            fetchStatsData().then(() => {openDecorInput()}).then(() => {setFetchCurrentProgress(true)});
         })
         }
         else if (costToChange === "food")
         {
           await handlePatch("FoodPrice", food).then(() => {
-            fetchStatsData().then(() => {openFoodInput()}).then(() => {fetchProgress()});
+            fetchStatsData().then(() => {openFoodInput()}).then(() => {setFetchCurrentProgress(true)});
         })
         }
   }
@@ -97,17 +86,10 @@ function Budget() {
 
     return (
         <div className="event">          
-            {/* <h3 className="eventTitle">
-            Event id: {eventId}
-            </h3>    */}
             <div className="row">
-                    <div className="Event-col-12">    
-                        <div className="progressBarContainer"> 
-                            <h3 className="progressText" >Checklist progress:</h3>  
-                                <div className="progress" id="progress">
-                                    <div className="progress-bar" id="progress-bar"></div>
-                                </div> 
-                        </div>
+                    <div className="Event-col-12">   
+                      <ProgressBar fetchCurrentProgress={fetchCurrentProgress}
+                          setFetchCurrentProgress={setFetchCurrentProgress}/>  
                     </div>
                 </div>   
             <h1>Budget</h1>

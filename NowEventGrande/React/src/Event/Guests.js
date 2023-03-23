@@ -1,4 +1,5 @@
 import SideBar from "./SideBar";
+import ProgressBar from "./ProgressBar";
 import React from 'react';
 import AllGuests from "./AllGuests";
 import '../styles/guests.css';
@@ -16,7 +17,8 @@ function Guests() {
     const [id, setEventId] = useState(eventId);
     const [count, setChecklistCount] = useState(0);
     const [checked, setChecked] = useState(false);
-    const toggle = () => {setChecked(!checked); console.log(checked)};
+    const toggle = () => {setChecked(!checked)};
+    const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
 
     const addChecklistCount =() => {
         setChecklistCount(count +1);
@@ -27,28 +29,14 @@ function Guests() {
     }      
 
     useEffect(() =>{  
-        fetchProgress();
         checkIfLargeSize();
-        console.log(user);
     }, [])
 
-    useEffect(() => {
-      fetchProgress();
-    }, [count]);
 
     useEffect(() => {
         changeSize();
     }, [checked]);
 
-    async function fetchProgress() {
-      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
-      res
-        .json()
-        .then(res => {
-            setChecklistCount(res);
-            handleStyle(res);
-        })                
-    }
 
     async function checkIfLargeSize() {
         const res = await fetch(`/events/${eventId}/CheckIfLargeSize`);      
@@ -59,7 +47,7 @@ function Guests() {
                 setChecked(true);
               }
           })                
-      }
+    }
 
     async function changeSize(){
         let choosenSize = "Small";
@@ -81,14 +69,11 @@ function Guests() {
         
         if (!res.ok) {
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
-            // setValid(false);
             throw new Error(message);
             }
-            // else{
-            // setValid(true);
-            // fetchProgress();
-            // }
-        // } 
+        else{            
+            setFetchCurrentProgress(true);
+        }
     }
 
     async function changeSizeRange(event){
@@ -104,14 +89,8 @@ function Guests() {
         
         if (!res.ok) {
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
-            // setValid(false);
             throw new Error(message);
             }
-        //     else{
-        //     setValid(true);
-        //     fetchProgress();
-        //     }
-        // } 
     }
     
 
@@ -119,13 +98,9 @@ function Guests() {
         <div className="event">
             <div>  
                 <div className="row">
-                    <div className="Event-col-12">    
-                        <div className="progressBarContainer"> 
-                            <h3 className="progressText" >Checklist progress:</h3>  
-                                <div className="progress" id="progress">
-                                    <div className="progress-bar" id="progress-bar"></div>
-                                </div> 
-                        </div>
+                    <div className="Event-col-12"> 
+                        <ProgressBar fetchCurrentProgress={fetchCurrentProgress}
+                        setFetchCurrentProgress={setFetchCurrentProgress}/>    
                     </div>
                 </div>     
                 <h1>Guests list</h1>
@@ -139,7 +114,6 @@ function Guests() {
                         <br/> 
                         {checked && 
                         <div>
-                        {/* <p>Big event</p> */}
                         <h3>Choose your event range:</h3>
                        
                         <input type="button" className="saveRange" value="Less than 100" onClick={changeSizeRange}/>
@@ -150,9 +124,9 @@ function Guests() {
                         } 
                         {!checked && 
                         <div>
-                            {/* <p>Small event</p>  */}
                             <div className="guestList">
-                                <AllGuests eventId={id} addChecklistCount={addChecklistCount} subtractChecklistCount={subtractChecklistCount}/>
+                                <AllGuests eventId={id} addChecklistCount={addChecklistCount} 
+                                subtractChecklistCount={subtractChecklistCount} setFetchCurrentProgress={setFetchCurrentProgress}/>
                             </div>
                         </div> }                                                               
                                               

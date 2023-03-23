@@ -11,7 +11,7 @@ namespace NowEvent.Services.VerificationService
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
         private readonly IDateAndTimeService _dateAndTimeService;
-        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>() {{"PlaceStatus", "No information. Provide location and come back."}};
         private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
         private DateTime _openingHour;
         private DateTime _closingHour;

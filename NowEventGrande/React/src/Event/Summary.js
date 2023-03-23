@@ -1,5 +1,6 @@
 import SideBar from "./SideBar";
 import Assistance from "./Assistance";
+import ProgressBar from "./ProgressBar";
 import React from 'react';
 import '../styles/guests.css';
 import {useLocation} from 'react-router-dom';
@@ -19,17 +20,13 @@ function Summary() {
     const [address, setAddress] = useState();
     const Completionist = () => <span>Time to party!</span>;
     const [status, setStatus] = useState(false);
+    const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
 
     useEffect(() => {
-        handleEventStartTime();  
-        fetchProgress();      
+        handleEventStartTime();       
         checkStatus().then(() => {getInfo();}); 
     }, []);
-
-    useEffect(() => {
-        handleStyle(count);
-    }, [count]);  
-
+ 
     async function handleEventStartTime()
     {
         var result = await GetEventStartTime();
@@ -40,13 +37,6 @@ function Summary() {
     async function GetEventStartTime(){
         const res = await fetch(`/events/${eventId}/GetEventStartDate`);
         return res;
-    }
-
-    async function fetchProgress() {
-      const res = await fetch(`/progress/${eventId}/GetChecklistProgress`);      
-      res
-        .json()
-        .then(res => setCount(res));
     }
 
     async function checkStatus() {
@@ -67,12 +57,8 @@ function Summary() {
             <div>  
                 <div className="row">
                     <div className="Event-col-12">    
-                        <div className="progressBarContainer"> 
-                            <h3 className="progressText" >Checklist progress:</h3>  
-                                <div className="progress" id="progress">
-                                    <div className="progress-bar" id="progress-bar"></div>
-                                </div> 
-                        </div>
+                        <ProgressBar fetchCurrentProgress={fetchCurrentProgress}
+                          setFetchCurrentProgress={setFetchCurrentProgress}/>  
                     </div>
                 </div>     
                 <h1>Summary</h1>

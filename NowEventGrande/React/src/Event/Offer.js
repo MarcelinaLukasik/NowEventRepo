@@ -43,10 +43,8 @@ function Offer() {
         });
         setButtonSubmit("Post My Offer");
         if (response.status === 200) {
-            console.log("imhere200");
             setStatus({ success: true, message: "Email sent successfully!" })
         } else {
-            console.log("imhere no200");
             setStatus({ success: false, message: "Something went wrong, please try again..." })
         }
     }

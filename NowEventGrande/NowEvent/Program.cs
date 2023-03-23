@@ -12,6 +12,7 @@ using NowEvent.Models;
 using NowEvent.Services.AuthenticationService;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.EmailService;
+using NowEvent.Services.ProgressService;
 using NowEvent.Services.VerificationService;
 using NowEvent.Validators;
 
@@ -88,6 +89,7 @@ builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IDateAndTimeService, DateAndTimeService>();
+builder.Services.AddScoped<IProgressService, ProgressService>();
 
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 

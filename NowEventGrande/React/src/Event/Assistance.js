@@ -11,7 +11,6 @@ function Assistance(props) {
       }, []);
 
 
-
     async function fetchVerification() {
         const res = await fetch(`/location/${props.eventId}/GetVerificationInfo`);
         const dataJ = await res.json();
@@ -19,7 +18,6 @@ function Assistance(props) {
         const result = dataJ;
         return result;
     }
-
 
     return (
         <div>
