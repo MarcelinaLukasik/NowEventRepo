@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
 
 namespace NowEvent.Data
@@ -37,7 +32,8 @@ namespace NowEvent.Data
             var result = _appDbContext.Offer.Join(_appDbContext.Events, 
                     offer => offer.EventId, evt => evt.Id,
                 (offer, evt) => new { Offer = offer, Evt = evt})
-                .Where(offerAndEvt => offerAndEvt.Evt.ClientId == id).Select(o => new { o.Evt.Name, o.Offer.Status}); 
+                .Where(offerAndEvt => offerAndEvt.Evt.ClientId == id)
+                .Select(o => new { o.Evt.Name, o.Offer.Status}); 
             return result;
         }
     }

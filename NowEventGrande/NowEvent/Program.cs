@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NowEvent;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
 using NowEvent.Services.AuthenticationService;
 using NowEvent.Services.DateAndTimeService;
@@ -18,9 +19,6 @@ using NowEvent.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// builder.Services.AddAuthentication();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -86,6 +84,8 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<ILocationAndTimeRepository, LocationAndTimeRepository>();
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
+builder.Services.AddScoped<IRatingsRepository, RatingsRepository>();
+
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IDateAndTimeService, DateAndTimeService>();

@@ -112,7 +112,6 @@ function Address(props) {
                 center={center}
                 zoom={15}
                 >           
-                { /* Child components, such as markers, info windows, etc. */ }
                 {mapInstance && <Marker
                 key="marker_1"
                 position={{ lat: latitude, lng: longitude }}

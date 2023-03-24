@@ -3,19 +3,30 @@ import '../styles/rateSlider.css';
 import {Col} from "react-bootstrap";
 import Icon from '../images/icons/list.png';
 import {useLocation} from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SideBar from "./SideBar";
 
 function AfterEvent() {
     const location = useLocation();
     const eventId = location.state.EventId;
-    const [id, setEventId] = useState(eventId);
     const [CommunicationRate, setCommunicationRate] = useState(3);
     const [QualityRate, setQualityRate] = useState(3);
     const [SpeedRate, setSpeedRate] = useState(3);
+    const [isPosted, setIsPosted]= useState(false);
     
 
-    function MoveSlider(evt) {
+    useEffect(() =>{ 
+        checkIfRated();  
+    }, [])
+
+    async function checkIfRated(){
+        const res = await fetch(`/events/${eventId}/CheckIfRated`);
+        if (res.ok){
+            setIsPosted(true);
+        }
+    }
+
+    function moveSlider(evt) {
         const slider = evt.target;
         const value = slider.value;
         const rate = slider.id;
@@ -42,11 +53,15 @@ function AfterEvent() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({CommunicationRating: CommunicationRate, QualityRating: QualityRate , SppedRating: SpeedRate, EventId: eventId}) ,
+          body: JSON.stringify({CommunicationRating: CommunicationRate, QualityRating: QualityRate ,
+             SpeedRating: SpeedRate, EventId: eventId}) ,
         })
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
           throw new Error(message);
+        }
+        else{
+            setIsPosted(true);
         }
     }  
       fetchData();    
@@ -64,36 +79,43 @@ function AfterEvent() {
                             </div>
                         <div className="Event-col-6">              
                                 <br/>  
-                                <h2>Please take a moment to rate your experience  
-                                    <br></br>
-                                     with the contractor:
-                                </h2>                                       
+                                {isPosted &&
+                                    <h2>You have rated this event. Thank you.</h2>
+                                }
+                                {!isPosted && 
                                 <div>
-                                    <h3>Communication:</h3>
-                                    <div className="rateSlidecontainer">
-                                        <input type="range" min="1" max="5" value={CommunicationRate} className="rateSlider" id="CommunicationRange" onInput={MoveSlider}/>
-                                    </div>
-                                    <h3>{CommunicationRate}</h3>                                 
-                                </div>   
-                                <div>
-                                    <h3>Quality:</h3>
-                                    <div className="rateSlidecontainer">
-                                        <input type="range" min="1" max="5" value={QualityRate} className="rateSlider" id="QualityRange" onInput={MoveSlider}/>
-                                    </div>
-                                    <h3>{QualityRate}</h3>                                 
+                                    <h2>Please take a moment to rate your experience  
+                                        <br></br>
+                                        with the contractor:
+                                    </h2>                                       
+                                    <div>
+                                        <h3>Communication:</h3>
+                                        <div className="rateSlidecontainer">
+                                            <input type="range" min="1" max="5" value={CommunicationRate} className="rateSlider" id="CommunicationRange" onInput={moveSlider}/>
+                                        </div>
+                                        <h3>{CommunicationRate}</h3>                                 
+                                    </div>   
+                                    <div>
+                                        <h3>Quality:</h3>
+                                        <div className="rateSlidecontainer">
+                                            <input type="range" min="1" max="5" value={QualityRate} className="rateSlider" id="QualityRange" onInput={moveSlider}/>
+                                        </div>
+                                        <h3>{QualityRate}</h3>                                 
+                                    </div> 
+                                    <div>
+                                        <h3>Speed:</h3>
+                                        <div className="rateSlidecontainer">
+                                            <input type="range" min="1" max="5" value={SpeedRate} className="rateSlider" id="SpeedRange" onInput={moveSlider}/>
+                                        </div>
+                                        <h3>{SpeedRate}</h3>                                 
+                                    </div> 
+                                    <div>
+                                    <form onSubmit={handleSubmit}>
+                                        <input className="saveGuest" type="submit" value="Send ratings"/>
+                                    </form>
+                                    </div>                               
                                 </div> 
-                                <div>
-                                    <h3>Speed:</h3>
-                                    <div className="rateSlidecontainer">
-                                        <input type="range" min="1" max="5" value={SpeedRate} className="rateSlider" id="SpeedRange" onInput={MoveSlider}/>
-                                    </div>
-                                    <h3>{SpeedRate}</h3>                                 
-                                </div> 
-                                <div>
-                                <form onSubmit={handleSubmit}>
-                                    <input className="saveGuest" type="submit" value="Send ratings"/>
-                                </form>
-                                </div>                  
+                                }                
                         </div> 
                         <div className="Event-col-2">
                             <Col cs={12} md={6} xl={6}>

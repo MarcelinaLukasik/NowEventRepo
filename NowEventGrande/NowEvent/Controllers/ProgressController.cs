@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NowEvent.Data;
-using NowEvent.Models;
 using NowEvent.Services.ProgressService;
 
 namespace NowEvent.Controllers
