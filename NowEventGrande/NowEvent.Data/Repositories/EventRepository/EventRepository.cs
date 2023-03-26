@@ -78,7 +78,11 @@ namespace NowEvent.Data
 
         public IQueryable GetEventsByUserId(string id)
         {
-            return _appDbContext.Events.Where(x => x.ClientId == id).Select(x => new { x.Name, x.Status, x.Id});
+
+            var events = _appDbContext.Events.Where(x => x.ClientId == id);
+            UpdateStatuses(events);
+            return events;
+
         }
 
 
@@ -128,6 +132,18 @@ namespace NowEvent.Data
         {
             var eventById = await GetEventByIdAsync(id);
             return eventById.Status;
+        }
+
+        public void UpdateStatuses(IQueryable events)
+        {
+            foreach (Event eventByUserId in events)
+            {
+                if (eventByUserId.Date <= DateTime.Now)
+                {
+                    SetStatus(eventByUserId.Id, EventStatuses.Finished);
+                }
+                
+            }
         }
         public async Task<Dictionary<string, string>> GetInfo(int id)
         {
@@ -188,7 +204,7 @@ namespace NowEvent.Data
         public bool CheckIfLargeSize(int id)
         {
             var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
-            return eventById.Size == "Large";
+            return eventById.Size == "Large" && eventById.SizeRange != null;
         }
     }
 }

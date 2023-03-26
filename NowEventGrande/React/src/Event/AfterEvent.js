@@ -5,6 +5,7 @@ import Icon from '../images/icons/list.png';
 import {useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import SideBar from "./SideBar";
+import balloonsIcon from '../images/icons/colorful_balloons.png';
 
 function AfterEvent() {
     const location = useLocation();
@@ -72,15 +73,14 @@ function AfterEvent() {
                     <div>              
                         <h1>After event</h1>
                         <div className="row">
-                            <div className="Event-col-3">
-                            <div className="sidebar">
-                            <SideBar eventId={eventId}/>
-                            </div>
-                            </div>
-                        <div className="Event-col-6">              
+                            
+                        <div className="Event-col-12">              
                                 <br/>  
                                 {isPosted &&
-                                    <h2>You have rated this event. Thank you.</h2>
+                                    <div>
+                                        <h2>You have rated this event. Thank you.</h2>                                       
+                                        <img src={balloonsIcon} alt="img" className='bigIcon'/>                                                                              
+                                    </div>
                                 }
                                 {!isPosted && 
                                 <div>
@@ -116,12 +116,7 @@ function AfterEvent() {
                                     </div>                               
                                 </div> 
                                 }                
-                        </div> 
-                        <div className="Event-col-2">
-                            <Col cs={12} md={6} xl={6}>
-                                <img src={Icon} alt="img" className="featureIcon"/>
-                            </Col>
-                            </div>                  
+                        </div>                    
                         </div>                             
                     </div>
                 </div>

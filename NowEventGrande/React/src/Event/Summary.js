@@ -83,7 +83,7 @@ function Summary() {
                           marginTop: "12px"      
                         }}                            
                         >
-                            <Completionist />
+                        <Completionist />
                         </Counter>  } 
                         <div className="summaryStats">
                         <h3>Current status: {status}</h3> 
