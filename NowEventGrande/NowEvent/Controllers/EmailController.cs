@@ -16,12 +16,6 @@ namespace NowEvent.Controllers
             _emailService = emailService;
         }
 
-        [HttpGet]
-        public IActionResult Hello()
-        {
-            return Ok();
-        }
-
         [HttpPost("SendEmail")]
         public IActionResult SendEmail([FromBody]Email request)
         {

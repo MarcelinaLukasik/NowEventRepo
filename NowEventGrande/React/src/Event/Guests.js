@@ -74,6 +74,7 @@ function Guests() {
         else{            
             setFetchCurrentProgress(true);
         }
+    
     }
 
     async function changeSizeRange(event){
@@ -91,6 +92,9 @@ function Guests() {
             const message = `An error has occured: ${res.status} - ${res.statusText}`;
             throw new Error(message);
             }
+        else{            
+            setFetchCurrentProgress(true);
+        }
     }
     
 

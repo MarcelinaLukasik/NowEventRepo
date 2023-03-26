@@ -48,7 +48,14 @@ function CreatedEvents(){
     function goToEvent(evt){
             evt.preventDefault();
             const eventId = evt.currentTarget.value;
-            navigate(`/event/${eventId}/summary`, {state: {EventId: eventId}});
+            const status = evt.currentTarget.id;
+            if (status !== "Finished") {
+                navigate(`/event/${eventId}/summary`, {state: {EventId: eventId}});
+            }
+            else {
+                navigate(`/event/${eventId}/afterEvent`, {state: {EventId: eventId}});
+            }
+            
     }
     return (
         <div className='event'> 
@@ -62,7 +69,7 @@ function CreatedEvents(){
                     {Array.from(events).map((item, i) => {
                         return (
                             <form key={i}  >
-                                <button className="longTile" value={item.id} onClick={goToEvent}>
+                                <button className="longTile" value={item.id} id={item.status} onClick={goToEvent}>
                                 <h2 className="longTileText">{item.name}</h2>
                                 <p className="longTileTextSmall">{item.status}</p>
                                 </button>

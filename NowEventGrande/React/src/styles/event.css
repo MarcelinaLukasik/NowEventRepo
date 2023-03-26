@@ -191,7 +191,6 @@ ol li:before {
 }
 
 .featureIcon {
-  /* filter: drop-shadow(8px 8px 10px rgb(82, 82, 82)); */
   filter: brightness(90%) hue-rotate(50deg);
   width: 50px;
   padding-top: 20px;
@@ -200,6 +199,9 @@ ol li:before {
 @media only screen and (min-width: 400px) {
   .featureIcon {
     width: 150px;
+  }
+  .bigIcon{
+    width: 500px;
   }
 }
 
@@ -262,12 +264,9 @@ ol li:before {
 
 .progressBarContainer {
   margin:auto;
-  /* margin-right: 50px; */
   text-align: center;
   position: relative;
-  /* float: right; */
   top: -35px;
-  /* left: 330px; */
 }
 
 .progressText {
@@ -354,9 +353,7 @@ ol li:before {
   border: 0px;
   border-radius: 20px;
   font-size: 22px;
-  
   text-align: center;
-  /* color:#b1b1b1; */
 }
 
 

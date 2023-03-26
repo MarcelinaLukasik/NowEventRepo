@@ -14,7 +14,6 @@ body {
     font-weight: 400;
     overflow-x: hidden;
     position: relative;
-    /*background-color: rgb(69, 64, 64) !important;*/
     background-color: #E7EBF0 !important;
     color: #fff !important;
     font-family: "Centra", sans-serif !important;
@@ -213,19 +212,4 @@ nav.navbar .navbar-toggler-icon:before {
   z-index: 2;
   transition: all 300ms linear;
 }
-/* nav.navbar .navbar-toggler-icon:after {
-  top: 8px;
-}
-nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
-  transform: rotate(45deg);
-  background-color: #fff;
-  height: 2px;
-}
-nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
-  transform: translateY(8px) rotate(-45deg);
-  background-color: #fff;
-  height: 2px;
-}
-nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-  border-color: transparent;
-} */
+

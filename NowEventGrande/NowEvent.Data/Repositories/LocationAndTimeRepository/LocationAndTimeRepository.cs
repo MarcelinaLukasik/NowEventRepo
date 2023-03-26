@@ -51,8 +51,7 @@ namespace NowEvent.Data
         public async Task<string> GetEventAddress(int id)
         {
             string address = await _appDbContext.EventAddress.Where(x => x.EventId == id)
-                .Select(x => x.FullAddress).FirstOrDefaultAsync() ?? "No address set"; 
-                              // ?? throw new ArgumentOutOfRangeException();
+                .Select(x => x.FullAddress).FirstOrDefaultAsync() ?? "No address set";
             return address;
         }
 

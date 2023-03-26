@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Net;
 using Microsoft.AspNetCore.Identity;
 
 namespace NowEvent.Models

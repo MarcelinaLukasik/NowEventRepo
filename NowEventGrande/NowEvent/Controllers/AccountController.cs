@@ -46,7 +46,7 @@ namespace NowEvent.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                ModelState.AddModelError(string.Empty, "Invalid Attempt");
             }
             return BadRequest();
         }
@@ -82,7 +82,6 @@ namespace NowEvent.Controllers
         [Authorize]
         public IActionResult GetCurrentUserId()
         {
-            // var result = HttpContext.User.Identity.Name;
             string userId = _userAuthenticationService.GetCurrentUserId(HttpContext.User.Identity.Name);
             return Ok(userId);
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.VerificationService;
@@ -14,20 +15,20 @@ namespace NowEvent.Controllers
     {
         private readonly ILogger<EventsController> _logger;
         private readonly IEventRepository _eventRepository;
+        private readonly IRatingsRepository _ratingsRepository;
         private readonly IVerificationService _verificationService;
-        // private readonly IUserAuthenticationService _userAuthenticationService;
         private readonly IDateAndTimeService _dateAndTimeService;
 
 
         public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, 
-            IVerificationService verificationService, IDateAndTimeService dateAndTimeService)
+            IVerificationService verificationService, IDateAndTimeService dateAndTimeService,
+            IRatingsRepository ratingsRepository)
         {
             _logger = logger;
-            // _guestRepository = guestRepository;
             _eventRepository = eventRepository;
             _verificationService = verificationService;
-            // _userAuthenticationService = userAuthenticationService;
             _dateAndTimeService = dateAndTimeService;
+            _ratingsRepository = ratingsRepository;
         }
 
 
@@ -42,11 +43,25 @@ namespace NowEvent.Controllers
 
             return validEvent ? Ok(id) : BadRequest(newEvent);
         }
+        
+        [HttpGet("{eventId:int}/CheckIfRated")]
+        public IActionResult CheckIfRated(int eventId)
+        {
+            bool isRated = _ratingsRepository.RatingStatus(eventId);
+            if (isRated)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
         [HttpPost("SaveRatings")]
         public IActionResult SaveRatings([FromBody] Rating rating)
         {
-            //TODO save rating to database
+            _ratingsRepository.SaveRatings(rating);
             return Ok(rating);
         }
 
@@ -65,13 +80,13 @@ namespace NowEvent.Controllers
             Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
             return await _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
-
-        [HttpGet("{id:int}/GetEventStartDate")]
-        public IActionResult GetEventStartDate(int id)
-        {
-            var getEvent = _eventRepository.GetEventStartDate(id);
-            return Ok();
-        }
+        //
+        // [HttpGet("{id:int}/GetEventStartDate")]
+        // public IActionResult GetEventStartDate(int id)
+        // {
+        //     var getEvent = _eventRepository.GetEventStartDate(id);
+        //     return Ok();
+        // }
 
         [HttpGet("{id:int}/GetEventStatus")]
         public async Task<string> GetEventStatus(int id)
