@@ -36,5 +36,12 @@ namespace NowEvent.Data
                 .Select(o => new { o.Evt.Name, o.Offer.Status}); 
             return result;
         }
+
+        public string GetClientIdByEventId(int id)
+        {
+            var clientId = _appDbContext.Events.Where(evt => evt.Id == id)
+                .Select(evt => evt.ClientId).FirstOrDefault();
+            return clientId;
+        }
     }
 }

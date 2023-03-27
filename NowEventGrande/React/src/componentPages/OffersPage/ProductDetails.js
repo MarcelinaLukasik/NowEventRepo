@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import '../../styles/Offers/ProductDetail.css'
 import sample from '../../images/sample.jpg';
-import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import { Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
 import agent from '../../app/api/agent';
 import LoadingComponent from '../../app/layout/LoadingComponent';
 import { Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 export const ProductDetails = () => {
 
     const { id } = useParams();
@@ -56,10 +58,13 @@ export const ProductDetails = () => {
                                 <TableCell>Event End</TableCell>
                                 <TableCell>{offer.eventEnd}</TableCell>
                             </TableRow>
-                            <TableRow>
+                            <Button size="small" component={Link} to={`/alloffers/offerToPrepare/${offer.id}`}>
+                                Offer to prepare the event
+                            </Button>
+                            {/* <TableRow>
                                 <TableCell>Guests</TableCell>
                                 <TableCell>{offer.guests}</TableCell>
-                            </TableRow>
+                            </TableRow> */}
                         </TableBody>
                     </Table>
                 </TableContainer>

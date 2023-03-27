@@ -8,15 +8,16 @@ import { ArrowRightCircle } from "react-bootstrap-icons";
 import '../styles/banner.css';
 
 function PostedEvents(){
-    const [offers, setOffers] = useState([]);
+    const [requests, setRequests] = useState([]);
     const user = localStorage.getItem('user');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserId();
     },[])
 
-    async function GetUserOffers(result){
-        const res = await fetch(`/offer/GetOffersByUserId`, {
+    async function GetUserRequests(result){
+        const res = await fetch(`/offer/GetRequestsByUserId`, {
             Authorization: !user ? {} : { 'Authorization': 'Bearer ' + user.accessToken },
             method: "POST",
             headers: {
@@ -24,7 +25,7 @@ function PostedEvents(){
             },
             body: JSON.stringify(result)
         }); 
-        res.json().then(res => setOffers(res));     
+        res.json().then(res => setRequests(res));     
     }
     async function fetchUserId(){
         const res = await fetch('../account/GetCurrentUserId',{
@@ -38,45 +39,53 @@ function PostedEvents(){
           else{       
             await res.text()
             .then((result)=> { 
-                GetUserOffers(result);
+                GetUserRequests(result);
             }) 
             .catch(res)       
           }
     }
 
+    function goToMessage(evt){
+        evt.preventDefault();
+        const requestId = evt.currentTarget.value;
+        navigate(`/offer/${requestId}`, {state: {RequestId: requestId}});
+       
+        
+}
+
     return (
         <div className='event'> 
-            {!user && <div className='notSignedInInfo'>You need to be signed in to see your posted events.
+            {!user && <div className='notSignedInInfo'>You need to be signed in to see your messages.
             </div>}   
-            {user && offers.length !== 0 &&     
+            {user && requests.length !== 0 &&     
             <div>
-                <h2>Your posted events:</h2>
-                <div className="row longTileContainer">
-                    <div className="Event-col-3">
-                    {Array.from(offers).map((item, i) => {
+                <h2>Your messages:</h2>
+                <div className="row shortTileContainer">
+                {/* <div className="Event-col-2">
+                        <img src={emoticonsBanner} alt="not loaded" className="verticalBanner"></img>
+                    </div>  */}
+                    <div className="Event-col-12">
+                    {Array.from(requests).map((item, i) => {
                         return (
                             <form key={i}  >
-                                <button className="longTile" value={item.name}>
-                                <h2 className="longTileText">{item.name}</h2>
-                                <p className="longTileTextSmall">{item.status}</p>
+                                <button className="shortTile" value={item.id} onClick={goToMessage}>
+                                <h2 className="shortTileText">Message from: {item.companyName}</h2>
+                                
                                 </button>
                             </form>)
                             })} 
                     </div>            
 
-                    <div className="Event-col-2">
-                        <img src={emoticonsBanner} alt="not loaded" className="verticalBanner"></img> 
-                    </div>
+                    
                     
                 </div>
             </div>    
             } 
-            {user && offers.length === 0 &&
-            <div className="row longTileContainer">
+            {user && requests.length === 0 &&
+            <div className="row shortTileContainer">
                         <div className="Event-col-5">
                             <div className="createdEventsInfo">
-                                Look like you don't have any offers yet.
-                                Complete your event and use "Post offer" button.
+                                Look like you don't have any messages yet.                               
                             </div>                        
                         </div> 
             </div>

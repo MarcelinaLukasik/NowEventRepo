@@ -80,13 +80,6 @@ namespace NowEvent.Controllers
             Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
             return await _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
-        //
-        // [HttpGet("{id:int}/GetEventStartDate")]
-        // public IActionResult GetEventStartDate(int id)
-        // {
-        //     var getEvent = _eventRepository.GetEventStartDate(id);
-        //     return Ok();
-        // }
 
         [HttpGet("{id:int}/GetEventStatus")]
         public async Task<string> GetEventStatus(int id)

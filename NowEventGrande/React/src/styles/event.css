@@ -425,6 +425,18 @@ ol li:before {
   margin-left: 25px;
 }
 
+.messageInput {
+  width: 400px;
+  height: 200px;
+  padding: 15px;
+  margin: auto;
+}
+
+.requestMessage {
+  font-size: 35px;
+  color: white;
+}
+
 
 
 

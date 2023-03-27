@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using NowEvent;
 using NowEvent.Data;
 using NowEvent.Data.Repositories.RatingsRepository;
+using NowEvent.Data.Repositories.RequestsRepository;
 using NowEvent.Models;
 using NowEvent.Services.AuthenticationService;
 using NowEvent.Services.DateAndTimeService;
@@ -85,6 +86,7 @@ builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<ILocationAndTimeRepository, LocationAndTimeRepository>();
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IRatingsRepository, RatingsRepository>();
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
