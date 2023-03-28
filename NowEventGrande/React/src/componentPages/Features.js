@@ -1,10 +1,13 @@
 import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
 import { FeatureCard } from "./FeatureCard";
-import projImg1 from "../images/budget.jpg";
-import projImg2 from "../images/guest-list.jpg";
-import projImg3 from "../images/date-time.jpg";
+import financeImage from "../images/finance.jpg";
+import guestListImage from "../images/guest-list.jpg";
+import DateTimeImage from "../images/date-time.jpg";
 import projImg4 from "../images/inspiration.jpg";
-import colorSharp2 from "../images/benefit1.svg";
+import benefitImage from "../images/benefit1.svg";
+import confettiImage from "../images/confetti.jpg";
+import celebrationImage from "../images/celebration.jpg";
+import concertImage from "../images/concert.jpg";
 import '../styles/features.css';
 import TrackVisibility from 'react-on-screen';
 
@@ -14,32 +17,33 @@ export const Features = () => {
         {
             title: "Guests",
             description: "Manage your guest list",
-            imgUrl: projImg2,
+            imgUrl: guestListImage,
         },
         {
             title: "Where and when?",
             description: "Set the date and place for your event",
-            imgUrl: projImg3,
+            imgUrl: DateTimeImage,
         },
         {
             title: "Theme",
             description: "Something oldschool? Something modern? Your choice!",
-            imgUrl: projImg2,
-        },
-        {
-            title: "Budget",
-            description: "Keep an eye on your expenses",
-            imgUrl: projImg3,
-        },
-        {
-            title: "Summary",
-            description: "All the important information in one place",
-            imgUrl: projImg2,
+            imgUrl: celebrationImage,
         },
         {
             title: "Your opinion",
             description: "Rate your experience and help other with their choice",
-            imgUrl: projImg3,
+            imgUrl: concertImage,
+        },
+        {
+            title: "Summary",
+            description: "All the important information in one place",
+            imgUrl: confettiImage,
+        },
+        {
+            
+            title: "Budget",
+            description: "Keep an eye on your expenses",
+            imgUrl: financeImage,
         },
     ];
 

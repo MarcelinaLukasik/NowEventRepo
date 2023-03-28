@@ -15,7 +15,7 @@ const request = {
 
 const Offers = {
     productsList: () => request.get('offer'),
-    productDetails: (id) => request.get(`offer/${id}`),
+    productDetails: (id) => request.get(`offer/${id}/GetOfferDetails`),
     productClientId: (id) => request.get(`offer/${id}/GetClientId`)
 }
 

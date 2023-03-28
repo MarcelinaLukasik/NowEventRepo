@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
 
 namespace NowEvent.Data
@@ -6,6 +7,7 @@ namespace NowEvent.Data
     public class OfferRepository : IOfferRepository
     {
         private readonly AppDbContext _appDbContext;
+        private Dictionary<string, string> _offerDetails = new Dictionary<string, string>();
 
         public OfferRepository(AppDbContext appDbContext)
         {
@@ -42,6 +44,26 @@ namespace NowEvent.Data
             var clientId = _appDbContext.Events.Where(evt => evt.Id == id)
                 .Select(evt => evt.ClientId).FirstOrDefault();
             return clientId;
+        }
+
+        public Dictionary<string, string> GetDetails(int id)
+        {
+            var mainEventInfo = _appDbContext.Events.FirstOrDefault(evt => evt.Id == id);
+            var eventAddress = _appDbContext.EventAddress.FirstOrDefault(evt => evt.EventId == id);
+            var eventBudget = _appDbContext.Budget.FirstOrDefault(evt => evt.EventId == id);
+            bool isInfoProvided = mainEventInfo !=null && eventAddress !=null && eventBudget !=null;
+            if (isInfoProvided)
+            {
+                _offerDetails.Add("name", mainEventInfo.Name);
+                _offerDetails.Add("type", mainEventInfo.Type);
+                _offerDetails.Add("eventStart", mainEventInfo.EventStart.ToShortDateString());
+                _offerDetails.Add("theme", mainEventInfo.Theme ?? "-");
+                _offerDetails.Add("size", mainEventInfo.Size);
+                _offerDetails.Add("address", eventAddress.FullAddress);
+                _offerDetails.Add("budget", eventBudget.Total.ToString());
+            }
+            
+            return _offerDetails;
         }
     }
 }

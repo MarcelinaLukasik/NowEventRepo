@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container } from 'react-bootstrap'
+import { Container, Nav } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import '../../styles/Offers/ProductDetail.css'
@@ -24,13 +24,14 @@ export const ProductDetails = () => {
     }, [id]);
 
     if (loading) return <LoadingComponent message='Loading offer...' />
-    console.log(offer)
     return (
+        <div class="event">
+            <h1>Event details</h1>
         <Container className='container_offers'>
             <Paper elevation={12}>   
 
             
-        <Grid container spacing={6} sx={{mt: 20, p: 1} }>
+        <Grid container spacing={6} sx={{mt: 10, p: 1} }>
                 
             <Grid item xs={4}>
                 <img src={sample} alt={offer.name} style={{ width: '100%' }} />
@@ -39,7 +40,7 @@ export const ProductDetails = () => {
                     <Grid item xs={8}>
                 <Typography variant='h4' style={{ textAlign: 'center' }}>{offer.name}</Typography>
                 <Divider sx={{ mb: 2 }} />
-                <TableContainer>s
+                <TableContainer>
                     <Table>
                         <TableBody>
                             <TableRow>
@@ -54,25 +55,33 @@ export const ProductDetails = () => {
                                 <TableCell>Event Start</TableCell>
                                 <TableCell>{offer.eventStart}</TableCell>
                             </TableRow>
-                            <TableRow>
+                            {/* <TableRow>
                                 <TableCell>Event End</TableCell>
                                 <TableCell>{offer.eventEnd}</TableCell>
+                            </TableRow>  */}
+                            <TableRow>
+                                <TableCell>Theme</TableCell>
+                                <TableCell>{offer.theme}</TableCell>
+                            </TableRow>                          
+                            <TableRow>
+                                <TableCell>Budget</TableCell>
+                                <TableCell>{offer.budget}$</TableCell>
                             </TableRow>
-                            <Button size="small" component={Link} to={`/alloffers/offerToPrepare/${offer.id}`}>
-                                Offer to prepare the event
-                            </Button>
-                            {/* <TableRow>
-                                <TableCell>Guests</TableCell>
-                                <TableCell>{offer.guests}</TableCell>
-                            </TableRow> */}
+                            <TableRow>
+                                <TableCell>Address</TableCell>
+                                <TableCell>{offer.address}</TableCell>
+                            </TableRow>
                         </TableBody>
-                    </Table>
-                </TableContainer>
-                    </Grid>
-                
+                        <Nav.Link as={Link} to={`/alloffers/offerToPrepare/${offer.id}`}>
+                            <button className="saveDate">Offer</button>
+                            </Nav.Link>
+                    </Table>                  
+                </TableContainer>             
+                    </Grid>              
             </Grid>
         </Paper>
 
         </Container>
+        </div>
     )
 }

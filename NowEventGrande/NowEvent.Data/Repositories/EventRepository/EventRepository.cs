@@ -30,7 +30,7 @@ namespace NowEvent.Data
         }
         public async Task<List<Event>> GetAllOffers()
         {
-            return await _appDbContext.Events.ToListAsync();
+            return await _appDbContext.Events.Where(x => x.Status == EventStatuses.Completed).ToListAsync();
         }
 
         public async Task<PagedResult<Event>> GetAll(OfferQuery query)

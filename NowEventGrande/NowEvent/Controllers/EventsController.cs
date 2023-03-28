@@ -131,6 +131,12 @@ namespace NowEvent.Controllers
             return _eventRepository.CheckIfLargeSize(id);
         }
 
+        [HttpGet("{id:int}/GetEventStartDate")]
+        public DateTime GetEventStartDate(int id)
+        {
+            return _eventRepository.GetEventStartDate(id);
+        }
+
 
     }
 }

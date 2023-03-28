@@ -10,6 +10,6 @@ export default function LoadingComponent({ message = 'Loading...' }) {
                     {message}
                 </Typography>
             </Box>
-            </Backdrop>
+        </Backdrop>
     )
 }

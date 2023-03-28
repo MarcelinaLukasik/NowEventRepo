@@ -81,5 +81,12 @@ namespace NowEvent.Controllers
             Request request = await _requestRepository.GetRequestById(id);
             return request;
         }
+
+        [HttpGet("{id:int}/GetOfferDetails")]
+        public IActionResult GetOfferDetails(int id)
+        {
+            var offerDetails = _offerRepository.GetDetails(id);
+            return Ok(offerDetails);
+        }
     }
 }
