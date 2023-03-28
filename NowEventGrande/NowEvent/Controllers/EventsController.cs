@@ -80,13 +80,6 @@ namespace NowEvent.Controllers
             Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
             return await _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
-        //
-        // [HttpGet("{id:int}/GetEventStartDate")]
-        // public IActionResult GetEventStartDate(int id)
-        // {
-        //     var getEvent = _eventRepository.GetEventStartDate(id);
-        //     return Ok();
-        // }
 
         [HttpGet("{id:int}/GetEventStatus")]
         public async Task<string> GetEventStatus(int id)
@@ -136,6 +129,12 @@ namespace NowEvent.Controllers
         public bool CheckIfLargeSize(int id)
         {
             return _eventRepository.CheckIfLargeSize(id);
+        }
+
+        [HttpGet("{id:int}/GetEventStartDate")]
+        public DateTime GetEventStartDate(int id)
+        {
+            return _eventRepository.GetEventStartDate(id);
         }
 
 

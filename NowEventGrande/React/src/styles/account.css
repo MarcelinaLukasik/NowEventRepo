@@ -17,12 +17,15 @@
 
 .registerButton {
     padding: 20px;
-    background-color: rgb(60, 183, 187);
+    background-color: rgb(126, 78, 214);
     color:aliceblue;
     font-size: 18px;
     margin-top: 30px;
     width: 300px;   
 }
+.registerButton:hover {   
+    background: rgb(154, 109, 240);
+  }
 
 .signInModal {
     z-index: 9999;

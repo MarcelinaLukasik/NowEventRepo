@@ -16,7 +16,10 @@ import Home from "../../pages/Home";
 import Offers from "../../pages/Offers";
 import Registration from '../../pages/Registration';
 import SignIn from '../../pages/SignIn';
-import PostedEvents from '../../Event/PostedEvents';
+import { OfferToPrepareEvent } from '../../componentPages/OffersPage/OfferToPrepareEvent';
+import MessagesPanel from '../../Event/MessagesPanel';
+import RequestMessage from '../../Event/RequestMessage';
+
 
 export const router = createBrowserRouter([
     {
@@ -26,12 +29,14 @@ export const router = createBrowserRouter([
             { path: '', element: <Home /> },
             { path: 'alloffers', element: <Offers /> },
             { path: 'alloffers/:id', element: <ProductDetails /> },
+            { path: '/alloffers/offerToPrepare/:id', element: <OfferToPrepareEvent />},
+            { path: '/offer/:requestId', element: <RequestMessage />},
             { path: 'registration', element: <Registration /> },
             { path: 'signIn', element: <SignIn /> },
             { path: 'contact', element: <Contact /> },
             { path: 'Event', element: <Event /> },
             { path: 'CreatedEvents', element: <CreatedEvents /> },
-            { path: 'PostedEvents', element: <PostedEvents /> },
+            { path: 'MessagesPanel', element: <MessagesPanel /> },
             { path: 'Event/:id/guests', element: <Guests /> },
             { path: 'Event/:id/budget', element: <Budget /> },
             { path: 'Event/:id/main', element: <EventMain /> },
@@ -40,6 +45,7 @@ export const router = createBrowserRouter([
             { path: 'Event/:id/afterEvent', element: <AfterEvent /> },
             { path: 'Event/:id/summary', element: <Summary /> },
             { path: 'Event/:id/details', element: <Details /> },
+           
             
 
             /*           { path: '*', element: <Navigate replace to='/not-found' /> },*/

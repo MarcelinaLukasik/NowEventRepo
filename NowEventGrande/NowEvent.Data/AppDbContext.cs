@@ -16,6 +16,7 @@ namespace NowEvent.Data
         public DbSet<Budget> Budget { get; set; }
         public DbSet<Offer> Offer { get; set; }
         public DbSet<Rating> Rating { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

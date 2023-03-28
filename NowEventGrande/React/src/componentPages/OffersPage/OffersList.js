@@ -2,6 +2,7 @@ import sample from '../../images/sample.jpg';
 import { motion } from 'framer-motion';
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Nav } from "react-bootstrap";
 
 export const OffersList = ({ offer }) => {
     return (
@@ -19,7 +20,7 @@ export const OffersList = ({ offer }) => {
                         } }
                 />
                 <CardMedia
-                    sx={{ height: 140, width: '100%', backgroundSize: 'contain', bgcolor: 'primary.light' }}
+                    sx={{ height: 140, width: '100%', backgroundSize: 'contain', bgcolor: 'text.primary' }}
                     image={sample}
                     title={offer.name}
                 />
@@ -35,9 +36,9 @@ export const OffersList = ({ offer }) => {
                     
                 </CardContent>
                 <CardActions>
-                    <Button size="small" component={Link} to={`/alloffers/${offer.id}`}>
-                        View
-                    </Button>
+                    <Nav.Link as={Link} to={`/alloffers/${offer.id}`}>
+                            <button className="saveDate">View</button>
+                    </Nav.Link>
                 </CardActions>
             </Card>
         </motion.div>

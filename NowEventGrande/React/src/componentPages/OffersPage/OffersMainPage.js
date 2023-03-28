@@ -19,7 +19,10 @@ export const OffersMainPage = () => {
             .finally(() => setLoading(false))
     }, []);
     
-    if (loading) return <LoadingComponent message='Loading products...' />
+    if (loading) return (       
+        <LoadingComponent message='Loading products...' />    
+    );
+      
 
     return (
         <div className="offers">

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.RequestsRepository;
 using NowEvent.Models;
 
 namespace NowEvent.Controllers
@@ -13,12 +14,14 @@ namespace NowEvent.Controllers
         private readonly ILogger<OfferController> _logger;
         private readonly IOfferRepository _offerRepository;
         private readonly IEventRepository _eventRepository;
-
-        public OfferController(ILogger<OfferController> logger, IOfferRepository offerRepository, IEventRepository eventRepository)
+        private readonly IRequestRepository _requestRepository;
+        public OfferController(ILogger<OfferController> logger, IOfferRepository offerRepository,
+            IEventRepository eventRepository, IRequestRepository requestRepository)
         {
             _logger = logger;
             _offerRepository = offerRepository;
             _eventRepository = eventRepository;
+            _requestRepository = requestRepository;
         }
 
         [HttpGet]
@@ -50,6 +53,40 @@ namespace NowEvent.Controllers
    
         }
 
+        [HttpGet("{id}/GetClientId")]
+        public IActionResult GetClientId(int id)
+        {
+            string clientId = _offerRepository.GetClientIdByEventId(id);
+            return Ok(clientId);
+        }
 
+        [HttpPost("PostRequest")]
+        public IActionResult PostRequest(Request request)
+        {
+            _requestRepository.SaveRequest(request);
+            return Ok(request);
+        }
+
+        [HttpPost("GetRequestsByUserId")]
+        [Authorize]
+        public IQueryable GetRequestsByUserId([FromBody] string id)
+        {
+            var result = _requestRepository.GetRequestsByUserId(id);
+            return result;
+        }
+
+        [HttpGet("{id:int}/GetSingleRequest")]
+        public async Task<Request> GetSingleRequest(int id)
+        {
+            Request request = await _requestRepository.GetRequestById(id);
+            return request;
+        }
+
+        [HttpGet("{id:int}/GetOfferDetails")]
+        public IActionResult GetOfferDetails(int id)
+        {
+            var offerDetails = _offerRepository.GetDetails(id);
+            return Ok(offerDetails);
+        }
     }
 }

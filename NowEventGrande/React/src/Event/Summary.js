@@ -31,6 +31,7 @@ function Summary() {
     {
         var result = await GetEventStartTime();
         var startDate = await result.text();
+        startDate = startDate.replace("T", " ").slice(0, -4);
         setEventTime(startDate);
     }
 

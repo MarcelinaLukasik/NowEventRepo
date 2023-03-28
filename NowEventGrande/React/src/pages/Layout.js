@@ -52,7 +52,7 @@ const Layout = () => {
               </Nav.Link>
               <NavDropdown className="dropdown" title="My projects" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/CreatedEvents">Created events</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/PostedEvents">Posted events</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/MessagesPanel">Messages</NavDropdown.Item>
               </NavDropdown>
             </Nav>
             <span className="navbar-text">

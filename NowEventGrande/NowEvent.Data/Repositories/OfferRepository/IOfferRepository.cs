@@ -8,4 +8,6 @@ public interface IOfferRepository
     Task<Offer> GetOfferById(int id);
     Task AddOffer(Offer offer);
     IQueryable GetOffersByUserId(string id);
+    string GetClientIdByEventId(int id);
+    Dictionary<string, string> GetDetails(int id);
 }
