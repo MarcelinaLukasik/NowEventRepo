@@ -89,3 +89,8 @@
 .contact form button:hover::before {
   width: 100%;
 }
+
+.successMsg {
+  font-size: 20px;
+  color:rgba(255, 255, 255, 1);
+}

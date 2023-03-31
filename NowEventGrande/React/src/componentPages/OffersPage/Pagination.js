@@ -6,10 +6,6 @@ const range = (start, end) => {
 
 export const Pagination = ({currentPage, totalPages, itemsFrom, itemsTo, setCurrentPage}) => {
 
-    // console.log(currentPage)
-    // console.log(totalPages)
-    // console.log(itemsFrom)
-    // console.log(itemsTo)
     const pages = range(1, totalPages)
   return (
     

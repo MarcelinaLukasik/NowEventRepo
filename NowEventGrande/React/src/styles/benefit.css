@@ -22,9 +22,9 @@
 .benefit-header {
   background: linear-gradient(
     90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgb(15, 76, 151) 50%,
-    rgb(16, 87, 220) 100%
+    rgb(25, 2, 47) 0%,
+    rgb(72, 10, 100) 35%,
+    rgb(25, 157, 197) 100%
   );
   flex-basis: 30%;
   text-align: center;
@@ -52,12 +52,12 @@
 
 .benefit-header h2 {
   margin-bottom: 25px;
-  color: #b8b8b8;
+  color: #dddddd;
   text-transform: uppercase;
 }
 
 .benefit-header p {
-  color: #b8b8b8;
+  color: #dddddd;
   font-size: 18px;
   padding: 10px 5px;
   letter-spacing: 0.8px;
@@ -73,7 +73,7 @@
   font-weight: 600;
   margin: 25px auto;
   color: #fff;
-  background: rgb(16, 87, 220);
+ 
 }
 
 .wrap .btn-join button {

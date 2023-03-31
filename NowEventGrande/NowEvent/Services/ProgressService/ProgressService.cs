@@ -10,27 +10,41 @@ namespace NowEvent.Services.ProgressService
         private readonly IEventRepository _eventRepository;
         private readonly IGuestRepository _guestRepository;
         private readonly IVerificationService _verificationService;
+        private readonly IOfferRepository _offerRepository;
         private int _progressLevel;
         private int _fullProgress = 3;
+        private bool _posted = false;
         public ProgressService(IEventRepository eventRepository, IGuestRepository guestRepository, 
-            IVerificationService verificationService)
+            IVerificationService verificationService, IOfferRepository offerRepository)
         {
             _eventRepository = eventRepository;
             _guestRepository = guestRepository;
             _verificationService = verificationService;
+            _offerRepository = offerRepository;
             
         }
         public async Task<bool> CheckEventStatus(int id)
         {
             _progressLevel = await GetChecklistCount(id);
+            Offer offer = _offerRepository.GetOfferByEventId(id);
+            if (offer != null)
+            {
+                _posted = true;
+            }
+
             if (_progressLevel != _fullProgress)
             {
-                 _eventRepository.SetStatus(id, EventStatuses.Incomplete);
+                 await _eventRepository.SetStatus(id, EventStatuses.Incomplete);
                  return false;
+            }
+            else if(_posted)
+            {
+                await _eventRepository.SetStatus(id, EventStatuses.Posted);
+                return true;
             }
             else
             {
-                _eventRepository.SetStatus(id, EventStatuses.Completed);
+                await _eventRepository.SetStatus(id, EventStatuses.Completed);
                 return true;
             }
         }

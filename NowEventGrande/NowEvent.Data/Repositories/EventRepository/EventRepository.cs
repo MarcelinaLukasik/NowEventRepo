@@ -30,7 +30,7 @@ namespace NowEvent.Data
         }
         public async Task<List<Event>> GetAllOffers()
         {
-            return await _appDbContext.Events.Where(x => x.Status == EventStatuses.Completed).ToListAsync();
+            return await _appDbContext.Events.Where(x => x.Status == EventStatuses.Posted).ToListAsync();
         }
 
         public async Task<PagedResult<Event>> GetAll(OfferQuery query)
@@ -80,7 +80,6 @@ namespace NowEvent.Data
         {
 
             var events = _appDbContext.Events.Where(x => x.ClientId == id);
-            UpdateStatuses(events);
             return events;
 
         }
@@ -134,13 +133,14 @@ namespace NowEvent.Data
             return eventById.Status;
         }
 
-        public void UpdateStatuses(IQueryable events)
+        public async void UpdateStatuses()
         {
-            foreach (Event eventByUserId in events)
+            var offers = GetAllOffers();
+            foreach (Event evt in offers.Result)
             {
-                if (eventByUserId.Date <= DateTime.Now)
+                if (evt.Date <= DateTime.Now)
                 {
-                    SetStatus(eventByUserId.Id, EventStatuses.Finished);
+                    await SetStatus(evt.Id, EventStatuses.Finished);
                 }
                 
             }
@@ -196,6 +196,7 @@ namespace NowEvent.Data
                     break;
 
                 case EventData.Theme:
+                    
                     eventById.Theme = dataToChange;
                     break;
             }

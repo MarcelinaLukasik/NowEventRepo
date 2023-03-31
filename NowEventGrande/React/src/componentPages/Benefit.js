@@ -39,7 +39,7 @@ export const Benefit = () => {
                     </Col>
                     <Col cs={12} md={6} xl={7} className="btn-join">
                         <Nav.Link as={Link} to="/event">
-                            <button>Get Started<ArrowRightCircle size={25} /></button>
+                            <button className='createEventButton'>Get Started<ArrowRightCircle size={25} /></button>
                         </Nav.Link>
                     </Col>
                 </Row>

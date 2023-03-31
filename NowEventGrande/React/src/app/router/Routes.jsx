@@ -19,6 +19,7 @@ import SignIn from '../../pages/SignIn';
 import { OfferToPrepareEvent } from '../../componentPages/OffersPage/OfferToPrepareEvent';
 import MessagesPanel from '../../Event/MessagesPanel';
 import RequestMessage from '../../Event/RequestMessage';
+import Inspirations from '../../Event/Inspirations';
 
 
 export const router = createBrowserRouter([
@@ -45,10 +46,7 @@ export const router = createBrowserRouter([
             { path: 'Event/:id/afterEvent', element: <AfterEvent /> },
             { path: 'Event/:id/summary', element: <Summary /> },
             { path: 'Event/:id/details', element: <Details /> },
-           
-            
-
-            /*           { path: '*', element: <Navigate replace to='/not-found' /> },*/
+            { path: 'inspirations', element: <Inspirations />}
         ]
     }
 ])

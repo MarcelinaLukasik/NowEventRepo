@@ -42,6 +42,7 @@ namespace NowEvent.Controllers
         public async Task<IActionResult> AddOffer([FromBody] Offer offer)
         {
             await _offerRepository.AddOffer(offer);
+            await _eventRepository.SetStatus(offer.EventId, EventStatuses.Posted);
             return Ok(offer);
         }
 

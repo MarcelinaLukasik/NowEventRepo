@@ -36,12 +36,12 @@ namespace NowEvent.Controllers
         [Authorize]
         public IActionResult CreateNewEvent([FromBody] Event newEvent)
         {
-            bool validEvent = _verificationService.VerifyEvent(newEvent);
+            bool isEventValid = _verificationService.VerifyEvent(newEvent);
             int id = 0;
-            if (validEvent)
+            if (isEventValid)
                 id = _eventRepository.AddEvent(newEvent);
 
-            return validEvent ? Ok(id) : BadRequest(newEvent);
+            return isEventValid ? Ok(id) : BadRequest(newEvent);
         }
         
         [HttpGet("{eventId:int}/CheckIfRated")]
@@ -111,8 +111,10 @@ namespace NowEvent.Controllers
         [HttpPost("{id:int}/SetTheme")]
         public IActionResult SetTheme(int id, [FromBody] string theme)
         {
-            bool correctData = _eventRepository.ManageEventData(id, theme, EventData.Theme);
-            return correctData ? Ok(correctData) : BadRequest(correctData);
+            bool isThemeCorrect = _verificationService.VerifyTheme(theme);
+            bool isIdCorrect = _eventRepository.ManageEventData(id, theme, EventData.Theme);
+            bool isDataCorrect = isThemeCorrect && isIdCorrect;
+            return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
 

@@ -10,4 +10,5 @@ public interface IOfferRepository
     IQueryable GetOffersByUserId(string id);
     string GetClientIdByEventId(int id);
     Dictionary<string, string> GetDetails(int id);
+    Offer GetOfferByEventId(int id);
 }
