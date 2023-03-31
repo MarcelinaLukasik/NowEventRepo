@@ -46,6 +46,12 @@ namespace NowEvent.Data
             return clientId;
         }
 
+        public Offer GetOfferByEventId(int id)
+        {
+            var offerByEventId = _appDbContext.Offer.Where(evt => evt.EventId == id).FirstOrDefault();
+            return offerByEventId;
+        }
+
         public Dictionary<string, string> GetDetails(int id)
         {
             var mainEventInfo = _appDbContext.Events.FirstOrDefault(evt => evt.Id == id);

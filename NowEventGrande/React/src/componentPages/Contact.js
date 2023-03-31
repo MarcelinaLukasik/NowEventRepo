@@ -17,31 +17,25 @@ export const Contact = () => {
     const [buttonSubmit, setButtonSubmit] = useState('Send');
     const [status, setStatus] = useState({});
 
-    const onFormUpdate = (category, value) => {
-        console.log(value)
+    const onFormUpdate = (category, value) => {       
         setFormDetails({
             ...formDetails,
             [category]: value
-        })
-        console.log(formDetails);
+        });        
     }
-    //TODO: refactor for email sending
     async function handleSubmit(evt) {
         evt.preventDefault();
         setButtonSubmit("Sending...")
-        console.log(formDetails.FirstName);
         const response = await fetch('/email/SendEmail', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ FirstName: formDetails.FirstName, LastName: formDetails.LastName, EmailAddress: formDetails.EmailAddress, Subject: formDetails.Subject, PhoneNumber: formDetails.PhoneNumber, Message: formDetails.Message })
-            // body: JSON.stringify({ formDetails })
+            
         });
         setButtonSubmit("Send");
-        if (response.status === 200) {
-            console.log("imhere200");
+        if (response.status === 200) {           
             setStatus({ success: true, message: "Email sent successfully!" })
-        } else {
-            console.log("imhere no200");
+        } else {           
             setStatus({ success: false, message: "Something went wrong, please try again..." })
         }
         setFormDetails(initialDeatils)
@@ -81,7 +75,7 @@ export const Contact = () => {
                             {
                                 status.message &&
                                 <Col>
-                                    <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
+                                    <p className={status.success === false ? "dangerMsg" : "successMsg"}>{status.message}</p>
                                 </Col>
                             }
                         </form>

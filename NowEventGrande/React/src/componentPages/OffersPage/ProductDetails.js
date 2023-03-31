@@ -22,7 +22,6 @@ export const ProductDetails = () => {
             .catch(error => console.log(error))
             .finally(() => setLoading(false))
     }, [id]);
-
     if (loading) return <LoadingComponent message='Loading offer...' />
     return (
         <div class="event">
@@ -55,10 +54,6 @@ export const ProductDetails = () => {
                                 <TableCell>Event Start</TableCell>
                                 <TableCell>{offer.eventStart}</TableCell>
                             </TableRow>
-                            {/* <TableRow>
-                                <TableCell>Event End</TableCell>
-                                <TableCell>{offer.eventEnd}</TableCell>
-                            </TableRow>  */}
                             <TableRow>
                                 <TableCell>Theme</TableCell>
                                 <TableCell>{offer.theme}</TableCell>
@@ -72,7 +67,7 @@ export const ProductDetails = () => {
                                 <TableCell>{offer.address}</TableCell>
                             </TableRow>
                         </TableBody>
-                        <Nav.Link as={Link} to={`/alloffers/offerToPrepare/${offer.id}`}>
+                        <Nav.Link as={Link} to={`/alloffers/offerToPrepare/${id}`}>
                             <button className="saveDate">Offer</button>
                             </Nav.Link>
                     </Table>                  

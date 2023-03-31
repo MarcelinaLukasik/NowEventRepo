@@ -10,6 +10,7 @@ import celebrationImage from "../images/celebration.jpg";
 import concertImage from "../images/concert.jpg";
 import '../styles/features.css';
 import TrackVisibility from 'react-on-screen';
+import { Link } from "react-router-dom";
 
 export const Features = () => {
 
@@ -66,7 +67,7 @@ export const Features = () => {
                                                 <Nav.Link eventKey="second">Post offer</Nav.Link>
                                             </Nav.Item>
                                             <Nav.Item>
-                                                <Nav.Link eventKey="third">Inspirations</Nav.Link>
+                                                <Nav.Link eventKey="third">Inspirations</Nav.Link>                                             
                                             </Nav.Item>
                                         </Nav>
                                         <Tab.Content id="slideInUp" className={isVisible ? "animate__animated animate__slideInUp" : ""}>
@@ -91,6 +92,12 @@ export const Features = () => {
                                                 <p>If you want to make your event look good, don't forget to check out Inspiration section with ideas and 
                                                     cool decorations for events!
                                                 </p>
+                                                <div className="center">
+                                                <Nav.Link as={Link} to="/Inspirations">
+                                                    <button className="smallEventButton">View</button>
+                                                </Nav.Link>
+                                                </div>
+                                                
                                             </Tab.Pane>
                                         </Tab.Content>
                                     </Tab.Container>

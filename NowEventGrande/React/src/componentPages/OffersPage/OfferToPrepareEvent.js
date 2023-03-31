@@ -17,7 +17,7 @@ export const OfferToPrepareEvent = () => {
 
     useEffect(() => {
         agent.Offers.productClientId(parseInt(id))
-            .then(client => setClient(client))
+            .then(client => setClient(client), console.log(client))
             .catch(error => console.log(error))
             .finally(() => setLoading(false))
     }, []);
@@ -30,7 +30,7 @@ export const OfferToPrepareEvent = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({Message: message, ContractorEmail: email, ClientId: client, 
+            body: JSON.stringify({Message: message, ContractorId: 0, ContractorEmail: email, ClientId: client, 
               EventId: id, CompanyName: companyName}) ,
           })
           if (!res.ok) {

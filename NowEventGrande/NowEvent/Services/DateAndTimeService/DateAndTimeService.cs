@@ -1,10 +1,17 @@
-﻿using NowEvent.Models;
+﻿using NowEvent.Data;
+using NowEvent.Models;
 
 namespace NowEvent.Services.DateAndTimeService
 {
     public class DateAndTimeService : IDateAndTimeService
     {
         private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
+        private readonly IEventRepository _eventRepository;
+
+        public DateAndTimeService(IEventRepository eventRepository)
+        {
+            _eventRepository = eventRepository;
+        }
         public Dictionary<string, string> FormatDateInfo(Dictionary<string, string> dateInfo)
         {
             dateInfo["StartTime"] = dateInfo["StartHour"] + ":" + dateInfo["StartMinutes"] + " " + dateInfo["TimeOfDayStart"];
@@ -43,6 +50,18 @@ namespace NowEvent.Services.DateAndTimeService
                         int.Parse(closingHoursAndMinutes[0]), int.Parse(closingHoursAndMinutes[1]), 00);
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+        public async void UpdateStatuses()
+        {
+            var offers = _eventRepository.GetAllOffers();
+            foreach (Event evt in offers.Result)
+            {
+                if (evt.Date <= DateTime.Now)
+                {
+                    await _eventRepository.SetStatus(evt.Id, EventStatuses.Finished);
+                }
+
             }
         }
     }

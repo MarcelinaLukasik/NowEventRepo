@@ -16,20 +16,6 @@ namespace NowEvent.Test
         [TestMethod]
         public void TestGetStatus()
         {
-            // var mockSet = new Mock<DbSet<Event>>();
-            // var events = new List<Event>() {
-            //     new Event() {
-            //         Id = 9999,
-            //         Size = "Large",
-            //         Type = "Festival",
-            //         Name = "FestivalEvent",
-            //         Status = "Incomplete"
-            //
-            //     }
-            // };
-
-            // var queryable = events.AsQueryable();
-            // mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(queryable.Expression);
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "NowEvent")
                 .Options;
@@ -50,8 +36,8 @@ namespace NowEvent.Test
             using (var context = new AppDbContext(options))
             {
                 EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-                var status = eventRepository.GetStatus(9999);
-                Assert.AreEqual("Incomplete", status.Result);
+                var status = eventRepository.GetStatus(9999).Result;
+                Assert.AreEqual("Incomplete", status);
             }
         }
 

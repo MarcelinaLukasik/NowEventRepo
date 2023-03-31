@@ -43,7 +43,7 @@ function Offer() {
         });
         setButtonSubmit("Post My Offer");
         if (response.status === 200) {
-            setStatus({ success: true, message: "Email sent successfully!" })
+            setStatus({ success: true, message: "Offer posted successfully!" })
         } else {
             setStatus({ success: false, message: "Something went wrong, please try again..." })
         }

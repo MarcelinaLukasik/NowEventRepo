@@ -11,7 +11,7 @@ export const Footer = () => {
                         <h2 className="footer-title">nowEvent</h2>
                     </Col>
                     <Col size={12} sm={6}>
-                        <p className='footer-desc'>Copyright 2022. All Rights Reserved</p>
+                        <p className='footer-desc'>Copyright 2023. All Rights Reserved</p>
                     </Col>
                 </Row>
             </Container>

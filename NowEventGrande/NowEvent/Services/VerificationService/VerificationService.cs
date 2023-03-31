@@ -129,8 +129,8 @@ namespace NowEvent.Services.VerificationService
 
         public void SetEventTimeStatus(DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )
         {
-            var openingTimeOnly = _openingHour.ToString("HH:mm");
-            var closingTimeOnly = _closingHour.ToString("HH:mm");
+            var openingTimeOnly = _openingHour.ToString("hh:mm tt");
+            var closingTimeOnly = _closingHour.ToString("hh:mm tt");
 
             switch (timeStage)
             {
@@ -160,6 +160,12 @@ namespace NowEvent.Services.VerificationService
                 default:
                     throw new ArgumentOutOfRangeException(nameof(timeStage), timeStage, null);
             }
+        }
+
+        public bool VerifyTheme(string theme)
+        {
+            bool exists = Enum.IsDefined(typeof(Themes), theme);
+            return exists;
         }
 
     }
