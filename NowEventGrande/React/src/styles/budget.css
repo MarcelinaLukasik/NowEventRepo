@@ -1,11 +1,40 @@
-<!DOCTYPE html>
+.addCost {
+  width: 150px;
+}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+.saveCosts {
+  background-color: rgb(126, 78, 214);
+  padding: 5px;
+  margin: 10px;
+  margin-left: 30px;
+  width: 100px;
+  color: #ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  float: right;
+}
 
-</body>
-</html>
+.budgetForm > div {
+  background-color: rgba(63, 63, 63, 0.472);
+  padding: 15px;
+  font-size: 23px;
+  text-align: center;
+}
+
+.editCost {
+  background-color: rgb(126, 78, 214);
+  padding: 5px;
+  margin: 10px;
+  margin-left: 30px;
+  width: 100px;
+  color: #ffffff;
+  border: 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  float: right;
+}
+
+.costInput {
+  width: 80px;
+}

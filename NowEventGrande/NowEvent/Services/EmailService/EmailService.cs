@@ -20,7 +20,6 @@ namespace NowEvent.Services.EmailService
             email.From.Add(MailboxAddress.Parse(request.EmailAddress));
             email.To.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
 
-            //TEST
             email.Subject = request.Subject;
             email.Body = new TextPart(TextFormat.Html) { Text =
                $"<h4><i>email from {request.EmailAddress}</i></h4>" +
@@ -31,9 +30,6 @@ namespace NowEvent.Services.EmailService
                $"{request.Message}"
                  };
 
-            // CONNECT METHOD
-            // use new using MailKit.Net.Smtp;
-            // Gmail: smtp.gmail.com, HotMail: smtp.live.com, Office365: smtp.office365.com
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);

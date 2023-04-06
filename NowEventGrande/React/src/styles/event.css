@@ -7,18 +7,42 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .Event-col-1 {width: 8.33%;}
-  .Event-col-2 {width: 16.66%;}
-  .Event-col-3 {width: 25%;}
-  .Event-col-4 {width: 33.33%;}
-  .Event-col-5 {width: 41.66%;}
-  .Event-col-6 {width: 50%;}
-  .Event-col-7 {width: 58.33%;}
-  .Event-col-8 {width: 66.66%;}
-  .Event-col-9 {width: 75%;}
-  .Event-col-10 {width: 83.33%;}
-  .Event-col-11 {width: 91.66%;}
-  .Event-col-12 {width: 100%;}
+  .Event-col-1 {
+    width: 8.33%;
+  }
+  .Event-col-2 {
+    width: 16.66%;
+  }
+  .Event-col-3 {
+    width: 25%;
+  }
+  .Event-col-4 {
+    width: 33.33%;
+  }
+  .Event-col-5 {
+    width: 41.66%;
+  }
+  .Event-col-6 {
+    width: 50%;
+  }
+  .Event-col-7 {
+    width: 58.33%;
+  }
+  .Event-col-8 {
+    width: 66.66%;
+  }
+  .Event-col-9 {
+    width: 75%;
+  }
+  .Event-col-10 {
+    width: 83.33%;
+  }
+  .Event-col-11 {
+    width: 91.66%;
+  }
+  .Event-col-12 {
+    width: 100%;
+  }
 }
 
 .row::after {
@@ -26,7 +50,6 @@
   clear: both;
   display: table;
 }
-
 
 .event {
   text-align: center;
@@ -36,7 +59,7 @@
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
-  height:auto;
+  height: auto;
   width: auto;
 }
 
@@ -48,11 +71,7 @@
   padding: 40px 100px;
   margin-bottom: 20px;
 
-  background: linear-gradient(
-    90deg,
-    rgb(25, 2, 47) 0%,
-    rgb(25, 157, 197) 100%
-  );
+  background: linear-gradient(90deg, rgb(25, 2, 47) 0%, rgb(25, 157, 197) 100%);
 }
 
 h2 {
@@ -83,7 +102,7 @@ h2 {
   margin: 20px;
   margin-bottom: 10px;
   border-radius: 25px;
-  transition: .5s;
+  transition: 0.5s;
   background-color: #1d1d1d;
 }
 
@@ -91,7 +110,6 @@ h2 {
   color: rgb(253, 189, 115);
   transform: scale(1.1);
   box-shadow: 0 0 25px #cd83ff;
-  
 }
 
 .tile:hover::before {
@@ -99,20 +117,19 @@ h2 {
   box-shadow: 0 0 25px #cd83ff;
 }
 
-.tile::before{
+.tile::before {
   background: #ffee10;
-  transition: .5s;
-  transform: scale(.9);
+  transition: 0.5s;
+  transform: scale(0.9);
   z-index: -1;
 }
-
 
 .tileText {
   text-align: center;
   font-size: 35px;
 }
 
-.tileTextSmall{
+.tileTextSmall {
   text-align: center;
   font-size: 20px;
 }
@@ -122,36 +139,33 @@ h2 {
   justify-content: center;
 }
 
-
 .tilesContainer button {
   flex-basis: 300px;
 }
 
-
-.createEventForm {  
- display: block;
+.createEventForm {
+  display: block;
   font-size: 25px;
 }
 
-.eventType{
+.eventType {
   margin-top: 10px !important;
   margin-bottom: 5px !important;
 }
 
 .addEventButton {
   border: 0;
-  background-color:rgb(75, 178, 219);
+  background-color: rgb(75, 178, 219);
   border-radius: 20px;
   padding: 20px 40px;
   font-size: 20px;
   margin: 20px;
 }
 
-.eventName { 
+.eventName {
   margin-bottom: 10px;
 }
 
-            
 ol li {
   list-style-type: none;
   counter-increment: item;
@@ -173,11 +187,11 @@ ol li:before {
   border-radius: 3px;
 }
 
-.infoNote{
+.infoNote {
   color: #ffe6a1;
 }
 
-.infoPanel{
+.infoPanel {
   margin: auto;
   text-align: center;
   background-color: rgba(63, 63, 63, 0.472);
@@ -200,33 +214,31 @@ ol li:before {
   .featureIcon {
     width: 150px;
   }
-  .bigIcon{
+  .bigIcon {
     width: 500px;
   }
 }
 
-
-.addCost {
+/* .addCost {
   width: 150px;
 }
 
 .saveCosts {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 5px;
   margin: 10px;
   margin-left: 30px;
   width: 100px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
   font-size: 20px;
-  float:right;
-}
+  float: right;
+} */
 
 .container-fluid {
   background-image: url("../images/blackWallpaper.jpg");
 }
-
 
 .budgetForm {
   font-size: 23px;
@@ -236,7 +248,7 @@ ol li:before {
   display: grid;
   column-gap: 50px;
 }
-
+/* 
 .budgetForm > div {
   background-color: rgba(63, 63, 63, 0.472);
   padding: 15px;
@@ -245,25 +257,24 @@ ol li:before {
 }
 
 .editCost {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 5px;
   margin: 10px;
   margin-left: 30px;
   width: 100px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
   font-size: 20px;
-  float:right;
+  float: right;
 }
 
 .costInput {
   width: 80px;
-}
-
+} */
 
 .progressBarContainer {
-  margin:auto;
+  margin: auto;
   text-align: center;
   position: relative;
   top: -35px;
@@ -271,10 +282,8 @@ ol li:before {
 
 .progressText {
   font-size: 24px;
-  margin:auto;
-
+  margin: auto;
 }
-
 
 .half {
   font-size: 14px;
@@ -322,40 +331,39 @@ ol li:before {
 }
 
 .saveDate {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 5px;
   margin: auto;
   margin-top: 15px;
   width: 150px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
   font-size: 20px;
-  float:right;
+  float: right;
   text-align: center;
 }
 
 .offerInformation {
-    text-align: center;
-    margin: auto;
-    word-wrap: break-word;
-    margin-left: 100px;
-    margin-top: 20px;
+  text-align: center;
+  margin: auto;
+  word-wrap: break-word;
+  margin-left: 100px;
+  margin-top: 20px;
 }
 
 .postOffer {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 7px;
   margin: auto;
   margin-top: 30px;
   width: 200px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
   font-size: 22px;
   text-align: center;
 }
-
 
 .countdown {
   background-color: #000000;
@@ -363,7 +371,6 @@ ol li:before {
   margin: 30px;
   padding: 16px;
   font-size: 58px !important;
-  
 }
 
 .timer-counter {
@@ -374,7 +381,6 @@ ol li:before {
   padding: 20px !important;
   margin: auto !important;
   margin-top: 10px !important;
-  
 }
 
 .summaryStats {
@@ -390,24 +396,22 @@ ol li:before {
   margin-top: 10px;
 }
 
-.form-control{
+.form-control {
   margin: auto;
   width: 400px;
   margin-top: 35px;
   margin-bottom: 25px;
 }
 
-.infoWindow{
+.infoWindow {
   color: black;
   display: block;
 }
-
 
 .notSignedInInfo {
   height: 1200px;
   font-size: 27px;
   color: #ffee10;
- 
 }
 
 .createdEventsInfo {
@@ -436,25 +440,3 @@ ol li:before {
   font-size: 35px;
   color: white;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

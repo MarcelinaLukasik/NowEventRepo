@@ -3,7 +3,7 @@ hr.solid {
 }
 
 .guestList {
-  margin:auto;
+  margin: auto;
   margin-top: 10px;
 }
 
@@ -17,7 +17,7 @@ hr.solid {
 
 .addButton {
   border: 0;
-  background-color:rgb(75, 178, 219);
+  background-color: rgb(75, 178, 219);
   border-radius: 20px;
   padding: 20px 20px;
   font-size: 20px;
@@ -26,7 +26,7 @@ hr.solid {
 }
 
 .removeModal {
-  color:rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
   text-align: center;
   position: absolute;
   float: left;
@@ -34,7 +34,6 @@ hr.solid {
   top: 100%;
   transform: translate(-50%, -50%);
   vertical-align: middle;
-  
 }
 
 .modal {
@@ -53,8 +52,7 @@ hr.solid {
 }
 
 .rejectButton {
-  
-  background-color:rgb(156, 25, 25);
+  background-color: rgb(156, 25, 25);
   padding: 10px;
   margin: 10px;
   width: 150px;
@@ -62,8 +60,8 @@ hr.solid {
   border-radius: 20px;
 }
 
-.acceptButton { 
-  background-color:rgb(38, 24, 78);
+.acceptButton {
+  background-color: rgb(38, 24, 78);
   padding: 10px;
   margin: 10px;
   width: 150px;
@@ -72,15 +70,13 @@ hr.solid {
 }
 
 .addGuestContainer {
-    display: block;
-    font-size:20px;
-    padding:10px 2px;
-    border:solid 1px #ffffff;
-    width:280px;
-    /* margin:20px 10px 20px 80px; */
-    margin: auto;
-    margin-top: 20px;
-    
+  display: block;
+  font-size: 20px;
+  padding: 10px 2px;
+  border: solid 1px #ffffff;
+  width: 280px;
+  margin: auto;
+  margin-top: 20px;
 }
 
 .addGuest {
@@ -88,16 +84,14 @@ hr.solid {
 }
 
 .saveGuest {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 10px;
   margin: 10px;
   width: 150px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
 }
-
-
 
 .eventTitle {
   position: absolute;
@@ -109,51 +103,50 @@ hr.solid {
 }
 
 .sortGuests {
- 
   margin-bottom: 40px;
   font-size: 20px;
   margin: 10px;
 }
 
 .addGuestForm {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .rangeContainer {
-  margin:auto;
+  margin: auto;
   margin-top: 10px;
 }
 
 .saveRange {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 15px;
   margin: auto;
   margin-left: 15px;
   width: 180px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
 }
 
 .saveRange {
-  background-color:rgb(126, 78, 214);
+  background-color: rgb(126, 78, 214);
   padding: 15px;
   margin: auto;
   margin-left: 15px;
   width: 180px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
   font-size: 20px;
 }
 
-.saveRange:focus{
-  background-color:rgb(23, 195, 167);
+.saveRange:focus {
+  background-color: rgb(23, 195, 167);
   padding: 15px;
   margin: auto;
   margin-left: 15px;
   width: 180px;
-  color:#ffffff;
+  color: #ffffff;
   border: 0px;
   border-radius: 20px;
 }
@@ -161,8 +154,3 @@ hr.solid {
 .rangeCol {
   margin-top: 35px;
 }
-
-
-
-
-

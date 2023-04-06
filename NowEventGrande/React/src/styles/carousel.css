@@ -1,35 +1,25 @@
-/* .carousel{
-    
-    z-index:2;
-    -moz-box-shadow: 0 0 4px #444;
-      -webkit-box-shadow: 0 0 4px #444;
-      box-shadow: 0 0 15px rgba(1,1,1,.5);
-} */
-
-
 .carouselImage {
-    height: 430px;
-    padding: 70px;
-    padding-bottom: 90px; 
+  height: 430px;
+  padding: 70px;
+  padding-bottom: 90px;
 }
 
-.carouselLight{
-    padding: 50px;
-    padding-bottom: 90px;
-    opacity: 0.75;
-    filter: blur(20px);
-    
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+.carouselLight {
+  padding: 50px;
+  padding-bottom: 90px;
+  opacity: 0.75;
+  filter: blur(20px);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .carousel .thumb img {
-    height: 50px;
-    padding: 0px;
+  height: 50px;
+  padding: 0px;
 }
 
 .legend {

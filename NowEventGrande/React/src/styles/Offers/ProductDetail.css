@@ -1,41 +1,41 @@
 .detail-container {
-    width: 40%;
-    margin: 0 auto;
-    padding: 2%;
-    background: rgb(65, 98, 168);
-    border-radius: 1rem;
+  width: 40%;
+  margin: 0 auto;
+  padding: 2%;
+  background: rgb(65, 98, 168);
+  border-radius: 1rem;
 }
 .detail-offer {
-    margin: 200px 0 200px 0;
-    text-align: center;
-    background-color: black;
-    padding: 20px;
+  margin: 200px 0 200px 0;
+  text-align: center;
+  background-color: black;
+  padding: 20px;
 }
 
 .left-side img {
-    width: 50%;
-    height: 30vh;
-    object-fit: cover;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-  }
+  width: 50%;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
 .offer_desc-detail {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 5px;
 }
 .button-contact {
-    display: block;
-    margin: 0 auto;
-    width: 50%;
-    text-transform: uppercase;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 0.5rem;
-    color: #fff;
-    border: 2px solid #fff;
-    font-weight: bold;
-    transition: 0.5s ease-in-out;
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0.5rem;
+  color: #fff;
+  border: 2px solid #fff;
+  font-weight: bold;
+  transition: 0.5s ease-in-out;
 }

@@ -4,7 +4,6 @@ using NowEvent.Services.EmailService;
 
 namespace NowEvent.Controllers
 {
-    // Used  Mailkit & SMTP
     [Route("[controller]")]
     [ApiController]
     public class EmailController : ControllerBase

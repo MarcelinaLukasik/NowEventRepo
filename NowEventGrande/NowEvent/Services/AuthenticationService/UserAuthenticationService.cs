@@ -13,14 +13,12 @@ namespace NowEvent.Services.AuthenticationService
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        // private readonly IMapper _mapper;
         private User? _user;
 
         public UserAuthenticationService(UserManager<User> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
-            // _mapper = mapper;
         }
         public async Task<string> CreateTokenAsync(User user)
         {

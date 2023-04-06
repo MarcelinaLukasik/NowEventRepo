@@ -1,5 +1,4 @@
-﻿
-namespace NowEvent.Data
+﻿namespace NowEvent.Data
 {
     public enum Themes
     {
