@@ -33,8 +33,6 @@ function Address(props) {
       setPlaceId(place.place_id);
       setLat(place.geometry.location.lat());
       setLng(place.geometry.location.lng());
-      console.log(place.geometry.location.lng());
-      console.log(String(place.business_status));
       setPlaceStatus(String(place.business_status));
       setAddress(String(place.formatted_address));
     }

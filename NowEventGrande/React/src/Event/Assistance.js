@@ -12,10 +12,9 @@ function Assistance(props) {
 
   async function fetchVerification() {
     const res = await fetch(`/location/${props.eventId}/GetVerificationInfo`);
-    const dataJ = await res.json();
-    setPlaceDetails(dataJ);
-    const result = dataJ;
-    return result;
+    const jsonResult = await res.json();
+    setPlaceDetails(jsonResult);
+    return jsonResult;
   }
 
   return (

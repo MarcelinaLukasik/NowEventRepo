@@ -18,56 +18,67 @@ function Budget() {
   const [isValid, setValid] = useState(true);
   const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
   const [isRentOpen, setRentOpen] = useState(false);
-  const openRentInput = () => {
-    setRentOpen(!isRentOpen);
-  };
   const [isDecorOpen, setDecorOpen] = useState(false);
-  const openDecorInput = () => {
-    setDecorOpen(!isDecorOpen);
-  };
   const [isFoodOpen, setFoodOpen] = useState(false);
-  const openFoodInput = () => {
-    setFoodOpen(!isFoodOpen);
+
+  const openInput = (budgetOptionId) => {
+    switch (budgetOptionId) {
+      case "RentPrice":
+        setRentOpen(!isRentOpen);
+        break;
+      case "DecorationPrice":
+        setDecorOpen(!isDecorOpen);
+        break;
+      case "FoodPrice":
+        setFoodOpen(!isFoodOpen);
+        break;
+      default:
+        throw new Error("Invalid data");
+    }
   };
+
+  const budgetOptions = [
+    {
+      Name: "Rental cost",
+      Id: "RentPrice",
+      IsOpen: isRentOpen,
+      Value: rent,
+      SetAction: setRent,
+      Price: budget.rentPrice,
+    },
+    {
+      Name: "Decoration cost",
+      Id: "DecorationPrice",
+      IsOpen: isDecorOpen,
+      Value: decoration,
+      SetAction: setDecoration,
+      Price: budget.decorationPrice,
+    },
+    {
+      Name: "Food cost",
+      Id: "FoodPrice",
+      IsOpen: isFoodOpen,
+      Value: food,
+      SetAction: setFood,
+      Price: budget.foodPrice,
+    },
+  ];
 
   useEffect(() => {
     fetchStatsData();
   }, []);
 
-  async function handleSubmit(evt) {
+  async function handleSubmit(evt, budgetOption) {
     evt.preventDefault();
-    const costToChange = evt.target.id;
-    if (costToChange === "rent") {
-      handlePatch("RentPrice", rent).then(() => {
-        fetchStatsData()
-          .then(() => {
-            openRentInput();
-          })
-          .then(() => {
-            setFetchCurrentProgress(true);
-          });
-      });
-    } else if (costToChange === "decoration") {
-      await handlePatch("DecorationPrice", decoration).then(() => {
-        fetchStatsData()
-          .then(() => {
-            openDecorInput();
-          })
-          .then(() => {
-            setFetchCurrentProgress(true);
-          });
-      });
-    } else if (costToChange === "food") {
-      await handlePatch("FoodPrice", food).then(() => {
-        fetchStatsData()
-          .then(() => {
-            openFoodInput();
-          })
-          .then(() => {
-            setFetchCurrentProgress(true);
-          });
-      });
-    }
+    handlePatch(budgetOption.Id, budgetOption.Value.toString()).then(() => {
+      fetchStatsData()
+        .then(() => {
+          openInput(budgetOption.Id);
+        })
+        .then(() => {
+          setFetchCurrentProgress(true);
+        });
+    });
   }
 
   async function fetchStatsData() {
@@ -117,98 +128,45 @@ function Budget() {
         </div>
         <div className="Event-col-5">
           <br />
-          <form onSubmit={handleSubmit} className="budgetForm" id="rent">
-            <div>
-              {!isRentOpen && (
+          {Array.from(budgetOptions).map((budgetOption, i) => {
+            return (
+              <form
+                onSubmit={(e) => handleSubmit(e, budgetOption)}
+                className="budgetForm"
+                id={budgetOption.Id}
+                key={i}
+              >
                 <div>
-                  <label>Rental cost: </label>
-                  <label>{budget.rentPrice}$</label>
-                  <input
-                    className="editCost"
-                    type="button"
-                    value="Edit"
-                    onClick={openRentInput}
-                    isOpen={isRentOpen}
-                  />
+                  {!budgetOption.IsOpen && (
+                    <div>
+                      <label>{budgetOption.Name}: </label>
+                      <label>{budgetOption.Price}$</label>
+                      <input
+                        className="editCost"
+                        type="button"
+                        value="Edit"
+                        onClick={() => openInput(budgetOption.Id)}
+                        isOpen={budgetOption.IsOpen}
+                      />
+                    </div>
+                  )}
+                  {budgetOption.IsOpen && (
+                    <div>
+                      <label>{budgetOption.Name}:</label>
+                      <input
+                        className="costInput"
+                        type="text"
+                        value={budgetOption.Value}
+                        required
+                        onChange={(e) => budgetOption.SetAction(e.target.value)}
+                      />
+                      <input className="saveCosts" type="submit" value="Save" />
+                    </div>
+                  )}
                 </div>
-              )}
-              {isRentOpen && (
-                <div>
-                  <label>Rental cost: </label>
-                  <input
-                    className="costInput"
-                    type="text"
-                    value={rent}
-                    required
-                    onChange={(e) => setRent(e.target.value)}
-                  />
-                  <input className="saveCosts" type="submit" value="Save" />
-                </div>
-              )}
-            </div>
-          </form>
-
-          <form onSubmit={handleSubmit} className="budgetForm" id="decoration">
-            <div>
-              {!isDecorOpen && (
-                <div>
-                  <label>Decoration cost: </label>
-                  <label>{budget.decorationPrice}$</label>
-                  <input
-                    className="editCost"
-                    type="button"
-                    value="Edit"
-                    onClick={openDecorInput}
-                    isOpen={isDecorOpen}
-                  />
-                </div>
-              )}
-              {isDecorOpen && (
-                <div>
-                  <label>Decoration cost: </label>
-                  <input
-                    className="costInput"
-                    type="text"
-                    value={decoration}
-                    required
-                    onChange={(e) => setDecoration(e.target.value)}
-                  />
-                  <input className="saveCosts" type="submit" value="Save" />
-                </div>
-              )}
-            </div>
-          </form>
-
-          <form onSubmit={handleSubmit} className="budgetForm" id="food">
-            <div>
-              {!isFoodOpen && (
-                <div>
-                  <label>Food cost: </label>
-                  <label>{budget.foodPrice}$</label>
-                  <input
-                    className="editCost"
-                    type="button"
-                    value="Edit"
-                    onClick={openFoodInput}
-                    isOpen={isFoodOpen}
-                  />
-                </div>
-              )}
-              {isFoodOpen && (
-                <div>
-                  <label>Food cost: </label>
-                  <input
-                    className="costInput"
-                    type="text"
-                    value={food}
-                    required
-                    onChange={(e) => setFood(e.target.value)}
-                  />
-                  <input className="saveCosts" type="submit" value="Save" />
-                </div>
-              )}
-            </div>
-          </form>
+              </form>
+            );
+          })}
           <div>
             {!isValid && (
               <p className="wrongInputMessage">Please provide valid numbers!</p>

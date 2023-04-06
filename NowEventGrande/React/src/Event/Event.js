@@ -68,7 +68,6 @@ function Event() {
       await res
         .json()
         .then((result) => {
-          console.log(result);
           navigate(`/event/${result}/main`, {
             state: { eventId: result, eventName: eventName },
           });

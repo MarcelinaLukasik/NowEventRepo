@@ -5,12 +5,30 @@ import { useState, useEffect } from "react";
 import balloonsIcon from "../images/icons/colorful_balloons.png";
 
 function AfterEvent() {
+  const initialRateValue = 2;
   const location = useLocation();
   const eventId = location.state.EventId;
-  const [CommunicationRate, setCommunicationRate] = useState(3);
-  const [QualityRate, setQualityRate] = useState(3);
-  const [SpeedRate, setSpeedRate] = useState(3);
+  const [CommunicationRate, setCommunicationRate] = useState(initialRateValue);
+  const [QualityRate, setQualityRate] = useState(initialRateValue);
+  const [SpeedRate, setSpeedRate] = useState(initialRateValue);
   const [isPosted, setIsPosted] = useState(false);
+  const rateOptions = [
+    {
+      Name: "Communication",
+      Id: "CommunicationRange",
+      Value: CommunicationRate,
+    },
+    {
+      Name: "Quality",
+      Id: "QualityRange",
+      Value: QualityRate,
+    },
+    {
+      Name: "Speed",
+      Id: "SpeedRange",
+      Value: SpeedRate,
+    },
+  ];
 
   useEffect(() => {
     checkIfRated();
@@ -64,7 +82,6 @@ function AfterEvent() {
     }
     fetchData();
   }
-
   return (
     <div className="event">
       <div>
@@ -85,51 +102,25 @@ function AfterEvent() {
                   <br></br>
                   with the contractor:
                 </h2>
-                <div>
-                  <h3>Communication:</h3>
-                  <div className="rateSlidecontainer">
-                    <input
-                      type="range"
-                      min="1"
-                      max="5"
-                      value={CommunicationRate}
-                      className="rateSlider"
-                      id="CommunicationRange"
-                      onInput={moveSlider}
-                    />
-                  </div>
-                  <h3>{CommunicationRate}</h3>
-                </div>
-                <div>
-                  <h3>Quality:</h3>
-                  <div className="rateSlidecontainer">
-                    <input
-                      type="range"
-                      min="1"
-                      max="5"
-                      value={QualityRate}
-                      className="rateSlider"
-                      id="QualityRange"
-                      onInput={moveSlider}
-                    />
-                  </div>
-                  <h3>{QualityRate}</h3>
-                </div>
-                <div>
-                  <h3>Speed:</h3>
-                  <div className="rateSlidecontainer">
-                    <input
-                      type="range"
-                      min="1"
-                      max="5"
-                      value={SpeedRate}
-                      className="rateSlider"
-                      id="SpeedRange"
-                      onInput={moveSlider}
-                    />
-                  </div>
-                  <h3>{SpeedRate}</h3>
-                </div>
+                {Array.from(rateOptions).map((rateOption, i) => {
+                  return (
+                    <div key={rateOption.Id}>
+                      <h3>{rateOption.Name}:</h3>
+                      <div className="rateSlidecontainer">
+                        <input
+                          type="range"
+                          min="1"
+                          max="5"
+                          value={rateOption.Value}
+                          className="rateSlider"
+                          id={rateOption.Id}
+                          onInput={moveSlider}
+                        />
+                      </div>
+                      <h3>{rateOption.Value}</h3>
+                    </div>
+                  );
+                })}
                 <div>
                   <form onSubmit={handleSubmit}>
                     <input

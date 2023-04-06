@@ -14,12 +14,42 @@ function AddGuestForm({
   const [email, setEmail] = useState("");
   const [isValid, setValid] = useState(true);
 
+  const guestData = [
+    {
+      Title: "First name",
+      Value: firstName,
+    },
+    {
+      Title: "Last name",
+      Value: lastName,
+    },
+    {
+      Title: "Email",
+      Value: email,
+    },
+  ];
+
   function handleSubmit(evt) {
     evt.preventDefault();
     handlePost();
     isOpen = false;
     onClick();
-    setFirstName("");
+  }
+
+  function setData(evt) {
+    switch (evt.target.id) {
+      case "First name":
+        setFirstName(evt.target.value);
+        break;
+      case "Last name":
+        setLastName(evt.target.value);
+        break;
+      case "Email":
+        setEmail(evt.target.value);
+        break;
+      default:
+        throw new Error("Invalid data");
+    }
   }
 
   function handlePost() {
@@ -41,7 +71,6 @@ function AddGuestForm({
         setValid(false);
         throw new Error(message);
       } else {
-        const result = await res.json();
         setValid(true);
         addGuestCount();
         addChecklistCount();
@@ -59,32 +88,21 @@ function AddGuestForm({
       {isOpen && (
         <div className="addGuestContainer">
           <form onSubmit={handleSubmit}>
-            <label>First name:</label>
-            <input
-              className="addGuest"
-              type="text"
-              value={firstName}
-              required
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-
-            <label>Last name:</label>
-            <input
-              className="addGuest"
-              type="text"
-              value={lastName}
-              required
-              onChange={(e) => setLastName(e.target.value)}
-            />
-
-            <label>Email:</label>
-            <input
-              className="addGuest"
-              type="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            {Array.from(guestData).map((dataField, i) => {
+              return (
+                <div key={i}>
+                  <label>{dataField.Title}</label>
+                  <input
+                    className="addGuest"
+                    type="text"
+                    value={dataField.Value}
+                    required
+                    id={dataField.Title}
+                    onChange={(e) => setData(e)}
+                  />
+                </div>
+              );
+            })}
             <input className="saveGuest" type="submit" value="Save" />
           </form>
         </div>

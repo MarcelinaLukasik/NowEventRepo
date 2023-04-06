@@ -21,7 +21,6 @@ function Details() {
         </div>
       </div>
       <h1>Details</h1>
-
       <div className="row">
         <div className="Event-col-3">
           <div className="sidebar">
