@@ -1,5 +1,4 @@
-﻿
-namespace NowEvent.Models
+﻿namespace NowEvent.Models
 {
     public static class EventStatuses
     {

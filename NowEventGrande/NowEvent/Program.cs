@@ -20,7 +20,6 @@ using NowEvent.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,15 +65,12 @@ builder.Services.AddIdentity<User, IdentityRole>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    //this event is called when user is unauthorized and is redirected to login page
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = 401;
-
         return Task.CompletedTask;
     };
 });
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -87,11 +83,9 @@ builder.Services.AddScoped<ILocationAndTimeRepository, LocationAndTimeRepository
 builder.Services.AddScoped<IOfferRepository, OfferRepository>();
 builder.Services.AddScoped<IRatingsRepository, RatingsRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
-
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
-
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
 var app = builder.Build();
@@ -102,10 +96,8 @@ using (var scope = app.Services.CreateScope())
     scopedService.UpdateStatuses();
 }
 
-
-
 builder.Services.AddCors();
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -120,13 +112,8 @@ app.UseCors(opt =>
 });
 
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
-
-
 app.Run();
 
 
