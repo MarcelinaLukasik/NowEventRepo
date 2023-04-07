@@ -14,7 +14,8 @@ namespace NowEvent.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IUserAuthenticationService _userAuthenticationService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUserAuthenticationService userAuthenticationService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
+            IUserAuthenticationService userAuthenticationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,7 +39,8 @@ namespace NowEvent.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var res = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
+                    var res = await _signInManager
+                        .PasswordSignInAsync(user.UserName, user.Password, true, false);
                     return Ok(res);
                 }
 
@@ -56,10 +58,12 @@ namespace NowEvent.Controllers
         public async Task<IActionResult> Login(Dictionary<string,string> userData)
         {
             var user = _userManager.FindByNameAsync(userData["UserName"]).Result;
-            var isUserValid = _signInManager.UserManager.CheckPasswordAsync(user, userData["Password"]).Result;
+            var isUserValid = _signInManager.UserManager
+                .CheckPasswordAsync(user, userData["Password"]).Result;
             if (isUserValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(userData["UserName"], userData["Password"], true, false);
+                var result = await _signInManager.PasswordSignInAsync(userData["UserName"], userData["Password"],
+                    true, false);
 
                 if (result.Succeeded)
                 {

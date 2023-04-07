@@ -11,32 +11,33 @@ import {Avatar,Card,CardActions,CardContent,
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { AllowedThemes } from "../../Event/Themes";
 
 export const OffersList = ({ offer }) => {
   const [offerImage, setOfferImage] = useState("");
 
   useEffect(() => {
-    GetThemeImage();
+    getThemeImage();
   }, []);
 
-  async function GetThemeImage() {
+  async function getThemeImage() {
     switch (offer.theme) {
-      case "Formal":
+      case AllowedThemes.Formal:
         setOfferImage(formalImage);
         break;
-      case "Spooky":
+      case AllowedThemes.Spooky:
         setOfferImage(spookyImage);
         break;
-      case "Tropical":
+      case AllowedThemes.Tropical:
         setOfferImage(tropicalImage);
         break;
-      case "Retro":
+      case AllowedThemes.Retro:
         setOfferImage(retroImage);
         break;
-      case "Disco":
+      case AllowedThemes.Disco:
         setOfferImage(discoImage);
         break;
-      case "Other":
+      case AllowedThemes.Other:
         setOfferImage(otherImage);
         break;
       default:

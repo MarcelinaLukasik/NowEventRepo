@@ -12,7 +12,8 @@ namespace NowEvent.Controllers
         private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IVerificationService _verificationService;
 
-        public LocationController(ILocationAndTimeRepository locationRepository, IVerificationService verificationService)
+        public LocationController(ILocationAndTimeRepository locationRepository, 
+            IVerificationService verificationService)
         {
             _locationRepository = locationRepository;
             _verificationService = verificationService;

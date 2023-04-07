@@ -4,6 +4,7 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { FormFields } from "../Event/FormFields";
 
 function SignIn() {
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ function SignIn() {
   );
   const [valid, setValid] = useState(true);
   const navigate = useNavigate();
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState(FormFields.Password);
 
   function handleLogin(evt) {
     evt.preventDefault();
@@ -57,11 +58,11 @@ function SignIn() {
 
   const togglePasswordVisibility = (evt) => {
     evt.preventDefault();
-    if (passwordType === "password") {
+    if (passwordType === FormFields.Password) {
       setPasswordType("text");
       return;
     }
-    setPasswordType("password");
+    setPasswordType(FormFields.Password);
   };
 
   return (
@@ -85,7 +86,7 @@ function SignIn() {
                 className="registerInput"
                 autoComplete="username"
                 aria-required="true"
-                placeholder="UserName"
+                placeholder={FormFields.UserName}
                 value={userName}
                 onChange={(evt) => {
                   setUserName(evt.target.value);
@@ -103,7 +104,7 @@ function SignIn() {
                 className="registerInput"
                 autoComplete="new-password"
                 aria-required="true"
-                placeholder="Password"
+                placeholder={FormFields.Password}
                 value={password}
                 onChange={(evt) => {
                   setPassword(evt.target.value);
@@ -114,7 +115,7 @@ function SignIn() {
                 className="visibilityButton"
                 onClick={togglePasswordVisibility}
               >
-                {passwordType === "password" ? (
+                {passwordType === FormFields.Password ? (
                   <EyeSlash size={24} />
                 ) : (
                   <Eye size={24} />

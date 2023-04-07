@@ -3,6 +3,7 @@ import "../styles/rateSlider.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import balloonsIcon from "../images/icons/colorful_balloons.png";
+import { RateNames, RateIds } from "./Rates";
 
 function AfterEvent() {
   const initialRateValue = 2;
@@ -14,18 +15,18 @@ function AfterEvent() {
   const [isPosted, setIsPosted] = useState(false);
   const rateOptions = [
     {
-      Name: "Communication",
-      Id: "CommunicationRange",
+      Name: RateNames.Communication,
+      Id: RateIds.Communication,
       Value: CommunicationRate,
     },
     {
-      Name: "Quality",
-      Id: "QualityRange",
+      Name: RateNames.Quality,
+      Id: RateIds.Quality,
       Value: QualityRate,
     },
     {
-      Name: "Speed",
-      Id: "SpeedRange",
+      Name: RateNames.Speed,
+      Id: RateIds.Speed,
       Value: SpeedRate,
     },
   ];
@@ -45,11 +46,11 @@ function AfterEvent() {
     const slider = evt.target;
     const value = slider.value;
     const rate = slider.id;
-    if (rate === "CommunicationRange") {
+    if (rate === RateIds.Communication) {
       setCommunicationRate(value);
-    } else if (rate === "QualityRange") {
+    } else if (rate === RateIds.Quality) {
       setQualityRate(value);
-    } else if (rate === "SpeedRange") {
+    } else if (rate === RateIds.Speed) {
       setSpeedRate(value);
     }
   }

@@ -48,7 +48,8 @@ namespace NowEvent.Data
 
         public Offer GetOfferByEventId(int id)
         {
-            var offerByEventId = _appDbContext.Offer.Where(evt => evt.EventId == id).FirstOrDefault();
+            var offerByEventId = _appDbContext.Offer
+                .Where(evt => evt.EventId == id).FirstOrDefault();
             return offerByEventId;
         }
 

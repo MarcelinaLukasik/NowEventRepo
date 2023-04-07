@@ -5,14 +5,12 @@ import React from "react";
 import "../styles/guests.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { handleStyle } from "./HandleProgress";
 import Counter from "react-countdown";
 
 function Summary() {
   const location = useLocation();
   const eventId = location.state.EventId;
   const [id, setEventId] = useState(eventId);
-  const [count, setCount] = useState(0);
   const [eventTime, setEventTime] = useState();
   const [type, setType] = useState();
   const [title, setTitle] = useState();
@@ -29,19 +27,19 @@ function Summary() {
   }, []);
 
   async function handleEventStartTime() {
-    var result = await GetEventStartTime();
+    var result = await getEventStartTime();
     var startDate = await result.text();
     startDate = startDate.replace("T", " ").slice(0, -4);
     setEventTime(startDate);
   }
 
-  async function GetEventStartTime() {
+  async function getEventStartTime() {
     const res = await fetch(`/events/${eventId}/GetEventStartDate`);
     return res;
   }
 
   async function checkStatus() {
-    const res = await fetch(`/progress/${id}/CheckStatus`);
+    await fetch(`/progress/${id}/CheckStatus`);
   }
 
   async function getInfo() {

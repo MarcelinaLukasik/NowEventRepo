@@ -28,13 +28,16 @@ namespace NowEvent.Controllers
                 switch (typeToChange)
                 {
                     case "RentPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Rent);
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
+                            eventId, BudgetPrices.Rent);
                         break;
                     case "DecorationPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Decoration);
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
+                            eventId, BudgetPrices.Decoration);
                         break;
                     case "FoodPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), eventId, BudgetPrices.Food);
+                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
+                            eventId, BudgetPrices.Food);
                         break;
                 }
                 return Ok(rentPrice);

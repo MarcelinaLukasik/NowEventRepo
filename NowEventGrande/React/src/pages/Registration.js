@@ -2,6 +2,7 @@ import "../styles/account.css";
 import React from "react";
 import { useState } from "react";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
+import { FormFields } from "../Event/FormFields";
 
 function Registration() {
   const [firstName, setFirstName] = useState("");
@@ -12,7 +13,7 @@ function Registration() {
   const [confrimPassword, setConfirmPassword] = useState("");
   const [valid, setValid] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState(FormFields.Password);
 
   function handlePost(evt) {
     evt.preventDefault();
@@ -35,7 +36,7 @@ function Registration() {
         setValid(false);
         throw new Error(message);
       } else {
-        const result = await res.json();
+        await res.json();
         setIsCompleted(true);
       }
     }
@@ -44,11 +45,11 @@ function Registration() {
 
   const togglePasswordVisibility = (evt) => {
     evt.preventDefault();
-    if (passwordType === "password") {
+    if (passwordType === FormFields.Password) {
       setPasswordType("text");
       return;
     }
-    setPasswordType("password");
+    setPasswordType(FormFields.Password);
   };
 
   return (
@@ -68,7 +69,7 @@ function Registration() {
                 className="registerInput"
                 autoComplete="username"
                 aria-required="true"
-                placeholder="Email"
+                placeholder={FormFields.Email}
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -84,7 +85,7 @@ function Registration() {
                 asp-for="Input.FirstName"
                 className="registerInput"
                 aria-required="true"
-                placeholder="First Name"
+                placeholder={FormFields.FirstName}
                 value={firstName}
                 onChange={(event) => {
                   setFirstName(event.target.value);
@@ -100,7 +101,7 @@ function Registration() {
                 asp-for="Input.LastName"
                 className="registerInput"
                 aria-required="true"
-                placeholder="Last Name"
+                placeholder={FormFields.LastName}
                 value={lastName}
                 onChange={(event) => {
                   setLastName(event.target.value);
@@ -116,7 +117,7 @@ function Registration() {
                 asp-for="Input.UserName"
                 className="registerInput"
                 aria-required="true"
-                placeholder="UserName"
+                placeholder={FormFields.UserName}
                 value={userName}
                 onChange={(event) => {
                   setUserName(event.target.value);
@@ -133,7 +134,7 @@ function Registration() {
                 className="registerInput"
                 autoComplete="new-password"
                 aria-required="true"
-                placeholder="Password"
+                placeholder={FormFields.Password}
                 value={password}
                 onChange={(event) => {
                   setPassword(event.target.value);
@@ -161,7 +162,7 @@ function Registration() {
                 className="registerInput"
                 autoComplete="new-password"
                 aria-required="true"
-                placeholder="Confirm password"
+                placeholder={FormFields.ConfirmPassword}
                 value={confrimPassword}
                 onChange={(event) => {
                   setConfirmPassword(event.target.value);
