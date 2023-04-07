@@ -9,7 +9,6 @@ function Event() {
   const [isValid, setValid] = useState(true);
   const user = localStorage.getItem("user");
   const [userId, setUserId] = useState();
-  console.log(user);
   const EventTypes = {
     Birthday: "Birthday",
     Festival: "Festival",
@@ -87,19 +86,19 @@ function Event() {
           <div className="row tileContainer">
             <button
               className="Event-col-2 tile"
-              onClick={(e) => setText(EventTypes.Birthday)}
+              onClick={() => setText(EventTypes.Birthday)}
             >
               <h2 className="tileText">BIRTHDAY</h2>
             </button>
             <button
               className="Event-col-2 tile"
-              onClick={(e) => setText(EventTypes.Festival)}
+              onClick={() => setText(EventTypes.Festival)}
             >
               <h2 className="tileText">FESTIVAL</h2>
             </button>
             <button
               className="Event-col-2 tile"
-              onClick={(e) => setText(EventTypes.Concert)}
+              onClick={() => setText(EventTypes.Concert)}
             >
               <h2 className="tileText">CONCERT</h2>
             </button>

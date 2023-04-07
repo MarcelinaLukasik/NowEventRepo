@@ -8,6 +8,7 @@ import { Col } from "react-bootstrap";
 import calendarIcon from "../images/icons/contact-list.png";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { EventSizes, EventSizeRanges } from "./EventSizes";
 
 function Guests() {
   const location = useLocation();
@@ -47,11 +48,11 @@ function Guests() {
   }
 
   async function changeSize() {
-    let choosenSize = "Small";
+    let choosenSize = EventSizes.Small;
     if (checked) {
-      choosenSize = "Large";
+      choosenSize = EventSizes.Large;
     } else {
-      choosenSize = "Small";
+      choosenSize = EventSizes.Small;
     }
 
     const res = await fetch(`/events/${id}/SetSize`, {
@@ -113,25 +114,17 @@ function Guests() {
             {checked && (
               <div>
                 <h3>Choose your event range:</h3>
-
-                <input
-                  type="button"
-                  className="saveRange"
-                  value="Less than 100"
-                  onClick={changeSizeRange}
-                />
-                <input
-                  type="button"
-                  className="saveRange"
-                  value="From 100 to 500"
-                  onClick={changeSizeRange}
-                />
-                <input
-                  type="button"
-                  className="saveRange"
-                  value="More than 500"
-                  onClick={changeSizeRange}
-                />
+                {Object.entries(EventSizeRanges).map(([i, sizeRange]) => {
+                  return (
+                    <input
+                      key={i}
+                      type="button"
+                      className="saveRange"
+                      value={sizeRange}
+                      onClick={changeSizeRange}
+                    />
+                  );
+                })}
               </div>
             )}
             {!checked && (

@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import SideBar from "./SideBar";
 
 function Offer() {
-  const [isOpen, setOpen] = useState(false);
   const location = useLocation();
   const eventId = location.state.EventId;
   const [id, setEventId] = useState(eventId);
@@ -50,7 +49,6 @@ function Offer() {
     <div className="event">
       <div>
         <h1>Post your offer</h1>
-
         <div className="row">
           <div className="Event-col-3">
             <div className="sidebar">

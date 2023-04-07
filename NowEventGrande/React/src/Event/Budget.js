@@ -8,6 +8,7 @@ import { useState, useEffect, setErrors } from "react";
 import "../styles/event.css";
 import "../styles/budget.css";
 
+
 function Budget() {
   const location = useLocation();
   const eventId = location.state.EventId;

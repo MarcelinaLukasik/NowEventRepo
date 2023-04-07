@@ -3,6 +3,7 @@ import lightbulb_1 from "../images/icons/light_bulb_small.png";
 import { useState, useEffect } from "react";
 import EventInfoPanel from "./EventInfoPanel";
 
+
 function Assistance(props) {
   const [placeDetails, setPlaceDetails] = useState();
 

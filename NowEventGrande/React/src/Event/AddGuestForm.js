@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { FormFields} from './FormFields';
 
 function AddGuestForm({
   onClick,
@@ -16,15 +17,15 @@ function AddGuestForm({
 
   const guestData = [
     {
-      Title: "First name",
+      Title: FormFields.FirstName,
       Value: firstName,
     },
     {
-      Title: "Last name",
+      Title: FormFields.LastName,
       Value: lastName,
     },
     {
-      Title: "Email",
+      Title: FormFields.Email,
       Value: email,
     },
   ];
@@ -38,13 +39,13 @@ function AddGuestForm({
 
   function setData(evt) {
     switch (evt.target.id) {
-      case "First name":
+      case FormFields.FirstName:
         setFirstName(evt.target.value);
         break;
-      case "Last name":
+      case FormFields.LastName:
         setLastName(evt.target.value);
         break;
-      case "Email":
+      case FormFields.Email:
         setEmail(evt.target.value);
         break;
       default:
