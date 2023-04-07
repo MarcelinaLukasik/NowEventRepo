@@ -14,13 +14,15 @@ namespace NowEvent.Data
 
         public EventAddress GetLocation(int eventId)
         {
-            return _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventId);
+            return _appDbContext.EventAddress
+                .FirstOrDefault(x => x.EventId == eventId);
         }
 
 
         public void SaveLocation(EventAddress eventAddress)
         {
-            var address = _appDbContext.EventAddress.FirstOrDefault(x => x.EventId == eventAddress.EventId);
+            var address = _appDbContext.EventAddress
+                .FirstOrDefault(x => x.EventId == eventAddress.EventId);
             if (address == null)
             {
                 _appDbContext.EventAddress.Add(eventAddress);
@@ -50,8 +52,10 @@ namespace NowEvent.Data
 
         public async Task<string> GetEventAddress(int id)
         {
-            string address = await _appDbContext.EventAddress.Where(x => x.EventId == id)
-                .Select(x => x.FullAddress).FirstOrDefaultAsync() ?? "No address set";
+            string address = await _appDbContext.EventAddress
+                .Where(x => x.EventId == id)
+                .Select(x => x.FullAddress)
+                .FirstOrDefaultAsync() ?? "No address set";
             return address;
         }
 

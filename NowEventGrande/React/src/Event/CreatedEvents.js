@@ -16,7 +16,7 @@ function CreatedEvents() {
     fetchUserId();
   }, []);
 
-  async function GetUserEvents(result) {
+  async function getUserEvents(result) {
     const res = await fetch(`/events/GetEventsByUserId`, {
       Authorization: !user
         ? {}
@@ -43,7 +43,7 @@ function CreatedEvents() {
       await res
         .text()
         .then((result) => {
-          GetUserEvents(result);
+          getUserEvents(result);
         })
         .catch(res);
     }
@@ -105,7 +105,6 @@ function CreatedEvents() {
               Look like you don't have any events yet. Click on the button below
               to create your first event.
             </div>
-
             <Nav.Link as={Link} to="/event">
               <button className="createEventButton">
                 Create event <ArrowRightCircle size={25} />

@@ -8,9 +8,6 @@ import SideBar from "./SideBar";
 
 function Offer() {
   const [isOpen, setOpen] = useState(false);
-  const openInput = () => {
-    setOpen(!isOpen);
-  };
   const location = useLocation();
   const eventId = location.state.EventId;
   const [id, setEventId] = useState(eventId);
@@ -28,7 +25,6 @@ function Offer() {
 
   async function handlePostOffer(e) {
     e.preventDefault();
-
     setButtonSubmit("Sending...");
     PostOffer();
   }

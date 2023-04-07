@@ -11,7 +11,10 @@ namespace NowEvent.Services.VerificationService
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
         private readonly IDateAndTimeService _dateAndTimeService;
-        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>() {{"PlaceStatus", "No information. Provide location and come back."}};
+        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>()
+        {
+            {"PlaceStatus", "No information. Provide location and come back."}
+        };
         private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
         private DateTime _openingHour;
         private DateTime _closingHour;
@@ -45,10 +48,12 @@ namespace NowEvent.Services.VerificationService
                     _verificationInfo["PlaceStatus"] = "Looks like the place you chose is operational. Good!";
                     break;
                 case "CLOSED_TEMPORARILY":
-                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is temporarily closed. Consider changing it to another one";
+                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is temporarily closed. " +
+                                                       "Consider changing it to another one";
                     break;
                 case "CLOSED_PERMANENTLY":
-                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is permanently closed. You need to chose a different one";
+                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is permanently closed. " +
+                                                       "You need to chose a different one";
                     break;
             }
         }
@@ -139,7 +144,8 @@ namespace NowEvent.Services.VerificationService
                     {
                         
                         _verificationInfo["EventStartStatus"] =
-                            $"The start time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                            $"The start time of the event does not match the operating hours of the selected venue. " +
+                            $"On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
                     }
                     else
                         _verificationInfo["EventStartStatus"] =
@@ -150,7 +156,8 @@ namespace NowEvent.Services.VerificationService
                     if (!isTimeCorrect)
                     {
                         _verificationInfo["EventEndStatus"] =
-                            $"The end time of the event does not match the operating hours of the selected venue. On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                            $"The end time of the event does not match the operating hours of the selected venue. " +
+                            $"On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
                     }
                     else
                         _verificationInfo["EventEndStatus"] =

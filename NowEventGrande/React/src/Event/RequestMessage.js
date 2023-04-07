@@ -1,6 +1,3 @@
-import SideBar from "./SideBar";
-import Carousel from "./Carousel";
-import ProgressBar from "./ProgressBar";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, setErrors } from "react";

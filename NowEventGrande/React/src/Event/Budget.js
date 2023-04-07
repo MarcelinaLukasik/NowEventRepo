@@ -17,31 +17,21 @@ function Budget() {
   const [budget, setBudget] = useState([]);
   const [isValid, setValid] = useState(true);
   const [fetchCurrentProgress, setFetchCurrentProgress] = useState(false);
-  const [isRentOpen, setRentOpen] = useState(false);
-  const [isDecorOpen, setDecorOpen] = useState(false);
-  const [isFoodOpen, setFoodOpen] = useState(false);
-
-  const openInput = (budgetOptionId) => {
-    switch (budgetOptionId) {
-      case "RentPrice":
-        setRentOpen(!isRentOpen);
-        break;
-      case "DecorationPrice":
-        setDecorOpen(!isDecorOpen);
-        break;
-      case "FoodPrice":
-        setFoodOpen(!isFoodOpen);
-        break;
-      default:
-        throw new Error("Invalid data");
-    }
+  const [open, setOpen] = useState({
+    isRentOpen: false,
+    isDecorOpen: false,
+    isFoodOpen: false,
+  });
+  const openInput = (budgetOption) => {
+    setOpen({ ...open, [budgetOption.IsOpenId]: !budgetOption.IsOpen });
   };
 
   const budgetOptions = [
     {
       Name: "Rental cost",
       Id: "RentPrice",
-      IsOpen: isRentOpen,
+      IsOpen: open.isRentOpen,
+      IsOpenId: "isRentOpen",
       Value: rent,
       SetAction: setRent,
       Price: budget.rentPrice,
@@ -49,7 +39,8 @@ function Budget() {
     {
       Name: "Decoration cost",
       Id: "DecorationPrice",
-      IsOpen: isDecorOpen,
+      IsOpen: open.isDecorOpen,
+      IsOpenId: "isDecorOpen",
       Value: decoration,
       SetAction: setDecoration,
       Price: budget.decorationPrice,
@@ -57,7 +48,8 @@ function Budget() {
     {
       Name: "Food cost",
       Id: "FoodPrice",
-      IsOpen: isFoodOpen,
+      IsOpen: open.isFoodOpen,
+      IsOpenId: "isFoodOpen",
       Value: food,
       SetAction: setFood,
       Price: budget.foodPrice,
@@ -73,7 +65,7 @@ function Budget() {
     handlePatch(budgetOption.Id, budgetOption.Value.toString()).then(() => {
       fetchStatsData()
         .then(() => {
-          openInput(budgetOption.Id);
+          openInput(budgetOption);
         })
         .then(() => {
           setFetchCurrentProgress(true);
@@ -145,7 +137,7 @@ function Budget() {
                         className="editCost"
                         type="button"
                         value="Edit"
-                        onClick={() => openInput(budgetOption.Id)}
+                        onClick={() => openInput(budgetOption)}
                         isOpen={budgetOption.IsOpen}
                       />
                     </div>

@@ -69,7 +69,8 @@ namespace NowEvent.Controllers
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            return (System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"))).Split(";")[0];
+            return (System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt")))
+                .Split(";")[0];
         }
 
 
@@ -138,7 +139,5 @@ namespace NowEvent.Controllers
         {
             return _eventRepository.GetEventStartDate(id);
         }
-
-
     }
 }

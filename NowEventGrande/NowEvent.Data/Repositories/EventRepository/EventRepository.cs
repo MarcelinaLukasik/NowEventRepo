@@ -30,7 +30,8 @@ namespace NowEvent.Data
         }
         public async Task<List<Event>> GetAllOffers()
         {
-            return await _appDbContext.Events.Where(x => x.Status == EventStatuses.Posted).ToListAsync();
+            return await _appDbContext.Events
+                .Where(x => x.Status == EventStatuses.Posted).ToListAsync();
         }
 
         public async Task<PagedResult<Event>> GetAll(OfferQuery query)
@@ -161,9 +162,11 @@ namespace NowEvent.Data
             switch (eventTimeStage)
             {
                 case EventTimeStages.Start:
-                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventStart).FirstOrDefault();
+                    return _appDbContext.Events.Where(x => x.Id == id)
+                        .Select(y => y.EventStart).FirstOrDefault();
                 case EventTimeStages.End:
-                    return _appDbContext.Events.Where(x => x.Id == id).Select(y => y.EventEnd).FirstOrDefault();
+                    return _appDbContext.Events.Where(x => x.Id == id)
+                        .Select(y => y.EventEnd).FirstOrDefault();
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -196,7 +199,6 @@ namespace NowEvent.Data
                     break;
 
                 case EventData.Theme:
-                    
                     eventById.Theme = dataToChange;
                     break;
             }

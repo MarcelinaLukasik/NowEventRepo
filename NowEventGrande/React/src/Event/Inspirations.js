@@ -27,7 +27,6 @@ function Inspirations() {
     );
     const dataJ = await data.json();
     const result = dataJ.results;
-    console.log(result);
     setRes(result);
   }
 

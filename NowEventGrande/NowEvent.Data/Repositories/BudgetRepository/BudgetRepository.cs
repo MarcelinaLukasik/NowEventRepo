@@ -50,7 +50,9 @@ namespace NowEvent.Data
                     default:
                         throw new ArgumentOutOfRangeException(nameof(budgetPrice), budgetPrice, null);
                 }
-                budgedToChange.Total = budgedToChange.RentPrice + budgedToChange.DecorationPrice + budgedToChange.FoodPrice;
+                budgedToChange.Total = budgedToChange.RentPrice 
+                                       + budgedToChange.DecorationPrice 
+                                       + budgedToChange.FoodPrice;
                 await _appDbContext.SaveChangesAsync();
             }
         }
@@ -58,7 +60,6 @@ namespace NowEvent.Data
         public async Task<Budget> GetBudget(int eventId)
         {
             return _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
-    
         }
 
         public decimal GetBudgetPrice(int eventId, BudgetPrices priceType)

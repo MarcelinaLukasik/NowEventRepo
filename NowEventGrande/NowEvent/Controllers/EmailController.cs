@@ -19,7 +19,6 @@ namespace NowEvent.Controllers
         public IActionResult SendEmail([FromBody]Email request)
         {
             _emailService.SendEmail(request);
-
             return Ok();
         }
     }

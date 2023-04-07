@@ -17,11 +17,8 @@ namespace NowEvent.Data.Repositories.RequestsRepository
         }
         public IQueryable GetRequestsByUserId(string id)
         {
-
             var requests = _appDbContext.Requests.Where(x => x.ClientId == id);
-            
             return requests;
-
         }
         public async Task<Request> GetRequestById(int id)
         {
