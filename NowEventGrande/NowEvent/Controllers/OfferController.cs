@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
 using NowEvent.Data.Repositories.RequestsRepository;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 
 namespace NowEvent.Controllers
 {
@@ -10,14 +11,12 @@ namespace NowEvent.Controllers
     [ApiController]
     public class OfferController : ControllerBase
     {
-        private readonly ILogger<OfferController> _logger;
         private readonly IOfferRepository _offerRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IRequestRepository _requestRepository;
-        public OfferController(ILogger<OfferController> logger, IOfferRepository offerRepository,
+        public OfferController(IOfferRepository offerRepository,
             IEventRepository eventRepository, IRequestRepository requestRepository)
         {
-            _logger = logger;
             _offerRepository = offerRepository;
             _eventRepository = eventRepository;
             _requestRepository = requestRepository;

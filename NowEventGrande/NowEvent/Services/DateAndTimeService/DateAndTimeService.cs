@@ -1,11 +1,12 @@
 ﻿using NowEvent.Data;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 
 namespace NowEvent.Services.DateAndTimeService
 {
     public class DateAndTimeService : IDateAndTimeService
     {
-        private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
+        private Dictionary<string, string> _allOpeningHours = new();
         private readonly IEventRepository _eventRepository;
 
         public DateAndTimeService(IEventRepository eventRepository)
@@ -14,9 +15,10 @@ namespace NowEvent.Services.DateAndTimeService
         }
         public Dictionary<string, string> FormatDateInfo(Dictionary<string, string> dateInfo)
         {
-            dateInfo["StartTime"] = dateInfo["StartHour"] + ":" + dateInfo["StartMinutes"] + " " + dateInfo["TimeOfDayStart"];
-            dateInfo["EndTime"] = dateInfo["EndHour"] + ":" + dateInfo["EndMinutes"] + " " + dateInfo["TimeOfDayEnd"];
-
+            dateInfo[Date.StartTime] = dateInfo[Date.StartHour] + ":" + dateInfo[Date.StartMinutes] 
+                                       + " " + dateInfo[Date.TimeOfDayStart];
+            dateInfo[Date.EndTime] = dateInfo[Date.EndHour] + ":" + dateInfo[Date.EndMinutes] 
+                                     + " " + dateInfo[Date.TimeOfDayEnd];
             return dateInfo;
         }
 
@@ -61,7 +63,6 @@ namespace NowEvent.Services.DateAndTimeService
                 {
                     await _eventRepository.SetStatus(evt.Id, EventStatuses.Finished);
                 }
-
             }
         }
     }

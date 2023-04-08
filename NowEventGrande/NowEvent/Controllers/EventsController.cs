@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
 using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.VerificationService;
-using EventData = NowEvent.Data.EventData;
 
 namespace NowEvent.Controllers
 {
@@ -13,24 +13,21 @@ namespace NowEvent.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly ILogger<EventsController> _logger;
         private readonly IEventRepository _eventRepository;
         private readonly IRatingsRepository _ratingsRepository;
         private readonly IVerificationService _verificationService;
         private readonly IDateAndTimeService _dateAndTimeService;
 
-
-        public EventsController(ILogger<EventsController> logger, IEventRepository eventRepository, 
+        public EventsController(IEventRepository eventRepository, 
             IVerificationService verificationService, IDateAndTimeService dateAndTimeService,
             IRatingsRepository ratingsRepository)
         {
-            _logger = logger;
+        
             _eventRepository = eventRepository;
             _verificationService = verificationService;
             _dateAndTimeService = dateAndTimeService;
             _ratingsRepository = ratingsRepository;
         }
-
 
         [HttpPost("CreateNewEvent")]
         [Authorize]
@@ -52,10 +49,7 @@ namespace NowEvent.Controllers
             {
                 return Ok();
             }
-            else
-            {
-                return NotFound();
-            }
+            return NotFound();
         }
 
         [HttpPost("SaveRatings")]
@@ -65,15 +59,12 @@ namespace NowEvent.Controllers
             return Ok(rating);
         }
 
-
         [HttpGet("GetKey")]
         public string GetKey()
         {
-            return (System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt")))
+            return System.IO.File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Key.txt"))
                 .Split(";")[0];
         }
-
-
 
         [HttpPost("{id:int}/SaveDate")]
         public async Task<IActionResult> SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
@@ -118,7 +109,6 @@ namespace NowEvent.Controllers
             return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
-
         [HttpPost("GetEventsByUserId")]
         [Authorize]
         public IQueryable GetEventsByUserId([FromBody] string id)
@@ -127,7 +117,6 @@ namespace NowEvent.Controllers
             return result;
         }
         
-
         [HttpGet("{id:int}/CheckIfLargeSize")]
         public bool CheckIfLargeSize(int id)
         {

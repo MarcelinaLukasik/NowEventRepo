@@ -7,15 +7,12 @@ namespace NowEvent.Controllers
     [ApiController]
     public class ProgressController : ControllerBase
     {
-        private readonly ILogger<EventsController> _logger;
         private readonly IProgressService _progressService;
-        public ProgressController(ILogger<EventsController> logger, IProgressService progressService)
+        public ProgressController(IProgressService progressService)
         {
-            _logger = logger;
             _progressService = progressService;
         }
 
-        
         [HttpGet("{id:int}/CheckStatus")]
         public async Task<bool> CheckIfComplete(int id)
         {

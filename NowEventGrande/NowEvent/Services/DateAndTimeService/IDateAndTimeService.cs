@@ -1,4 +1,4 @@
-﻿using NowEvent.Models;
+﻿using NowEvent.Models.Constants;
 
 namespace NowEvent.Services.DateAndTimeService
 {

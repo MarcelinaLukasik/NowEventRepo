@@ -1,6 +1,7 @@
 ﻿using System.Net.Mail;
 using NowEvent.Data;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 using NowEvent.Services.DateAndTimeService;
 
 namespace NowEvent.Services.VerificationService
@@ -11,13 +12,16 @@ namespace NowEvent.Services.VerificationService
         private readonly IEventRepository _eventRepository;
         private readonly IBudgetRepository _budgetRepository;
         private readonly IDateAndTimeService _dateAndTimeService;
-        private readonly Dictionary<string, string> _verificationInfo = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> _verificationInfo = new()
         {
-            {"PlaceStatus", "No information. Provide location and come back."}
+            {PlaceStatuses.Title, PlaceStatuses.NoDataMessage}
         };
-        private Dictionary<string, string> _allOpeningHours = new Dictionary<string, string>();
+        private Dictionary<string, string> _allOpeningHours = new ();
         private DateTime _openingHour;
         private DateTime _closingHour;
+        private string _openingTimeOnly = "--";
+        private string _closingTimeOnly = "--";
+
 
         public VerificationService(ILocationAndTimeRepository locationRepository, IEventRepository eventRepository, 
             IBudgetRepository budgetRepository, IDateAndTimeService dateAndTimeService)
@@ -44,16 +48,14 @@ namespace NowEvent.Services.VerificationService
         {
             switch (placeStatus)
             {
-                case "OPERATIONAL":
-                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is operational. Good!";
+                case PlaceStatuses.OperationalStatus:
+                    _verificationInfo[PlaceStatuses.Title] = PlaceStatuses.OperationalMessage;
                     break;
-                case "CLOSED_TEMPORARILY":
-                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is temporarily closed. " +
-                                                       "Consider changing it to another one";
+                case PlaceStatuses.ClosedTempStatus:
+                    _verificationInfo[PlaceStatuses.Title] = PlaceStatuses.ClosedTempMessage;
                     break;
-                case "CLOSED_PERMANENTLY":
-                    _verificationInfo["PlaceStatus"] = "Looks like the place you chose is permanently closed. " +
-                                                       "You need to chose a different one";
+                case PlaceStatuses.ClosedPermStatus:
+                    _verificationInfo[PlaceStatuses.Title] = PlaceStatuses.ClosedPermMessage;
                     break;
             }
         }
@@ -86,7 +88,7 @@ namespace NowEvent.Services.VerificationService
             var validMail = true;
             try
             {
-                var emailAddress = new MailAddress(guest.Email);
+                new MailAddress(guest.Email);
             }
             catch
             {
@@ -109,7 +111,7 @@ namespace NowEvent.Services.VerificationService
 
         public bool CheckBudgetFullStatus(int eventId)
         {
-            Dictionary<BudgetPrices, decimal> allPrices = _budgetRepository.GetAllPrices(eventId);
+            Dictionary<BudgetOptions, decimal> allPrices = _budgetRepository.GetAllPrices(eventId);
             foreach (var price in allPrices)
             {
                 if (price.Value <= 0)
@@ -134,38 +136,35 @@ namespace NowEvent.Services.VerificationService
 
         public void SetEventTimeStatus(DayOfWeek dayOfWeek, bool isTimeCorrect, EventTimeStages timeStage )
         {
-            var openingTimeOnly = _openingHour.ToString("hh:mm tt");
-            var closingTimeOnly = _closingHour.ToString("hh:mm tt");
+            _openingTimeOnly = _openingHour.ToString("hh:mm tt");
+            _closingTimeOnly = _closingHour.ToString("hh:mm tt");
 
             switch (timeStage)
             {
                 case EventTimeStages.Start:
                     if (!isTimeCorrect)
                     {
-                        
-                        _verificationInfo["EventStartStatus"] =
-                            $"The start time of the event does not match the operating hours of the selected venue. " +
-                            $"On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                        _verificationInfo[EventStatuses.EventStartStatusTitle] =
+                            CreateVerificationNote(EventTimeStages.Start, dayOfWeek);
                     }
                     else
-                        _verificationInfo["EventStartStatus"] =
-                            "The start time of the event match the operating hours of the selected venue. Yay!";
+                        _verificationInfo[EventStatuses.EventStartStatusTitle] =
+                            CreateVerificationNote(EventTimeStages.Start);
                     break;
 
                 case EventTimeStages.End:
                     if (!isTimeCorrect)
                     {
-                        _verificationInfo["EventEndStatus"] =
-                            $"The end time of the event does not match the operating hours of the selected venue. " +
-                            $"On {dayOfWeek} this venue is open since {openingTimeOnly} and closing at {closingTimeOnly}.";
+                        _verificationInfo[EventStatuses.EventEndStatusTitle] =
+                            CreateVerificationNote(EventTimeStages.End, dayOfWeek);
                     }
                     else
-                        _verificationInfo["EventEndStatus"] =
-                            "The end time of the event match the operating hours of the selected venue. Yay!";
+                        _verificationInfo[EventStatuses.EventEndStatusTitle] =
+                            CreateVerificationNote(EventTimeStages.End);
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(timeStage), timeStage, null);
+                    throw new ArgumentOutOfRangeException(nameof(timeStage), timeStage, "invalid status");
             }
         }
 
@@ -175,5 +174,17 @@ namespace NowEvent.Services.VerificationService
             return exists;
         }
 
+        public string CreateVerificationNote(EventTimeStages timeStage)
+        {
+            return $"The {timeStage.ToString().ToLower()} time of the event match " +
+                   "the operating hours of the selected venue. Yay!";
+        }
+        public string CreateVerificationNote(EventTimeStages timeStage, DayOfWeek dayOfWeek)
+        {
+            return $"The {timeStage.ToString().ToLower()} time of the event does not match " +
+                   "the operating hours of the selected venue. " +
+                   $"On {dayOfWeek} this venue is open since {_openingTimeOnly} " +
+                   $"and closing at {_closingTimeOnly}.";
+        }
     }
 }

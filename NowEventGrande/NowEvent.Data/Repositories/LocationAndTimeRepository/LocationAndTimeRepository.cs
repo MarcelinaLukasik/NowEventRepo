@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.LocationAndTimeRepository
 {
     public class LocationAndTimeRepository : ILocationAndTimeRepository
     {
@@ -39,9 +40,7 @@ namespace NowEvent.Data
                 address.PlaceStatus = eventAddress.PlaceStatus;
                 _appDbContext.SaveChanges();
             }
-            
         }
-
         public void SaveDateAndTime(Event eventById, DateTime date, DateTime start, DateTime end)
         {
             eventById.Date = date;
@@ -55,7 +54,7 @@ namespace NowEvent.Data
             string address = await _appDbContext.EventAddress
                 .Where(x => x.EventId == id)
                 .Select(x => x.FullAddress)
-                .FirstOrDefaultAsync() ?? "No address set";
+                .FirstOrDefaultAsync() ?? PlaceStatuses.NoAddress;
             return address;
         }
 

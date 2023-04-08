@@ -47,6 +47,5 @@ namespace NowEvent.Controllers
             return _verificationService.GetVerificationInfo(id);
         }
 
-
     }
 }

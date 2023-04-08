@@ -1,13 +1,13 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.OfferRepository
 {
     public class OfferRepository : IOfferRepository
     {
         private readonly AppDbContext _appDbContext;
-        private Dictionary<string, string> _offerDetails = new Dictionary<string, string>();
+        private Dictionary<string, string> _offerDetails = new ();
 
         public OfferRepository(AppDbContext appDbContext)
         {
@@ -48,8 +48,7 @@ namespace NowEvent.Data
 
         public Offer GetOfferByEventId(int id)
         {
-            var offerByEventId = _appDbContext.Offer
-                .Where(evt => evt.EventId == id).FirstOrDefault();
+            var offerByEventId = _appDbContext.Offer.FirstOrDefault(evt => evt.EventId == id);
             return offerByEventId;
         }
 
@@ -61,13 +60,13 @@ namespace NowEvent.Data
             bool isInfoProvided = mainEventInfo !=null && eventAddress !=null && eventBudget !=null;
             if (isInfoProvided)
             {
-                _offerDetails.Add("name", mainEventInfo.Name);
-                _offerDetails.Add("type", mainEventInfo.Type);
-                _offerDetails.Add("eventStart", mainEventInfo.EventStart.ToShortDateString());
-                _offerDetails.Add("theme", mainEventInfo.Theme ?? "-");
-                _offerDetails.Add("size", mainEventInfo.Size);
-                _offerDetails.Add("address", eventAddress.FullAddress);
-                _offerDetails.Add("budget", eventBudget.Total.ToString());
+                _offerDetails.Add(EventInfoFields.Name, mainEventInfo.Name);
+                _offerDetails.Add(EventInfoFields.Type, mainEventInfo.Type);
+                _offerDetails.Add(Date.EventStart, mainEventInfo.EventStart.ToShortDateString());
+                _offerDetails.Add(EventInfoFields.Theme, mainEventInfo.Theme ?? "-");
+                _offerDetails.Add(EventInfoFields.Size, mainEventInfo.Size);
+                _offerDetails.Add(EventInfoFields.Address, eventAddress.FullAddress);
+                _offerDetails.Add(EventInfoFields.Budget, eventBudget.Total.ToString());
             }
             
             return _offerDetails;

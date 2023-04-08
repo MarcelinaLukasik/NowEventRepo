@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Controllers
@@ -20,29 +20,29 @@ namespace NowEvent.Controllers
         }
 
         [HttpPatch("{eventId:int}/Update/{typeToChange}")]
-        public async Task<IActionResult> UpdateRentPrice(int eventId, string typeToChange, [FromBody] string rentPrice)
+        public async Task<IActionResult> UpdatePrices(int eventId, string typeToChange, [FromBody] string price)
         {
-            bool validPrice = _verificationService.VerifyBudgetPrice(rentPrice);
+            bool validPrice = _verificationService.VerifyBudgetPrice(price);
             if (validPrice)
             {
                 switch (typeToChange)
                 {
-                    case "RentPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
-                            eventId, BudgetPrices.Rent);
+                    case BudgetPrices.Rent:
+                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                            eventId, BudgetOptions.Rent);
                         break;
-                    case "DecorationPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
-                            eventId, BudgetPrices.Decoration);
+                    case BudgetPrices.Decoration:
+                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                            eventId, BudgetOptions.Decoration);
                         break;
-                    case "FoodPrice":
-                        await _budgetRepository.ChangePrice(decimal.Parse(rentPrice), 
-                            eventId, BudgetPrices.Food);
+                    case BudgetPrices.Food:
+                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                            eventId, BudgetOptions.Food);
                         break;
                 }
-                return Ok(rentPrice);
+                return Ok(price);
             }
-            else return BadRequest(rentPrice);
+            return BadRequest(price);
 
         }
 

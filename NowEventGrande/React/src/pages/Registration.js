@@ -2,7 +2,7 @@ import "../styles/account.css";
 import React from "react";
 import { useState } from "react";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
-import { FormFields } from "../Event/FormFields";
+import { FormFields } from "../Event/Utils/FormFields";
 
 function Registration() {
   const [firstName, setFirstName] = useState("");

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
-import { FormFields } from "../Event/FormFields";
+import { FormFields } from "../Event/Utils/FormFields";
 
 function SignIn() {
   const [password, setPassword] = useState("");

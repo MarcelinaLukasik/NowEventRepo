@@ -3,8 +3,6 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
 using NowEvent.Models;
 
 namespace NowEvent.Services.AuthenticationService
@@ -13,7 +11,6 @@ namespace NowEvent.Services.AuthenticationService
     {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        private User? _user;
 
         public UserAuthenticationService(UserManager<User> userManager, IConfiguration configuration)
         {

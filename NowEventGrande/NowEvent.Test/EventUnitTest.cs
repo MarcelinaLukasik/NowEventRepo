@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Models;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.VerificationService;
