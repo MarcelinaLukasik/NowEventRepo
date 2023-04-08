@@ -1,4 +1,4 @@
-﻿namespace NowEvent.Models
+﻿namespace NowEvent.Models.Constants
 {
     public enum EventTimeStages
     {

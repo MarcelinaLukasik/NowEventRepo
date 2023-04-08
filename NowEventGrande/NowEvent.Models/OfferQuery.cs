@@ -1,4 +1,6 @@
-﻿namespace NowEvent.Models
+﻿using NowEvent.Models.Constants;
+
+namespace NowEvent.Models
 {
     public class OfferQuery
     {

@@ -1,6 +1,6 @@
 ﻿using NowEvent.Models;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.GuestRepository
 {
     public class GuestRepository : IGuestRepository
     {
@@ -11,13 +11,7 @@ namespace NowEvent.Data
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Guest> AllGuests
-        {
-            get
-            {
-                return _appDbContext.Guests;
-            }
-        }
+        public IEnumerable<Guest> AllGuests => _appDbContext.Guests;
 
         public IEnumerable<Guest> AllGuestsByEventId(int eventId)
         {
@@ -39,7 +33,7 @@ namespace NowEvent.Data
                 _appDbContext.SaveChanges();
                 return true;
             }
-            else return false;
+            return false;
 
         }
 

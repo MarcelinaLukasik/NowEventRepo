@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 using NowEvent.Services.AuthenticationService;
 
 namespace NowEvent.Controllers
@@ -57,12 +58,13 @@ namespace NowEvent.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(Dictionary<string,string> userData)
         {
-            var user = _userManager.FindByNameAsync(userData["UserName"]).Result;
+            var user = _userManager.FindByNameAsync(userData[Account.UserName]).Result;
             var isUserValid = _signInManager.UserManager
-                .CheckPasswordAsync(user, userData["Password"]).Result;
+                .CheckPasswordAsync(user, userData[Account.Password]).Result;
             if (isUserValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(userData["UserName"], userData["Password"],
+                var result = await _signInManager.PasswordSignInAsync(userData[Account.UserName], 
+                    userData[Account.Password],
                     true, false);
 
                 if (result.Succeeded)

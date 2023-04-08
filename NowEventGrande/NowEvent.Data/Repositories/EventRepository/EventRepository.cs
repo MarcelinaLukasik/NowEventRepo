@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NowEvent.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using NowEvent.Models.Constants;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.EventRepository
 {
     public class EventRepository : IEventRepository
     {
@@ -65,8 +65,6 @@ namespace NowEvent.Data
             return result;
         }
 
-        
-
         public async Task<Event> GetEventByIdAsync(int id)
         {
             return await _appDbContext.Events.FindAsync(id);
@@ -79,18 +77,15 @@ namespace NowEvent.Data
 
         public IQueryable GetEventsByUserId(string id)
         {
-
             var events = _appDbContext.Events.Where(x => x.ClientId == id);
             return events;
-
         }
-
 
         public async Task<bool> SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
         {
-            bool isDateCorrect = DateTime.TryParse(formattedDateInfo["Date"], out var date);
-            bool correctStartTime = DateTime.TryParse(formattedDateInfo["StartTime"], out var start);
-            bool correctEndTime = DateTime.TryParse(formattedDateInfo["EndTime"], out var end);
+            bool isDateCorrect = DateTime.TryParse(formattedDateInfo[EventInfoFields.Date], out var date);
+            bool correctStartTime = DateTime.TryParse(formattedDateInfo[Date.StartTime], out var start);
+            bool correctEndTime = DateTime.TryParse(formattedDateInfo[Date.EndTime], out var end);
 
             if (isDateCorrect && correctStartTime && correctEndTime)
             {
@@ -133,28 +128,15 @@ namespace NowEvent.Data
             var eventById = await GetEventByIdAsync(id);
             return eventById.Status;
         }
-
-        public async void UpdateStatuses()
-        {
-            var offers = GetAllOffers();
-            foreach (Event evt in offers.Result)
-            {
-                if (evt.Date <= DateTime.Now)
-                {
-                    await SetStatus(evt.Id, EventStatuses.Finished);
-                }
-                
-            }
-        }
         public async Task<Dictionary<string, string>> GetInfo(int id)
         {
             Dictionary<string, string> info = new Dictionary<string, string>();
             var eventById = await GetEventByIdAsync(id);
             var eventAddress = await _locationAndTimeRepository.GetEventAddress(id);
-            info["Type"] = eventById.Type;
-            info["Name"] = eventById.Name;
-            info["Status"] = eventById.Status;
-            info["Address"] = eventAddress;
+            info[EventInfoFields.Type] = eventById.Type;
+            info[EventInfoFields.Name] = eventById.Name;
+            info[EventInfoFields.Status] = eventById.Status;
+            info[EventInfoFields.Address] = eventAddress;
             return info;
         }
         public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)
@@ -207,7 +189,7 @@ namespace NowEvent.Data
         public bool CheckIfLargeSize(int id)
         {
             var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
-            return eventById.Size == "Large" && eventById.SizeRange != null;
+            return eventById.Size == EventSizes.Large.ToString() && eventById.SizeRange != null;
         }
     }
 }

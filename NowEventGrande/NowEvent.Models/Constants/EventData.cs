@@ -1,4 +1,4 @@
-﻿namespace NowEvent.Data
+﻿namespace NowEvent.Models.Constants
 {
     public enum EventData
     {

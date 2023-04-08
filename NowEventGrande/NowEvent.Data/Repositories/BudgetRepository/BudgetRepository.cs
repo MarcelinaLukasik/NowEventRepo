@@ -1,6 +1,7 @@
 ﻿using NowEvent.Models;
+using NowEvent.Models.Constants;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.BudgetRepository
 {
     public class BudgetRepository : IBudgetRepository
     {
@@ -13,42 +14,42 @@ namespace NowEvent.Data
 
         public Budget CreateBudget(int eventId)
         {
-            Budget budget = new Budget();
-            budget.Total = 0;
-            budget.RentPrice = 0;
-            budget.DecorationPrice = 0;
-            budget.FoodPrice = 0;
-            budget.EventId = eventId;
+            Budget budget = new Budget
+            {
+                Total = 0,
+                RentPrice = 0,
+                DecorationPrice = 0,
+                FoodPrice = 0,
+                EventId = eventId
+            };
             return budget;
         }
 
         public void AddBudget(Budget budget)
         {
             var result = _appDbContext.Budget.Count(x => x.EventId == budget.EventId);
-            if (result == 0)
-            {
-                _appDbContext.Budget.Add(budget);
-                _appDbContext.SaveChanges();
-            }
+            if (result != 0) return;
+            _appDbContext.Budget.Add(budget);
+            _appDbContext.SaveChanges();
         }
-        public async Task ChangePrice(decimal price, int eventId, BudgetPrices budgetPrice)
+        public async Task ChangePrice(decimal price, int eventId, BudgetOptions budgetOption)
         {
             var budgedToChange = _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
             if (budgedToChange != null)
             {
-                switch (budgetPrice)
+                switch (budgetOption)
                 {
-                    case BudgetPrices.Food:
+                    case BudgetOptions.Food:
                         budgedToChange.FoodPrice = price;
                         break;
-                    case BudgetPrices.Decoration:
+                    case BudgetOptions.Decoration:
                         budgedToChange.DecorationPrice = price;
                         break;
-                    case BudgetPrices.Rent:
+                    case BudgetOptions.Rent:
                         budgedToChange.RentPrice = price;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(budgetPrice), budgetPrice, null);
+                        throw new ArgumentOutOfRangeException(nameof(budgetOption), budgetOption, null);
                 }
                 budgedToChange.Total = budgedToChange.RentPrice 
                                        + budgedToChange.DecorationPrice 
@@ -62,19 +63,19 @@ namespace NowEvent.Data
             return _appDbContext.Budget.FirstOrDefault(x => x.EventId == eventId);
         }
 
-        public decimal GetBudgetPrice(int eventId, BudgetPrices priceType)
+        public decimal GetBudgetPrice(int eventId, BudgetOptions optionType)
         {
-            switch (priceType)
+            switch (optionType)
             {
-                case BudgetPrices.Rent:
+                case BudgetOptions.Rent:
                     var rentPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
                         .Select(x => x.RentPrice).FirstOrDefault();
                     return rentPrice;
-                case BudgetPrices.Decoration:
+                case BudgetOptions.Decoration:
                     var decorPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
                         .Select(x => x.DecorationPrice).FirstOrDefault();
                     return decorPrice;
-                case BudgetPrices.Food:
+                case BudgetOptions.Food:
                     var foodPrice = _appDbContext.Budget.Where(x => x.EventId == eventId)
                         .Select(x => x.FoodPrice).FirstOrDefault();
                     return foodPrice;
@@ -83,15 +84,15 @@ namespace NowEvent.Data
             }
         }
 
-        public Dictionary<BudgetPrices, decimal> GetAllPrices(int eventId)
+        public Dictionary<BudgetOptions, decimal> GetAllPrices(int eventId)
         {
-            decimal rentPrice = GetBudgetPrice(eventId, BudgetPrices.Rent);
-            decimal decorPrice = GetBudgetPrice(eventId, BudgetPrices.Decoration);
-            decimal foodPrice = GetBudgetPrice(eventId, BudgetPrices.Food);
-            Dictionary<BudgetPrices, decimal> pricesDict =
-                new Dictionary<BudgetPrices, decimal> { { BudgetPrices.Rent, rentPrice },
-                    { BudgetPrices.Decoration, decorPrice },
-                    { BudgetPrices.Food, foodPrice }
+            decimal rentPrice = GetBudgetPrice(eventId, BudgetOptions.Rent);
+            decimal decorPrice = GetBudgetPrice(eventId, BudgetOptions.Decoration);
+            decimal foodPrice = GetBudgetPrice(eventId, BudgetOptions.Food);
+            Dictionary<BudgetOptions, decimal> pricesDict =
+                new Dictionary<BudgetOptions, decimal> { { BudgetOptions.Rent, rentPrice },
+                    { BudgetOptions.Decoration, decorPrice },
+                    { BudgetOptions.Food, foodPrice }
                 };
             return pricesDict;
         }

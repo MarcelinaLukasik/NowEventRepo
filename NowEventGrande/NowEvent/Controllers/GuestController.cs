@@ -26,8 +26,7 @@ namespace NowEvent.Controllers
                 _guestRepository.AddGuest(guest);
                 return Ok(guest);
             }
-            else
-                return BadRequest(guest);
+            return BadRequest(guest);
         }
 
         [HttpGet("{id:int}/all")]
@@ -54,7 +53,7 @@ namespace NowEvent.Controllers
             bool isRemoved = _guestRepository.RemoveGuest(id);
             if (isRemoved)
                 return Ok(id);
-            else return BadRequest(id);
+            return BadRequest(id);
         }
     }
 }

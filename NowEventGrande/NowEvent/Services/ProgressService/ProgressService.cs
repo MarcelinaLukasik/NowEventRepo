@@ -1,19 +1,19 @@
 ﻿using NowEvent.Data;
 using NowEvent.Models;
+using NowEvent.Models.Constants;
 using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Services.ProgressService
 {
     public class ProgressService : IProgressService
     {
-        
         private readonly IEventRepository _eventRepository;
         private readonly IGuestRepository _guestRepository;
         private readonly IVerificationService _verificationService;
         private readonly IOfferRepository _offerRepository;
         private int _progressLevel;
-        private int _fullProgress = 3;
-        private bool _posted = false;
+        private const int FullProgress = 3;
+        private bool _posted;
         public ProgressService(IEventRepository eventRepository, IGuestRepository guestRepository, 
             IVerificationService verificationService, IOfferRepository offerRepository)
         {
@@ -31,13 +31,12 @@ namespace NowEvent.Services.ProgressService
             {
                 _posted = true;
             }
-
-            if (_progressLevel != _fullProgress)
+            if (_progressLevel != FullProgress)
             {
                  await _eventRepository.SetStatus(id, EventStatuses.Incomplete);
                  return false;
             }
-            else if(_posted)
+            if(_posted)
             {
                 await _eventRepository.SetStatus(id, EventStatuses.Posted);
                 return true;
