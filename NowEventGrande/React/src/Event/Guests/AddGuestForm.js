@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { FormFields} from './FormFields';
+import { FormFields} from '../Utils/FormFields';
 
 function AddGuestForm({
   onClick,

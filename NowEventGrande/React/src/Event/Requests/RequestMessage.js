@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, setErrors } from "react";
-import "../styles/tiles.css";
+import "../../styles/tiles.css";
 
 function RequestMessage() {
   const location = useLocation();

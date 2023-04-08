@@ -1,9 +1,9 @@
-import SideBar from "./SideBar";
+import SideBar from "../Utils/SideBar";
 import React from "react";
-import "../styles/guests.css";
+import "../../styles/guests.css";
 import { useLocation } from "react-router-dom";
 import { Col } from "react-bootstrap";
-import calendarIcon from "../images/icons/list.png";
+import calendarIcon from "../../images/icons/list.png";
 import { createContext } from "react";
 
 const EventIdContext = createContext();

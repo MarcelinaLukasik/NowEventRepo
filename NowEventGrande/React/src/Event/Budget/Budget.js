@@ -1,12 +1,12 @@
-import SideBar from "./SideBar";
-import ProgressBar from "./ProgressBar";
+import SideBar from "../Utils/SideBar";
+import ProgressBar from "../Progress/ProgressBar";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Col } from "react-bootstrap";
-import calendarIcon from "../images/icons/salary.png";
+import calendarIcon from "../../images/icons/salary.png";
 import { useState, useEffect, setErrors } from "react";
-import "../styles/event.css";
-import "../styles/budget.css";
+import "../../styles/event.css";
+import "../../styles/budget.css";
 
 
 function Budget() {

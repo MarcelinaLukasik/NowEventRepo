@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/guests.css";
+import "../../styles/guests.css";
 import { Col } from "react-bootstrap";
-import calendarIcon from "../images/icons/find.png";
+import calendarIcon from "../../images/icons/find.png";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import SideBar from "./SideBar";
+import SideBar from "../Utils/SideBar";
 
 function Offer() {
   const location = useLocation();

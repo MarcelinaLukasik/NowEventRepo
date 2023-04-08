@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/tiles.css";
-import "../styles/banner.css";
+import "../../styles/tiles.css";
+import "../../styles/banner.css";
 
 function PostedEvents() {
   const [requests, setRequests] = useState([]);

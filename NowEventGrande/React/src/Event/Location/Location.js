@@ -1,13 +1,13 @@
 import React from "react";
-import "../styles/calendar.css";
+import "../../styles/calendar.css";
 import { Col } from "react-bootstrap";
-import calendarIcon from "../images/icons/list.png";
+import calendarIcon from "../../images/icons/list.png";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import SideBar from "./SideBar";
+import SideBar from "../Utils/SideBar";
 import Address from "./Address";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../Progress/ProgressBar";
 
 function Location() {
   const location = useLocation();

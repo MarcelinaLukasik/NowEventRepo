@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/tiles.css";
-import emoticonsBanner from "../images/emoticonsBanner.jpg";
+import "../../styles/tiles.css";
+import emoticonsBanner from "../../images/emoticonsBanner.jpg";
 import { Nav } from "react-bootstrap";
 import { ArrowRightCircle } from "react-bootstrap-icons";
-import "../styles/banner.css";
+import "../../styles/banner.css";
 
 function CreatedEvents() {
   const [events, setEvents] = useState([]);

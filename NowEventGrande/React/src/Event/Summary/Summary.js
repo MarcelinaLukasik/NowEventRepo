@@ -1,8 +1,8 @@
-import SideBar from "./SideBar";
+import SideBar from "../Utils/SideBar";
 import Assistance from "./Assistance";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../Progress/ProgressBar";
 import React from "react";
-import "../styles/guests.css";
+import "../../styles/guests.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Counter from "react-countdown";

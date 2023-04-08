@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/event.css";
+import "../../styles/event.css";
 import { useState, useEffect, useRef } from "react";
 import {
   StandaloneSearchBox,
@@ -122,7 +122,7 @@ function Address(props) {
                   key="marker_1"
                   position={{ lat: latitude, lng: longitude }}
                   icon={{
-                    url: require("../images/icons/party_emoji.png"),
+                    url: require("../../images/icons/party_emoji.png"),
                     fillColor: "#EB00FF",
                     scale: 7,
                   }}

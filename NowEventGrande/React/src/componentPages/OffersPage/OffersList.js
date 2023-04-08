@@ -11,7 +11,7 @@ import {Avatar,Card,CardActions,CardContent,
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { AllowedThemes } from "../../Event/Themes";
+import { AllowedThemes } from "../../Event/Theme/Themes";
 
 export const OffersList = ({ offer }) => {
   const [offerImage, setOfferImage] = useState("");

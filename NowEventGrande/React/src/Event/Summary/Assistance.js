@@ -1,7 +1,7 @@
 import React from "react";
-import lightbulb_1 from "../images/icons/light_bulb_small.png";
+import lightbulb_1 from "../../images/icons/light_bulb_small.png";
 import { useState, useEffect } from "react";
-import EventInfoPanel from "./EventInfoPanel";
+import EventInfoPanel from "../Main/EventInfoPanel";
 
 
 function Assistance(props) {

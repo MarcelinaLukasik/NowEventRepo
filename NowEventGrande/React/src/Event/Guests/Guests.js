@@ -1,14 +1,14 @@
-import SideBar from "./SideBar";
-import ProgressBar from "./ProgressBar";
+import SideBar from "../Utils/SideBar";
+import ProgressBar from "../Progress/ProgressBar";
 import React from "react";
 import AllGuests from "./AllGuests";
-import "../styles/guests.css";
-import "../styles/toggleSwitch.css";
+import "../../styles/guests.css";
+import "../../styles/toggleSwitch.css";
 import { Col } from "react-bootstrap";
-import calendarIcon from "../images/icons/contact-list.png";
+import calendarIcon from "../../images/icons/contact-list.png";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { EventSizes, EventSizeRanges } from "./EventSizes";
+import { EventSizes, EventSizeRanges } from "../Main/EventSizes";
 
 function Guests() {
   const location = useLocation();

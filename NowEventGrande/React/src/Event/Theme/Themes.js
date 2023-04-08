@@ -1,9 +1,9 @@
-import formalImage from "../images/themes/formal.jpg";
-import spookyImage from "../images/themes/spooky.jpg";
-import tropicalImage from "../images/themes/tropical.jpg";
-import retroImage from "../images/themes/retro.jpg";
-import discoImage from "../images/themes/disco.jpg";
-import otherImage from "../images/themes/other.jpg";
+import formalImage from "../../images/themes/formal.jpg";
+import spookyImage from "../../images/themes/spooky.jpg";
+import tropicalImage from "../../images/themes/tropical.jpg";
+import retroImage from "../../images/themes/retro.jpg";
+import discoImage from "../../images/themes/disco.jpg";
+import otherImage from "../../images/themes/other.jpg";
 
 export const AllowedThemes = {
   Formal: "Formal",

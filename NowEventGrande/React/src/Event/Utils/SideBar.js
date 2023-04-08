@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import "../styles/sidebar.css";
-import { Features } from "./Features";
+import "../../styles/sidebar.css";
+import { Features } from "../Main/Features";
 
 function SideBar(props) {
   return (

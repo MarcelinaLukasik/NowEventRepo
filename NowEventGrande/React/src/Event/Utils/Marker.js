@@ -1,5 +1,5 @@
 import React from "react";
-import calendarIcon from "../images/icons/salary.png";
+import calendarIcon from "../../images/icons/salary.png";
 
 function Marker() {
   return (

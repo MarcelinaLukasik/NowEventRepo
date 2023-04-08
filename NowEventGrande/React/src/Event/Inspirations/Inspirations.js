@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/guests.css";
+import "../../styles/guests.css";
 import { useState, useEffect } from "react";
 
 function Inspirations() {

@@ -1,8 +1,8 @@
 import React from "react";
-import "../styles/rateSlider.css";
+import "../../styles/rateSlider.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import balloonsIcon from "../images/icons/colorful_balloons.png";
+import balloonsIcon from "../../images/icons/colorful_balloons.png";
 import { RateNames, RateIds } from "./Rates";
 
 function AfterEvent() {
