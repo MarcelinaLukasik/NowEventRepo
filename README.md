@@ -5,7 +5,7 @@ This is our final project at Codecool school.
  
 Website that connects people ordering the service with the appropriate contractors.
 
-Create your dream event without leaving home. Birthday? Meeting with friends? business meeting?
+Birthday? Meeting with friends? Business meeting?
 Create your dream event without leaving home!
 
 ## Tech Stack
@@ -47,7 +47,7 @@ We rely on a simple dependency table that we created ourselves
 
 ![features more](https://user-images.githubusercontent.com/35083021/219223215-bea2ee45-7df4-4616-acce-5a30804eccda.png)
 
-# Fully Response
+# Fully Responsive
 
 ![response](https://user-images.githubusercontent.com/35083021/219224301-25566dcb-ed59-40b8-9afe-ca6417c7c51f.png)
 ## Authors
