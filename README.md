@@ -1,5 +1,5 @@
 
-# NowEventRepo
+# NowEvent
 
 This is our final project at Codecool school.
  
