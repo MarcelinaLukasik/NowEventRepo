@@ -1,4 +1,5 @@
 ﻿using NowEvent.Data;
+using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 

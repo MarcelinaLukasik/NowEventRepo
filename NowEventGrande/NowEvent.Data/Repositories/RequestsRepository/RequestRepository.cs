@@ -13,7 +13,7 @@ namespace NowEvent.Data.Repositories.RequestsRepository
         public void SaveRequest(Request request)
         {
             _appDbContext.Requests.Add(request);
-                _appDbContext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
         public IQueryable GetRequestsByUserId(string id)
         {
@@ -22,7 +22,7 @@ namespace NowEvent.Data.Repositories.RequestsRepository
         }
         public async Task<Request> GetRequestById(int id)
         {
-            return _appDbContext.Requests.Find(id);
+            return (await _appDbContext.Requests.FindAsync(id))!;
         }
     }
 }

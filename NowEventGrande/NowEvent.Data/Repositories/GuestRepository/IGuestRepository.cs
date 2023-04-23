@@ -1,10 +1,9 @@
 ﻿using NowEvent.Models;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.GuestRepository
 {
     public interface IGuestRepository
     {
-        IEnumerable<Guest> AllGuests { get; }
         void AddGuest(Guest guest);
         bool RemoveGuest(int id);
         public IEnumerable<Guest> SortDescending();

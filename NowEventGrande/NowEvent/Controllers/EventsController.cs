@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NowEvent.Data;
+using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
@@ -88,16 +88,16 @@ namespace NowEvent.Controllers
         [HttpPost("{id:int}/SetSize")]
         public IActionResult SetSize(int id, [FromBody] string size)
         {
-            bool correctData = _eventRepository.ManageEventData(id, size, EventData.Size);
-            return correctData ? Ok(correctData) : BadRequest(correctData);
+            bool isDataCorrect = _eventRepository.ManageEventData(id, size, EventData.Size);
+            return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
 
         [HttpPost("{id:int}/SetSizeRange")]
         public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
         {
-            bool correctData = _eventRepository.ManageEventData(id, sizeRange, EventData.SizeRange);
-            return correctData ? Ok(correctData) : BadRequest(correctData);
+            bool isDataCorrect = _eventRepository.ManageEventData(id, sizeRange, EventData.SizeRange);
+            return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
         [HttpPost("{id:int}/SetTheme")]

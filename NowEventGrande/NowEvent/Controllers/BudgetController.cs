@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.BudgetRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 using NowEvent.Services.VerificationService;

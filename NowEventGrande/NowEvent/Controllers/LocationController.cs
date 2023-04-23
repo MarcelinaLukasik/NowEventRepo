@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Services.VerificationService;
 

@@ -1,6 +1,6 @@
 ﻿using NowEvent.Models;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.LocationAndTimeRepository
 {
     public interface ILocationAndTimeRepository
     {

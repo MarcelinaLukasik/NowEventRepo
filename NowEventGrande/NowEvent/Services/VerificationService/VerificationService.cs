@@ -1,5 +1,8 @@
 ﻿using System.Net.Mail;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.BudgetRepository;
+using NowEvent.Data.Repositories.EventRepository;
+using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 using NowEvent.Services.DateAndTimeService;
@@ -44,7 +47,7 @@ namespace NowEvent.Services.VerificationService
 
         }
 
-        public void VerifyPlaceStatus(string placeStatus)
+        private void VerifyPlaceStatus(string placeStatus)
         {
             switch (placeStatus)
             {
@@ -60,7 +63,7 @@ namespace NowEvent.Services.VerificationService
             }
         }
 
-        public void VerifyPlaceHours(string allDaysAndHours, int id)
+        private void VerifyPlaceHours(string allDaysAndHours, int id)
         {
             _allOpeningHours = _dateAndTimeService.FormatAllOpeningDaysAndHours(allDaysAndHours);
             var startDate = _eventRepository.GetEventTimeStage(id, EventTimeStages.Start);
@@ -97,7 +100,7 @@ namespace NowEvent.Services.VerificationService
             return validName && validMail;
         }
 
-        public bool VerifyGuestName(Guest guest)
+        private bool VerifyGuestName(Guest guest)
         {
             bool validFirstName = guest.FirstName.All(Char.IsLetter);
             bool validLastName = guest.LastName.All(Char.IsLetter);

@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using NowEvent.Data.Repositories.BudgetRepository;
+using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 
@@ -70,7 +72,7 @@ namespace NowEvent.Data.Repositories.EventRepository
             return await _appDbContext.Events.FindAsync(id);
         }
 
-        public Event GetEventById(int id)
+        private Event GetEventById(int id)
         {
             return _appDbContext.Events.Find(id);
         }
@@ -121,7 +123,7 @@ namespace NowEvent.Data.Repositories.EventRepository
         {
             var eventById = await GetEventByIdAsync(id);
             eventById.Status = status;
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
         public async Task<string> GetStatus(int id)
         {
@@ -168,7 +170,7 @@ namespace NowEvent.Data.Repositories.EventRepository
             return isCorrect;
         }
 
-        public void SetEventData(Event eventById, string dataToChange, EventData eventDataCol)
+        private void SetEventData(Event eventById, string dataToChange, EventData eventDataCol)
         {
             switch (eventDataCol)
             {
@@ -189,7 +191,7 @@ namespace NowEvent.Data.Repositories.EventRepository
         public bool CheckIfLargeSize(int id)
         {
             var eventById = _appDbContext.Events.FirstOrDefault(x => x.Id == id);
-            return eventById.Size == EventSizes.Large.ToString() && eventById.SizeRange != null;
+            return eventById!.Size == EventSizes.Large.ToString() && eventById.SizeRange != null;
         }
     }
 }

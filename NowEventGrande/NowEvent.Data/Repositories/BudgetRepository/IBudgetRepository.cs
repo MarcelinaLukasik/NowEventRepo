@@ -1,7 +1,7 @@
 ﻿using NowEvent.Models;
 using NowEvent.Models.Constants;
 
-namespace NowEvent.Data
+namespace NowEvent.Data.Repositories.BudgetRepository
 {
     public interface IBudgetRepository
     {

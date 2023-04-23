@@ -17,9 +17,7 @@ namespace NowEvent.Models
         public string Status { get; set; }
         public DateTime EventStart { get; set; }
         public DateTime EventEnd { get; set; }
-        public ICollection<EventAddress>? EventAddresses { get; set; }
         public ICollection<Guest>? Guests { get; set; }
-        public ICollection<Budget>? Budgets { get; set; }
         public ICollection<Rating>? Ratings { get; set; }
     }
 }

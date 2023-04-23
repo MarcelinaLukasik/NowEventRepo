@@ -8,7 +8,6 @@ namespace NowEvent.Models
 
         [ForeignKey("Event")]
         public int EventId { get; set; }
-
         public int CommunicationRating { get; set; }
         public int QualityRating { get; set; }
     }

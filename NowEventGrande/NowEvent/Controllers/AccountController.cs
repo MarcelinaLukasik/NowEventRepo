@@ -88,8 +88,12 @@ namespace NowEvent.Controllers
         [Authorize]
         public IActionResult GetCurrentUserId()
         {
-            string userId = _userAuthenticationService.GetCurrentUserId(HttpContext.User.Identity.Name);
-            return Ok(userId);
+            if (HttpContext.User.Identity != null)
+            {
+                string userId = _userAuthenticationService.GetCurrentUserId(HttpContext.User.Identity.Name!);
+                return Ok(userId);
+            }
+            return BadRequest("Invalid user");
         }
 
     }

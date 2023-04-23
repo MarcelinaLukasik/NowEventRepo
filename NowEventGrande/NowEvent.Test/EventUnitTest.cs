@@ -1,18 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.BudgetRepository;
 using NowEvent.Data.Repositories.EventRepository;
+using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
-using NowEvent.Services.DateAndTimeService;
-using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Test
 {
     [TestClass]
     public class EventUnitTest
     {
-        private readonly ILocationAndTimeRepository _locationRepository;
-        private readonly IBudgetRepository _budgetRepository;
+        private readonly ILocationAndTimeRepository _locationRepository = null!;
+        private readonly IBudgetRepository _budgetRepository = null!;
 
         [TestMethod]
         public void TestGetStatus()
@@ -20,26 +19,20 @@ namespace NowEvent.Test
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "NowEvent")
                 .Options;
-            using (var context = new AppDbContext(options))
+            Event testEvent = new Event
             {
-                context.Events.Add(new Event
-                {
-                    Id = 9999,
-                    Size = "Large",
-                    Type = "Festival",
-                    Name = "FestivalEvent",
-                    Status = "Incomplete"
+                Size = "Large",
+                Type = "Festival",
+                Name = "FestivalEvent",
+                Status = "Incomplete"
+            };
+            using var context = new AppDbContext(options);
+            context.Events.Add(testEvent);
+            context.SaveChanges();
+            EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
+            var status = eventRepository.GetStatus(testEvent.Id).Result;
 
-                });
-
-                context.SaveChanges();
-            }
-            using (var context = new AppDbContext(options))
-            {
-                EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-                var status = eventRepository.GetStatus(9999).Result;
-                Assert.AreEqual("Incomplete", status);
-            }
+            Assert.AreEqual("Incomplete", status);
         }
 
         [TestMethod]
@@ -48,28 +41,22 @@ namespace NowEvent.Test
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "NowEvent")
                 .Options;
-            DateTime dateTocheck = new DateTime(2023, 12 , 23 ,06,00,00);
-            using (var context = new AppDbContext(options))
+            DateTime dateToCheck = new DateTime(2023, 12 , 23 ,06,00,00);
+            Event testEvent = new Event
             {
-                context.Events.Add(new Event
-                {
-                    Id = 99999,
-                    Size = "Large",
-                    Type = "Festival",
-                    Name = "FestivalEvent",
-                    Status = "Incomplete",
-                    EventStart = dateTocheck
+                Size = "Large",
+                Type = "Festival",
+                Name = "FestivalEvent",
+                Status = "Incomplete",
+                EventStart = dateToCheck
+            };
+            using var context = new AppDbContext(options);
+            context.Events.Add(testEvent);
+            context.SaveChanges();
+            EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
+            var dateResult = eventRepository.GetEventStartDate(testEvent.Id);
 
-                });
-
-                context.SaveChanges();
-            }
-            using (var context = new AppDbContext(options))
-            {
-                EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-                var dateResult = eventRepository.GetEventStartDate(99999);
-                Assert.AreEqual(dateTocheck, dateResult);
-            }
+            Assert.AreEqual(dateToCheck, dateResult);
         }
 
         [TestMethod]
@@ -87,29 +74,23 @@ namespace NowEvent.Test
                 ["StartTime"] = "04:00 AM",
                 ["EndTime"] = "08:00 AM"
             };
-            using (var context = new AppDbContext(options))
+            Event testEvent = new Event
             {
-                context.Events.Add(new Event
-                {
-                    Id = 999999,
-                    Size = "Large",
-                    Type = "Festival",
-                    Name = "FestivalEvent",
-                    Status = "Incomplete",
-                    EventStart = eventStart,
-                    EventEnd = eventEnd,
-                    Date = eventDate
+                Size = "Large",
+                Type = "Festival",
+                Name = "FestivalEvent",
+                Status = "Incomplete",
+                EventStart = eventStart,
+                EventEnd = eventEnd,
+                Date = eventDate
+            };
+            using var context = new AppDbContext(options);
+            context.Events.Add(testEvent);
+            context.SaveChanges();
+            EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
+            var date = eventRepository.SetEventDateAndTime(testEvent.Id, formattedInfo);
 
-                });
-
-                context.SaveChanges();
-            }
-            using (var context = new AppDbContext(options))
-            {
-                EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-                var date = eventRepository.SetEventDateAndTime(999999, formattedInfo);
-                Assert.IsFalse(date.Result);
-            }
+            Assert.IsFalse(date.Result);
         }
     }
 }
