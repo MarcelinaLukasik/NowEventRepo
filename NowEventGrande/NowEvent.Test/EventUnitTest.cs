@@ -4,6 +4,9 @@ using NowEvent.Data.Repositories.BudgetRepository;
 using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
+using NowEvent.Services.BudgetService;
+using NowEvent.Services.DateAndTimeService;
+using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Test
 {
@@ -12,6 +15,9 @@ namespace NowEvent.Test
     {
         private readonly ILocationAndTimeRepository _locationRepository = null!;
         private readonly IBudgetRepository _budgetRepository = null!;
+        private readonly IBudgetService _budgetService = null!;
+        private readonly IEventRepository _eventRepository = null!;
+        private readonly IDateAndTimeService _dateAndTimeService = null!;
 
         [TestMethod]
         public void TestGetStatus()
@@ -60,37 +66,19 @@ namespace NowEvent.Test
         }
 
         [TestMethod]
-        public void TestSetEventDateAndTime()
+        public void TestIfEventDateAndTimeIsValid()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "NowEvent")
-                .Options;
-            DateTime eventStart = new DateTime(2023, 12, 23, 06, 00, 00);
-            DateTime eventEnd = new DateTime(2023, 12, 23, 09, 00, 00);
-            DateTime eventDate = new DateTime(2023, 12, 23, 06, 00, 00);
+            VerificationService verificationService = new VerificationService(_locationRepository,
+                _eventRepository, _budgetService, _dateAndTimeService);
             Dictionary<string, string> formattedInfo = new Dictionary<string, string>()
             {
                 ["Date"] = "2022 - 01 - 19T23:00:00.000Z",
-                ["StartTime"] = "04:00 AM",
+                ["StartTime"] = "Bad data",
                 ["EndTime"] = "08:00 AM"
             };
-            Event testEvent = new Event
-            {
-                Size = "Large",
-                Type = "Festival",
-                Name = "FestivalEvent",
-                Status = "Incomplete",
-                EventStart = eventStart,
-                EventEnd = eventEnd,
-                Date = eventDate
-            };
-            using var context = new AppDbContext(options);
-            context.Events.Add(testEvent);
-            context.SaveChanges();
-            EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-            var date = eventRepository.SetEventDateAndTime(testEvent.Id, formattedInfo);
+            var isDateValid = verificationService.VerifyEventDateAndTime(formattedInfo);
 
-            Assert.IsFalse(date.Result);
+            Assert.IsFalse(isDateValid);
         }
     }
 }

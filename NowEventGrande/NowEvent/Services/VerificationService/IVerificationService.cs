@@ -10,5 +10,6 @@ namespace NowEvent.Services.VerificationService
         bool CheckBudgetFullStatus(int eventId);
         bool VerifyBudgetPrice(string budgetPrice);
         bool VerifyTheme(string theme);
+        bool VerifyEventDateAndTime(Dictionary<string, string> formattedDateInfo);
     }
 }

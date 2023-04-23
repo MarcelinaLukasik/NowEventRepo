@@ -83,30 +83,6 @@ namespace NowEvent.Data.Repositories.EventRepository
             return events;
         }
 
-        public async Task<bool> SetEventDateAndTime(int id, Dictionary<string, string> formattedDateInfo)
-        {
-            bool isDateCorrect = DateTime.TryParse(formattedDateInfo[EventInfoFields.Date], out var date);
-            bool correctStartTime = DateTime.TryParse(formattedDateInfo[Date.StartTime], out var start);
-            bool correctEndTime = DateTime.TryParse(formattedDateInfo[Date.EndTime], out var end);
-
-            if (isDateCorrect && correctStartTime && correctEndTime)
-            {
-                var eventById = await GetEventByIdAsync(id);
-                int result = DateTime.Compare(date, DateTime.Now);
-                if (result < 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    _locationAndTimeRepository.SaveDateAndTime(eventById, date, start, end);
-                    return true;
-                }
-                
-            }
-            else return false;
-        }
-
         public async Task<bool> CheckDateAndTimeByEventId(int id)
         {
             var eventId = await GetEventByIdAsync(id);
@@ -130,17 +106,7 @@ namespace NowEvent.Data.Repositories.EventRepository
             var eventById = await GetEventByIdAsync(id);
             return eventById.Status;
         }
-        public async Task<Dictionary<string, string>> GetInfo(int id)
-        {
-            Dictionary<string, string> info = new Dictionary<string, string>();
-            var eventById = await GetEventByIdAsync(id);
-            var eventAddress = await _locationAndTimeRepository.GetEventAddress(id);
-            info[EventInfoFields.Type] = eventById.Type;
-            info[EventInfoFields.Name] = eventById.Name;
-            info[EventInfoFields.Status] = eventById.Status;
-            info[EventInfoFields.Address] = eventAddress;
-            return info;
-        }
+   
         public DateTime GetEventTimeStage(int id, EventTimeStages eventTimeStage)
         {
             switch (eventTimeStage)

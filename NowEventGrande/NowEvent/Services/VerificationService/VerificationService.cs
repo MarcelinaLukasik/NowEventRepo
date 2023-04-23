@@ -5,6 +5,7 @@ using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
+using NowEvent.Services.BudgetService;
 using NowEvent.Services.DateAndTimeService;
 
 namespace NowEvent.Services.VerificationService
@@ -13,7 +14,7 @@ namespace NowEvent.Services.VerificationService
     {
         private readonly ILocationAndTimeRepository _locationRepository;
         private readonly IEventRepository _eventRepository;
-        private readonly IBudgetRepository _budgetRepository;
+        private readonly IBudgetService _budgetService;
         private readonly IDateAndTimeService _dateAndTimeService;
         private readonly Dictionary<string, string> _verificationInfo = new()
         {
@@ -27,11 +28,11 @@ namespace NowEvent.Services.VerificationService
 
 
         public VerificationService(ILocationAndTimeRepository locationRepository, IEventRepository eventRepository, 
-            IBudgetRepository budgetRepository, IDateAndTimeService dateAndTimeService)
+            IBudgetService budgetService, IDateAndTimeService dateAndTimeService)
         {
             _locationRepository = locationRepository;
             _eventRepository = eventRepository;
-            _budgetRepository = budgetRepository;
+            _budgetService = budgetService;
             _dateAndTimeService = dateAndTimeService;
         }
 
@@ -114,7 +115,7 @@ namespace NowEvent.Services.VerificationService
 
         public bool CheckBudgetFullStatus(int eventId)
         {
-            Dictionary<BudgetOptions, decimal> allPrices = _budgetRepository.GetAllPrices(eventId);
+            Dictionary<BudgetOptions, decimal> allPrices = _budgetService.GetAllPrices(eventId);
             foreach (var price in allPrices)
             {
                 if (price.Value <= 0)
@@ -188,6 +189,15 @@ namespace NowEvent.Services.VerificationService
                    "the operating hours of the selected venue. " +
                    $"On {dayOfWeek} this venue is open since {_openingTimeOnly} " +
                    $"and closing at {_closingTimeOnly}.";
+        }
+
+        public bool VerifyEventDateAndTime(Dictionary<string, string> formattedDateInfo)
+        {
+            bool isDateCorrect = DateTime.TryParse(formattedDateInfo[EventInfoFields.Date], out _);
+            bool correctStartTime = DateTime.TryParse(formattedDateInfo[Date.StartTime], out _);
+            bool correctEndTime = DateTime.TryParse(formattedDateInfo[Date.EndTime], out _);
+
+            return isDateCorrect && correctStartTime && correctEndTime;
         }
     }
 }

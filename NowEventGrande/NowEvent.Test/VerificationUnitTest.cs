@@ -5,6 +5,7 @@ using NowEvent.Data.Repositories.EventRepository;
 using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
+using NowEvent.Services.BudgetService;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.VerificationService;
 
@@ -16,6 +17,7 @@ namespace NowEvent.Test
 
         private readonly ILocationAndTimeRepository _locationRepository = null!;
         private readonly IEventRepository _eventRepository = null!;
+        private readonly IBudgetService _budgetService = null!;
         private readonly IBudgetRepository _budgetRepository = null!;
         private readonly IDateAndTimeService _dateAndTimeService = null!;
 
@@ -23,7 +25,7 @@ namespace NowEvent.Test
         public void Test_IncorrectLastNameInGuestInfo()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Guest guest = new Guest { FirstName = "John", LastName = "123", Email = "doe@gmail.com" };
             bool result = verificationService.VerifyGuest(guest);
             Assert.IsFalse(result);
@@ -33,7 +35,7 @@ namespace NowEvent.Test
         public void Test_CorrectGuestInfo()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Guest guest = new Guest { FirstName = "John", LastName = "Doe", Email = "doe@gmail.com" };
             bool result = verificationService.VerifyGuest(guest);
             Assert.IsTrue(result);
@@ -43,7 +45,7 @@ namespace NowEvent.Test
         public void Test_VerifyCorrectEventData()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
                 { Type = "Birthday", Size = "Small", Name = "birthdayEvent", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
@@ -55,7 +57,7 @@ namespace NowEvent.Test
         public void Test_VerifyEventNameWithNumbers()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
                 { Type = "Birthday", Size = "Small", Name = "event123", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
@@ -67,7 +69,7 @@ namespace NowEvent.Test
         public void Test_VerifyEmptyBudgetType()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
                 { Type = "", Size = "Small", Name = "birthdayEvent", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
@@ -79,7 +81,7 @@ namespace NowEvent.Test
         public void Test_VerifyCorrectBudgetPrices()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("123");
             Assert.IsTrue(validPrices);
         }
@@ -88,7 +90,7 @@ namespace NowEvent.Test
         public void Test_IncorrectCharsInBudgetPrices()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("!#$%");
             Assert.IsFalse(validPrices);
         }
