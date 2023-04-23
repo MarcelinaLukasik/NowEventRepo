@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using NowEvent.Models;
+﻿using NowEvent.Models;
 
 namespace NowEvent.Services.AuthenticationService
 {

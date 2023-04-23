@@ -14,6 +14,7 @@ using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Data.Repositories.RequestsRepository;
 using NowEvent.Models;
 using NowEvent.Services.AuthenticationService;
+using NowEvent.Services.BudgetService;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.EmailService;
 using NowEvent.Services.ProgressService;
@@ -88,6 +89,7 @@ builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IVerificationService, VerificationService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
 var app = builder.Build();

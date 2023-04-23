@@ -7,7 +7,7 @@ namespace NowEvent.Data.Repositories.BudgetRepository
     {
         void AddBudget(Budget budget);
         Task ChangePrice(decimal price, int eventId, BudgetOptions budgetOption);
-        Dictionary<BudgetOptions, decimal> GetAllPrices(int eventId);
+        decimal GetBudgetPrice(int eventId, BudgetOptions optionType);
         Task<Budget> GetBudget(int eventId);
         Budget CreateBudget(int eventId);
 
