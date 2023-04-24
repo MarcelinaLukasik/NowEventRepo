@@ -25,7 +25,7 @@ namespace NowEvent.Services.AuthenticationService
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
-        public SigningCredentials GetSigningCredentials()
+        private SigningCredentials GetSigningCredentials()
         {
             var jwtConfig = _configuration.GetSection("jwtConfig");
             var key = Encoding.UTF8.GetBytes(jwtConfig["Key"]);
@@ -33,7 +33,7 @@ namespace NowEvent.Services.AuthenticationService
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<List<Claim>> GetClaims(User user)
+        private async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim>
             {
@@ -47,7 +47,7 @@ namespace NowEvent.Services.AuthenticationService
             return claims;
         }
 
-        public JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
             var jwtSettings = _configuration.GetSection("JwtConfig");
             var tokenOptions = new JwtSecurityToken

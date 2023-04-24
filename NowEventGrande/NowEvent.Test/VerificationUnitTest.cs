@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.BudgetRepository;
 using NowEvent.Data.Repositories.EventRepository;
+using NowEvent.Data.Repositories.LocationAndTimeRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
+using NowEvent.Services.BudgetService;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.VerificationService;
 
@@ -13,18 +15,19 @@ namespace NowEvent.Test
     public class VerificationUnitTest
     {
 
-        private readonly ILocationAndTimeRepository _locationRepository;
-        private readonly IEventRepository _eventRepository;
-        private readonly IBudgetRepository _budgetRepository;
-        private readonly IDateAndTimeService _dateAndTimeService;
+        private readonly ILocationAndTimeRepository _locationRepository = null!;
+        private readonly IEventRepository _eventRepository = null!;
+        private readonly IBudgetService _budgetService = null!;
+        private readonly IBudgetRepository _budgetRepository = null!;
+        private readonly IDateAndTimeService _dateAndTimeService = null!;
 
         [TestMethod]
         public void Test_IncorrectLastNameInGuestInfo()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
-            Guest guest = new Guest() { FirstName = "John", LastName = "123"};
-            bool result = verificationService.VerifyGuestName(guest);
+                _eventRepository, _budgetService, _dateAndTimeService);
+            Guest guest = new Guest { FirstName = "John", LastName = "123", Email = "doe@gmail.com" };
+            bool result = verificationService.VerifyGuest(guest);
             Assert.IsFalse(result);
         }
 
@@ -32,9 +35,9 @@ namespace NowEvent.Test
         public void Test_CorrectGuestInfo()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
-            Guest guest = new Guest() { FirstName = "John", LastName = "Doe" };
-            bool result = verificationService.VerifyGuestName(guest);
+                _eventRepository, _budgetService, _dateAndTimeService);
+            Guest guest = new Guest { FirstName = "John", LastName = "Doe", Email = "doe@gmail.com" };
+            bool result = verificationService.VerifyGuest(guest);
             Assert.IsTrue(result);
         }
 
@@ -42,9 +45,9 @@ namespace NowEvent.Test
         public void Test_VerifyCorrectEventData()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
-                { Id = 99999, Type = "Birthday", Size = "Small", Name = "birthdayEvent", Status = "" };
+                { Type = "Birthday", Size = "Small", Name = "birthdayEvent", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
             
             Assert.IsTrue(validEvent);
@@ -54,9 +57,9 @@ namespace NowEvent.Test
         public void Test_VerifyEventNameWithNumbers()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
-                { Id = 99999, Type = "Birthday", Size = "Small", Name = "event123", Status = "" };
+                { Type = "Birthday", Size = "Small", Name = "event123", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
 
             Assert.IsFalse(validEvent);
@@ -66,9 +69,9 @@ namespace NowEvent.Test
         public void Test_VerifyEmptyBudgetType()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             Event newEvent = new Event
-                { Id = 99999, Type = "", Size = "Small", Name = "birthdayEvent", Status = "" };
+                { Type = "", Size = "Small", Name = "birthdayEvent", Status = "" };
             bool validEvent = verificationService.VerifyEvent(newEvent);
 
             Assert.IsFalse(validEvent);
@@ -78,7 +81,7 @@ namespace NowEvent.Test
         public void Test_VerifyCorrectBudgetPrices()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("123");
             Assert.IsTrue(validPrices);
         }
@@ -87,7 +90,7 @@ namespace NowEvent.Test
         public void Test_IncorrectCharsInBudgetPrices()
         {
             VerificationService verificationService = new VerificationService(_locationRepository,
-                _eventRepository, _budgetRepository, _dateAndTimeService);
+                _eventRepository, _budgetService, _dateAndTimeService);
             bool validPrices = verificationService.VerifyBudgetPrice("!#$%");
             Assert.IsFalse(validPrices);
         }
@@ -96,7 +99,7 @@ namespace NowEvent.Test
         public void Test_FormatStartTimeAM()
         {
             DateAndTimeService dateAndTimeService = new DateAndTimeService(_eventRepository);
-            Dictionary<string, string> dictWithTime = new Dictionary<string, string>()
+            Dictionary<string, string> dictWithTime = new Dictionary<string, string>
             {
                 { "StartHour", "1" }, {"StartMinutes", "20"}, {"TimeOfDayStart", "AM"},
                 { "EndHour", "2" }, {"EndMinutes", "30"}, {"TimeOfDayEnd", "AM"}
@@ -147,43 +150,23 @@ namespace NowEvent.Test
         [TestMethod]
         public void Test_GetStatus()
         {
-            var mockSet = new Mock<DbSet<Event>>();
-            var events = new List<Event>() {
-                new Event() {
-                    Id = 9999,
-                    Size = "Large",
-                    Type = "Festival",
-                    Name = "FestivalEvent",
-                    Status = "Incomplete"
-
-                }
-            };
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "NowEvent")
                 .Options;
-            var queryable = events.AsQueryable();
-            mockSet.As<IQueryable<Event>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            using (var context = new AppDbContext(options))
+            Event testEvent = new Event
             {
-                context.Events.Add(new Event
-                {
-                    Id = 9999,
-                    Size = "Large",
-                    Type = "Festival",
-                    Name = "FestivalEvent",
-                    Status = "Incomplete"
+                Size = "Large",
+                Type = "Festival",
+                Name = "FestivalEvent",
+                Status = "Incomplete"
+            };
+            using var context = new AppDbContext(options);
+            context.Events.Add(testEvent);
+            context.SaveChanges();
+            EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
+            var status = eventRepository.GetStatus(testEvent.Id);
 
-                });
-
-                context.SaveChanges();
-            }
-            using (var context = new AppDbContext(options))
-            {
-                EventRepository eventRepository = new EventRepository(context, _budgetRepository, _locationRepository);
-                var status = eventRepository.GetStatus(9999);
-
-                Assert.AreEqual("Incomplete", status.Result);
-            }
+            Assert.AreEqual("Incomplete", status.Result);
         }
 
     }

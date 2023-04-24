@@ -16,7 +16,7 @@ namespace NowEvent.Data.Repositories.LocationAndTimeRepository
         public EventAddress GetLocation(int eventId)
         {
             return _appDbContext.EventAddress
-                .FirstOrDefault(x => x.EventId == eventId);
+                .FirstOrDefault(x => x.EventId == eventId)!;
         }
 
 

@@ -83,18 +83,5 @@ namespace NowEvent.Data.Repositories.BudgetRepository
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public Dictionary<BudgetOptions, decimal> GetAllPrices(int eventId)
-        {
-            decimal rentPrice = GetBudgetPrice(eventId, BudgetOptions.Rent);
-            decimal decorPrice = GetBudgetPrice(eventId, BudgetOptions.Decoration);
-            decimal foodPrice = GetBudgetPrice(eventId, BudgetOptions.Food);
-            Dictionary<BudgetOptions, decimal> pricesDict =
-                new Dictionary<BudgetOptions, decimal> { { BudgetOptions.Rent, rentPrice },
-                    { BudgetOptions.Decoration, decorPrice },
-                    { BudgetOptions.Food, foodPrice }
-                };
-            return pricesDict;
-        }
     }
 }

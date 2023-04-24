@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.EventRepository;
+using NowEvent.Data.Repositories.OfferRepository;
 using NowEvent.Data.Repositories.RequestsRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
@@ -49,7 +51,6 @@ namespace NowEvent.Controllers
         public IQueryable GetOffersByUserId([FromBody] string id)
         {
             return _offerRepository.GetOffersByUserId(id);
-   
         }
 
         [HttpGet("{id}/GetClientId")]

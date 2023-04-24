@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NowEvent.Data;
+using NowEvent.Data.Repositories.GuestRepository;
 using NowEvent.Models;
 using NowEvent.Services.VerificationService;
 
@@ -20,8 +21,8 @@ namespace NowEvent.Controllers
         [HttpPost("SaveGuest")]
         public IActionResult SaveGuest([FromBody] Guest guest)
         {
-            bool validGuest = _verificationService.VerifyGuest(guest);
-            if (validGuest)
+            bool isGuestValid = _verificationService.VerifyGuest(guest);
+            if (isGuestValid)
             {
                 _guestRepository.AddGuest(guest);
                 return Ok(guest);

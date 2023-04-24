@@ -1,4 +1,7 @@
 ﻿using NowEvent.Data;
+using NowEvent.Data.Repositories.EventRepository;
+using NowEvent.Data.Repositories.GuestRepository;
+using NowEvent.Data.Repositories.OfferRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 using NowEvent.Services.VerificationService;
@@ -27,16 +30,17 @@ namespace NowEvent.Services.ProgressService
         {
             _progressLevel = await GetChecklistCount(id);
             Offer offer = _offerRepository.GetOfferByEventId(id);
-            if (offer != null)
-            {
-                _posted = true;
-            }
+      
             if (_progressLevel != FullProgress)
             {
                  await _eventRepository.SetStatus(id, EventStatuses.Incomplete);
                  return false;
             }
-            if(_posted)
+            if (offer != null!)
+            {
+                _posted = true;
+            }
+            if (_posted)
             {
                 await _eventRepository.SetStatus(id, EventStatuses.Posted);
                 return true;

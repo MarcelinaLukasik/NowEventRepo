@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NowEvent.Data;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
+using NowEvent.Services.BudgetService;
 using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Controllers
@@ -10,13 +10,12 @@ namespace NowEvent.Controllers
     [ApiController]
     public class BudgetController : ControllerBase
     {
-        private readonly IBudgetRepository _budgetRepository;
         private readonly IVerificationService _verificationService;
-
-        public BudgetController(IBudgetRepository budgetRepository, IVerificationService verificationService)
+        private readonly IBudgetService _budgetService;
+        public BudgetController(IVerificationService verificationService, IBudgetService budgetService)
         {
-            _budgetRepository = budgetRepository;
             _verificationService = verificationService;
+            _budgetService = budgetService;
         }
 
         [HttpPatch("{eventId:int}/Update/{typeToChange}")]
@@ -28,15 +27,15 @@ namespace NowEvent.Controllers
                 switch (typeToChange)
                 {
                     case BudgetPrices.Rent:
-                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                        await _budgetService.ChangePrice(decimal.Parse(price), 
                             eventId, BudgetOptions.Rent);
                         break;
                     case BudgetPrices.Decoration:
-                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                        await _budgetService.ChangePrice(decimal.Parse(price), 
                             eventId, BudgetOptions.Decoration);
                         break;
                     case BudgetPrices.Food:
-                        await _budgetRepository.ChangePrice(decimal.Parse(price), 
+                        await _budgetService.ChangePrice(decimal.Parse(price), 
                             eventId, BudgetOptions.Food);
                         break;
                 }
@@ -49,7 +48,7 @@ namespace NowEvent.Controllers
         [HttpGet("{id:int}/GetBudget")]
         public async Task<Budget> GetBudget(int id)
         {
-            Budget budget = await _budgetRepository.GetBudget(id);
+            Budget budget = await _budgetService.GetBudget(id);
             return budget;
         }
     }

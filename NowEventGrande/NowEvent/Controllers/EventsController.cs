@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NowEvent.Data;
-using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 using NowEvent.Services.DateAndTimeService;
+using NowEvent.Services.EventService;
+using NowEvent.Services.RatingsService;
 using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Controllers
@@ -13,20 +13,20 @@ namespace NowEvent.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly IEventRepository _eventRepository;
-        private readonly IRatingsRepository _ratingsRepository;
+        private readonly IEventService _eventService;
+        private readonly IRatingsService _ratingsService;
         private readonly IVerificationService _verificationService;
         private readonly IDateAndTimeService _dateAndTimeService;
 
-        public EventsController(IEventRepository eventRepository, 
+        public EventsController(IEventService eventService, 
             IVerificationService verificationService, IDateAndTimeService dateAndTimeService,
-            IRatingsRepository ratingsRepository)
+            IRatingsService ratingsService)
         {
         
-            _eventRepository = eventRepository;
+            _eventService = eventService;
             _verificationService = verificationService;
             _dateAndTimeService = dateAndTimeService;
-            _ratingsRepository = ratingsRepository;
+            _ratingsService = ratingsService;
         }
 
         [HttpPost("CreateNewEvent")]
@@ -36,7 +36,7 @@ namespace NowEvent.Controllers
             bool isEventValid = _verificationService.VerifyEvent(newEvent);
             int id = 0;
             if (isEventValid)
-                id = _eventRepository.AddEvent(newEvent);
+                id = _eventService.AddEvent(newEvent);
 
             return isEventValid ? Ok(id) : BadRequest(newEvent);
         }
@@ -44,7 +44,7 @@ namespace NowEvent.Controllers
         [HttpGet("{eventId:int}/CheckIfRated")]
         public IActionResult CheckIfRated(int eventId)
         {
-            bool isRated = _ratingsRepository.RatingStatus(eventId);
+            bool isRated = _ratingsService.RatingStatus(eventId);
             if (isRated)
             {
                 return Ok();
@@ -55,7 +55,7 @@ namespace NowEvent.Controllers
         [HttpPost("SaveRatings")]
         public IActionResult SaveRatings([FromBody] Rating rating)
         {
-            _ratingsRepository.SaveRatings(rating);
+            _ratingsService.SaveRatings(rating);
             return Ok(rating);
         }
 
@@ -70,41 +70,41 @@ namespace NowEvent.Controllers
         public async Task<IActionResult> SaveDate(int id, [FromBody] Dictionary<string, string> dateInfo)
         {
             Dictionary<string, string> formattedDateInfo = _dateAndTimeService.FormatDateInfo(dateInfo);
-            return await _eventRepository.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
+            return await _eventService.SetEventDateAndTime(id, formattedDateInfo) ? Ok() : BadRequest();
         }
 
         [HttpGet("{id:int}/GetEventStatus")]
         public async Task<string> GetEventStatus(int id)
         {
-            return await _eventRepository.GetStatus(id);
+            return await _eventService.GetStatus(id);
         }
 
         [HttpGet("{id:int}/GetEventInfo")]
         public async Task<Dictionary<string, string>> GetEventInfo(int id)
         {
-            return await _eventRepository.GetInfo(id);
+            return await _eventService.GetInfo(id);
         }
 
         [HttpPost("{id:int}/SetSize")]
         public IActionResult SetSize(int id, [FromBody] string size)
         {
-            bool correctData = _eventRepository.ManageEventData(id, size, EventData.Size);
-            return correctData ? Ok(correctData) : BadRequest(correctData);
+            bool isDataCorrect = _eventService.ManageEventData(id, size, EventData.Size);
+            return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
 
         [HttpPost("{id:int}/SetSizeRange")]
         public IActionResult SetSizeRange(int id, [FromBody] string sizeRange)
         {
-            bool correctData = _eventRepository.ManageEventData(id, sizeRange, EventData.SizeRange);
-            return correctData ? Ok(correctData) : BadRequest(correctData);
+            bool isDataCorrect = _eventService.ManageEventData(id, sizeRange, EventData.SizeRange);
+            return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
 
         [HttpPost("{id:int}/SetTheme")]
         public IActionResult SetTheme(int id, [FromBody] string theme)
         {
             bool isThemeCorrect = _verificationService.VerifyTheme(theme);
-            bool isIdCorrect = _eventRepository.ManageEventData(id, theme, EventData.Theme);
+            bool isIdCorrect = _eventService.ManageEventData(id, theme, EventData.Theme);
             bool isDataCorrect = isThemeCorrect && isIdCorrect;
             return isDataCorrect ? Ok(isDataCorrect) : BadRequest(isDataCorrect);
         }
@@ -113,20 +113,20 @@ namespace NowEvent.Controllers
         [Authorize]
         public IQueryable GetEventsByUserId([FromBody] string id)
         {
-            var result = _eventRepository.GetEventsByUserId(id);
+            var result = _eventService.GetEventsByUserId(id);
             return result;
         }
         
         [HttpGet("{id:int}/CheckIfLargeSize")]
         public bool CheckIfLargeSize(int id)
         {
-            return _eventRepository.CheckIfLargeSize(id);
+            return _eventService.CheckIfLargeSize(id);
         }
 
         [HttpGet("{id:int}/GetEventStartDate")]
         public DateTime GetEventStartDate(int id)
         {
-            return _eventRepository.GetEventStartDate(id);
+            return _eventService.GetEventStartDate(id);
         }
     }
 }
