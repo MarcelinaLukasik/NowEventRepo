@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NowEvent.Data.Repositories.RatingsRepository;
 using NowEvent.Models;
 using NowEvent.Models.Constants;
 using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.EventService;
+using NowEvent.Services.RatingsService;
 using NowEvent.Services.VerificationService;
 
 namespace NowEvent.Controllers
@@ -14,19 +14,19 @@ namespace NowEvent.Controllers
     public class EventsController : ControllerBase
     {
         private readonly IEventService _eventService;
-        private readonly IRatingsRepository _ratingsRepository;
+        private readonly IRatingsService _ratingsService;
         private readonly IVerificationService _verificationService;
         private readonly IDateAndTimeService _dateAndTimeService;
 
         public EventsController(IEventService eventService, 
             IVerificationService verificationService, IDateAndTimeService dateAndTimeService,
-            IRatingsRepository ratingsRepository)
+            IRatingsService ratingsService)
         {
         
             _eventService = eventService;
             _verificationService = verificationService;
             _dateAndTimeService = dateAndTimeService;
-            _ratingsRepository = ratingsRepository;
+            _ratingsService = ratingsService;
         }
 
         [HttpPost("CreateNewEvent")]
@@ -44,7 +44,7 @@ namespace NowEvent.Controllers
         [HttpGet("{eventId:int}/CheckIfRated")]
         public IActionResult CheckIfRated(int eventId)
         {
-            bool isRated = _ratingsRepository.RatingStatus(eventId);
+            bool isRated = _ratingsService.RatingStatus(eventId);
             if (isRated)
             {
                 return Ok();
@@ -55,7 +55,7 @@ namespace NowEvent.Controllers
         [HttpPost("SaveRatings")]
         public IActionResult SaveRatings([FromBody] Rating rating)
         {
-            _ratingsRepository.SaveRatings(rating);
+            _ratingsService.SaveRatings(rating);
             return Ok(rating);
         }
 

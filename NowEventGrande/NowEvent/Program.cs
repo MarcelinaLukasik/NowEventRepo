@@ -19,6 +19,7 @@ using NowEvent.Services.DateAndTimeService;
 using NowEvent.Services.EmailService;
 using NowEvent.Services.EventService;
 using NowEvent.Services.ProgressService;
+using NowEvent.Services.RatingsService;
 using NowEvent.Services.VerificationService;
 using NowEvent.Validators;
 
@@ -92,6 +93,7 @@ builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IRatingsService, RatingsService>();
 builder.Services.AddScoped<IValidator<OfferQuery>, OfferQueryValidator>();
 
 var app = builder.Build();

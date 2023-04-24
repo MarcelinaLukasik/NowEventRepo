@@ -11,10 +11,9 @@ namespace NowEvent.Data.Repositories.RatingsRepository
             _appDbContext = appDbContext;
         }
 
-        public bool RatingStatus(int eventId)
+        public Rating RatingStatus(int eventId)
         {
-            var eventById = _appDbContext.Rating.FirstOrDefault(g => g.EventId == eventId);
-            return eventById != null;
+            return _appDbContext.Rating.FirstOrDefault(g => g.EventId == eventId)!;
         }
 
         public void SaveRatings(Rating rating)
