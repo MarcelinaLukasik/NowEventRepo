@@ -85,8 +85,8 @@ namespace NowEvent.Data.Repositories.EventRepository
 
         public async Task<bool> CheckDateAndTimeByEventId(int id)
         {
-            var eventId = await GetEventByIdAsync(id);
-            return eventId.Date > DateTime.Now;
+            var eventById = await GetEventByIdAsync(id);
+            return eventById.Date > DateTime.Now;
         }
 
         public DateTime GetEventStartDate(int id)

@@ -39,13 +39,18 @@ namespace NowEvent.Services.VerificationService
         public Dictionary<string, string> GetVerificationInfo(int eventId)
         {
             var location = _locationRepository.GetLocation(eventId);
-            if (location != null)
+            if (VerifyIfRecordExists(location))
             {
                 VerifyPlaceStatus(location.PlaceStatus);
                 VerifyPlaceHours(location.PlaceOpeningHours, eventId);
             }
             return _verificationInfo;
 
+        }
+
+        public bool VerifyIfRecordExists<T>(T record)
+        {
+            return record != null;
         }
 
         private void VerifyPlaceStatus(string placeStatus)
